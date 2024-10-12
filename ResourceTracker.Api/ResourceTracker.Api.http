@@ -1,0 +1,6 @@
+@ResourceTracker.Api_HostAddress = http://localhost:5037
+
+GET {{ResourceTracker.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
