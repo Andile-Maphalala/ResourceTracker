@@ -1,20 +1,23 @@
-﻿using FluentValidation;
-using ResourceTracker.Application.Common.Exceptions;
+﻿using ResourceTracker.Application.Common.Exceptions;
+using FluentValidation;
+using MediatR;
+
 
 namespace ResourceTracker.Application.Common.Behavior
 {
-    public class ValidationBehavior<TRequest>
+    public sealed class ValidationBehaviorWithIRequestAndIResponse<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+        public ValidationBehaviorWithIRequestAndIResponse(IEnumerable<IValidator<TRequest>> validators)
         {
             _validators = validators;
         }
 
-        public async Task ValidateAsync(TRequest request, CancellationToken cancellationToken)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            if (!_validators.Any()) return;
+            if (!_validators.Any()) return await next();
 
             var context = new ValidationContext<TRequest>(request);
 
@@ -28,7 +31,8 @@ namespace ResourceTracker.Application.Common.Behavior
 
             if (errors.Any())
                 throw new BadRequestException(errors);
+
+            return await next();
         }
     }
-
 }
