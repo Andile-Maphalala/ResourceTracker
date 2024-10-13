@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Commands\ComponentCommands\DeleteComponent\" />
     <Folder Include="Features\Commands\ComponentCommands\UpdateComponent\" />
     <Folder Include="Features\Commands\ResourceCommands\" />
     <Folder Include="Features\Queries\" />

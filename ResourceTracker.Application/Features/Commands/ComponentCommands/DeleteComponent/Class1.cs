@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResourceTracker.Application.Features.Commands.ComponentCommands.CreateComponent
+namespace ResourceTracker.Application.Features.Commands.ComponentCommands.DeleteComponent
 {
-    internal class CreateComponentCommand
+    internal class Class1
     {
-
     }
 }
