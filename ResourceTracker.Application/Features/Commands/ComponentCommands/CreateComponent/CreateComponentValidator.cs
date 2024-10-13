@@ -14,6 +14,5 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands.Create
         public bool IsDebit { get; set; }
         public int UserID { get; set; }
     }
-    {
-    }
+
 }
