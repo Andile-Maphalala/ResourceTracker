@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using EntitySecurity.Contract.Security;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using ResourceTracker.Application.Common.User;
 using ResourceTracker.Application.Constants;
 using ResourceTracker.Application.Features.Auth.Login;
 using ResourceTracker.Application.Features.Auth.Register;
@@ -22,23 +24,16 @@ namespace ResourceTracker.Application.Features.Auth
         IRequestHandler<RegisterRequest, RegistrationResponse>
     {
 
-        private readonly IResourceTrackerRepository _repo;
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly JwtSettings _jwtSettings;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserInfo _userInfo;
 
-        public AuthHandler(IResourceTrackerRepository repo, IMapper mapper, IUnitOfWork unitOfWork, IMediator mediator, UserManager<User> userManager, SignInManager<User> signInManager, IOptions<JwtSettings> jwtSettings, IHttpContextAccessor httpContextAccessor)
+        public AuthHandler(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<JwtSettings> jwtSettings)
         {
-            _repo = repo;
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtSettings = jwtSettings.Value;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<AuthResponse> Handle(LoginRequest request, CancellationToken cancellationToken)

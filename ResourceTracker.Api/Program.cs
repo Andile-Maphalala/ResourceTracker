@@ -2,22 +2,25 @@ using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Persistence;
 using ResourceTracker.Application;
 using Microsoft.OpenApi.Models;
-
+using ResourceTracker.Api.Middleware;
+using EntitySecurity.Domain;
+using EntitySecurity.Contract.Security;
+using EntitySecurity.Logic;
+using EntitySecurity.Logic.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Register necessary services
 builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureApplicationServices();
-
+builder.Services.AddEntitySecurity();
+builder.Services.AddScoped<IInfoSetter, InfoSetter>();
 builder.Services.ConfigurePersistenceServices((DbContextOptionsBuilder options) =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
 }, builder.Configuration);
 
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -33,36 +36,32 @@ builder.Services.AddSwaggerGen(c =>
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                  {
-                    {
-                      new OpenApiSecurityScheme
-                      {
-                        Reference = new OpenApiReference
-                          {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                          },
-                          Scheme = "oauth2",
-                          Name = "Bearer",
-                          In = ParameterLocation.Header,
-
-                        },
-                        new List<string>()
-                      }
-                    });
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header,
+            },
+            new List<string>()
+        }
+    });
 
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
         Title = "Resource Tracker Api",
-
     });
-
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -70,10 +69,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseMiddleware<UserIdentifierMiddleware>();
+
+app.MapControllers()
+    .RequireAuthorization();
 
 app.Run();

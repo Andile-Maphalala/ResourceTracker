@@ -10,6 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using ResourceTracker.Application.Models.Identity;
+using ResourceTracker.Application.Common.User;
+using ResourceTracker.Persistence.Common;
 
 
 namespace ResourceTracker.Persistence
@@ -24,6 +26,7 @@ namespace ResourceTracker.Persistence
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ResourceTrackerDbContext>()
                 .AddDefaultTokenProviders();
+            services.AddScoped<IUserInfo, UserInfo>();
 
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             services.AddAuthentication(options =>
