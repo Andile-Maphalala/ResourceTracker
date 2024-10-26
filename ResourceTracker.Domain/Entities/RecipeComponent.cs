@@ -6,21 +6,14 @@ using System.Threading.Tasks;
 
 namespace ResourceTracker.Domain.Entities
 {
-    public class QuestComponents
+    public class RecipeComponent
     {
-        public int Id { get; set; }
-
+        public int RecipeId { get; set; }
+        public int ComponentId { get; set; }
         public int AmountRequired { get; set; }
 
-        public int AmountAquired { get; set; }
-
-        public int ComponentId { get; set; }
-
-        public int QuestId { get; set; }
+        public virtual Recipe Recipe { get; set; }
 
         public virtual Component Component { get; set; }
-
-        public virtual Quest Quest { get; set; }
-
     }
 }

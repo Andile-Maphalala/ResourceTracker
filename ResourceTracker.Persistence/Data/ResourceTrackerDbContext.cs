@@ -17,10 +17,8 @@ namespace ResourceTracker.Persistence.Data
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Quest> Quests { get; set; }
         public virtual DbSet<Component> Components { get; set; }
-        public virtual DbSet<Resource> Resources { get; set; }
         public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<QuestComponents> QuestComponents { get; set; }
-        public virtual DbSet<ResourceCollection> ResourceCollections { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,8 +30,7 @@ namespace ResourceTracker.Persistence.Data
             modelBuilder.ApplyConfiguration(new Configurations.QuestComponentsConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.QuestConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.RecipeConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.ResourceCollectionConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.ResourceConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.RecipeComponentConfiguration());
 
             OnModelCreatingPartial(modelBuilder);
         }

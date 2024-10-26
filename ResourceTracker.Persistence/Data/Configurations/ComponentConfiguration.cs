@@ -28,9 +28,9 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .WithOne(r => r.Component)
                 .HasForeignKey(r => r.ComponentId);
 
-            builder.HasMany(c => c.ParentRecipes)
-                .WithOne()
-                .HasForeignKey(r => r.ParentComponentId);
+            builder.HasMany(c => c.RecipeComponents)
+                .WithOne(r => r.Component)
+                .HasForeignKey(r => r.ComponentId);
 
             builder.HasMany(c => c.QuestComponents)
                 .WithOne(qc => qc.Component)

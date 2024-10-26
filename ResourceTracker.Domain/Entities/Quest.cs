@@ -21,6 +21,5 @@ namespace ResourceTracker.Domain.Entities
         public virtual User User { get; set; }
 
         public virtual ICollection<QuestComponents> QuestComponents { get; set; }
-        public virtual ICollection<ResourceCollection> ResourceCollections { get; set; }
     }
 }

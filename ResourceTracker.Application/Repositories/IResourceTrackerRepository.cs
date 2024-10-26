@@ -12,9 +12,9 @@ namespace ResourceTracker.Application.Repositories
         IQueryable<User> Users { get; }
         IQueryable<Quest> Quests { get; }
         IQueryable<Component> Components { get; }
-        IQueryable<Resource> Resources { get; }
         IQueryable<Recipe> Recipes { get; }
         IQueryable<QuestComponents> QuestComponents { get; }
-        IQueryable<ResourceCollection> ResourceCollections { get; }
+        IQueryable<RecipeComponent> RecipeComponents { get; }
+
     }
 }

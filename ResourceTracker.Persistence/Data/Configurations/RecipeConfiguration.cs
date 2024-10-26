@@ -19,23 +19,18 @@ namespace ResourceTracker.Persistence.Data.Configurations
             builder.HasKey(x => x.Id);
 
             // Properties
-            builder.Property(e => e.Quantity)
+            builder.Property(e => e.AmountMade)
                 .IsRequired();
 
             // Relationships
-            builder.HasOne(r => r.ParentComponent)
-                .WithMany(c => c.ParentRecipes)
-                .HasForeignKey(r => r.ParentComponentId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder.HasOne(r => r.Component)
                 .WithMany(c => c.Recipes)
                 .HasForeignKey(r => r.ComponentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(r => r.Resource)
-                .WithMany()
-                .HasForeignKey(r => r.ResourceId)
+            builder.HasMany(r => r.RecipeComponents)
+                .WithOne(c => c.Recipe)
+                .HasForeignKey(r => r.RecipeId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
