@@ -1,16 +1,15 @@
 ﻿using MediatR;
-using ResourceTracker.Application.Common.CQRS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
-namespace ResourceTracker.Application.Features.Commands.ComponentCommands.CreateComponent
+namespace ResourceTracker.Application.Features.Commands.ComponentCommands.UpdateComponent
 {
-    public class CreateComponentCommand : ICommand<CreateComponentResponse>
+    public class UpdateComponentCommand : IRequest
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Type { get; set; }

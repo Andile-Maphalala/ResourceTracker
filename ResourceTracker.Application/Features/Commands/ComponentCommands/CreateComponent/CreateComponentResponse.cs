@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace ResourceTracker.Application.Features.Commands.ComponentCommands.CreateComponent
 {
-    internal class CreateComponentMapper
-    {
-    }
+    public record CreateComponentResponse(int Id);
 }

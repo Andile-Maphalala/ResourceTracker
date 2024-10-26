@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ResourceTracker.Application.Repositories
 {
-    public interface IResourceTrackerRepository
+    public interface IResourceTrackerRepository : IGenericRepository
     {
         IQueryable<User> Users { get; }
         IQueryable<Quest> Quests { get; }
