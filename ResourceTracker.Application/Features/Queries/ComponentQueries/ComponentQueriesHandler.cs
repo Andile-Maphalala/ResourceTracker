@@ -53,7 +53,8 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries
         public async Task<PageableResponse<SearchComponentsResponse>> Handle(SearchComponentsQuery request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(request.OrderBy))
-                request.OrderBy = nameof(Component.Name);
+                request.OrderBy = nameof(Component.Id);
+
             var quests = await _repo.Components
                    .ApplyFilters(request)
                  .Select(x => new SearchComponentsResponse

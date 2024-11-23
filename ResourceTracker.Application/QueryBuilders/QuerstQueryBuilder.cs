@@ -27,20 +27,27 @@ namespace ResourceTracker.Application.QueryBuilders
             if (request.QuestId.HasValue)
                 predicate = predicate.And(o => o.Id == request.QuestId);
 
+            if (!string.IsNullOrEmpty(request.Name))
+                predicate = predicate.And(x => x.Name.StartsWith(request.Name));
+
+            if (!string.IsNullOrEmpty(request.Description))
+                predicate = predicate.And(x => x.Description.StartsWith(request.Description));
+
             return predicate;
         }
 
         internal static Expression<Func<Quest, bool>> BuildSearchExpression(IEnumerable<string> terms, ExpressionMatchTypeEnum matchType = ExpressionMatchTypeEnum.StartsWith)
         {
-            var predicate = PredicateBuilder.New<Quest>(true);
+            if (terms == null || !terms.Any())
+                return PredicateBuilder.New<Quest>(true);
+
+            var predicate = PredicateBuilder.New<Quest>(false);
             var patternFormat = PageableExtensions.GetSearchPatternFormat(matchType);
+
             foreach (var term in terms)
             {
                 var pattern = term.BuildSearchPattern(patternFormat);
-
-                predicate = predicate.And(o =>
-                    EF.Functions.Like(o.Name, pattern)
-                );
+                predicate = predicate.And(o => EF.Functions.Like(o.Name, pattern) || EF.Functions.Like(o.Description, pattern));
             }
             return predicate;
         }

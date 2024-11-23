@@ -3,18 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Pagination;
 using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
-using ResourceTracker.Application.Features.Queries.ComponentQueries.GetComponent;
-using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
 using ResourceTracker.Application.Features.Queries.QuestQueries.GetQuest;
 using ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests;
 using ResourceTracker.Application.QueryBuilders;
 using ResourceTracker.Application.Repositories;
 using ResourceTracker.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ResourceTracker.Application.Features.Queries.QuestQueries
 {
@@ -48,6 +42,9 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries
 
         public async Task<PageableResponse<SearchQuestsResponse>> Handle(SearchQuestsQuery request, CancellationToken cancellationToken)
         {
+            if (string.IsNullOrEmpty(request.OrderBy))
+                request.OrderBy = nameof(Quest.Id);
+
             var quests = await _repo.Quests
                    .ApplyFilters(request)
                  .Select(x => new SearchQuestsResponse

@@ -1,17 +1,11 @@
-﻿using AutoMapper;
-using EntitySecurity.Contract.Security;
-using MediatR;
-using Microsoft.AspNetCore.Http;
+﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ResourceTracker.Application.Common.User;
 using ResourceTracker.Application.Constants;
 using ResourceTracker.Application.Features.Auth.Login;
 using ResourceTracker.Application.Features.Auth.Register;
 using ResourceTracker.Application.Models.Identity;
-using ResourceTracker.Application.Repositories;
 using ResourceTracker.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -27,7 +21,6 @@ namespace ResourceTracker.Application.Features.Auth
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly JwtSettings _jwtSettings;
-        private readonly IUserInfo _userInfo;
 
         public AuthHandler(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<JwtSettings> jwtSettings)
         {
