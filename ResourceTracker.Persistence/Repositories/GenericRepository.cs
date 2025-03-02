@@ -4,6 +4,7 @@ using ResourceTracker.Application.Repositories;
 using ResourceTracker.Application.Common.Exceptions;
 
 using System.Linq.Expressions;
+using EFCore.BulkExtensions;
 
 namespace ResourceTracker.Persistence.Repositories
 {
@@ -43,6 +44,12 @@ namespace ResourceTracker.Persistence.Repositories
             _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
-
+        public async Task BulkUpdateAsync<T>(List<T> entities, CancellationToken cancellationToken) where T : class
+        {
+            if (entities.Any())
+            {
+                await _dbContext.BulkUpdateAsync(entities);
+            }
+        }
     }
 }

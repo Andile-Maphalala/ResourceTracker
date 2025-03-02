@@ -13,7 +13,7 @@ namespace ResourceTracker.Api.Controllers
     public class QuestController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CreateCompoent([FromBody] CreateQuestCommand request)
+        public async Task<IActionResult> CreateQuest([FromBody] CreateQuestCommand request)
         {
             var response = await sender.Send(request);
 

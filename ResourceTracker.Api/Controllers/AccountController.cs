@@ -15,9 +15,12 @@ namespace ResourceTracker.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public AccountController(IMediator mediator)
+        private readonly IConfiguration _configuration;
+
+        public AccountController(IMediator mediator, IConfiguration configuration)
         {
             _mediator = mediator;
+            _configuration = configuration;
         }
 
         [HttpPost("login")]
@@ -46,6 +49,26 @@ namespace ResourceTracker.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet("FastLogin")]
+        public async Task<ActionResult<string>> FastLogin()
+        {
+
+            var email = _configuration["DevCredentials:Email"];
+            var password = _configuration["DevCredentials:Password"];
+
+            var request = new LoginRequest
+            {
+                Email = email,
+                Password = password
+            };
+            var response = await _mediator.Send(request);
+
+
+            var bearer = "Bearer" + " " + response.Token;
+
+            return Ok(bearer);
         }
     }
 }

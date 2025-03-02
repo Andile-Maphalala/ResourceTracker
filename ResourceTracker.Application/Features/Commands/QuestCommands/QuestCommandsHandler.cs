@@ -12,21 +12,19 @@ using ResourceTracker.Application.Common.User;
 
 namespace ResourceTracker.Application.Features.Commands.QuestCommands
 {
-    public class QuestCommandsHandler:
+    public class QuestCommandsHandler :
         ICommandHandler<CreateQuestCommand, CreateQuestResponse>,
-        IRequestHandler<UpdateQuestCommand>,
-        IRequestHandler<DeleteQuestCommand>
+        ICommandHandler<UpdateQuestCommand>,
+        ICommandHandler<DeleteQuestCommand>
     {
         private readonly IResourceTrackerRepository _repo;
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserInfo _userInfo;
 
 
-        public QuestCommandsHandler(IResourceTrackerRepository repo, IMapper mapper, IUnitOfWork unitOfWork, IUserInfo userInfo)
+        public QuestCommandsHandler(IResourceTrackerRepository repo, IUnitOfWork unitOfWork, IUserInfo userInfo)
         {
             _repo = repo;
-            _mapper = mapper;
             _unitOfWork = unitOfWork;
             _userInfo = userInfo;
         }
@@ -52,7 +50,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
             return new CreateQuestResponse(item.Id);
         }
 
-        public async Task Handle(UpdateQuestCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateQuestCommand command, CancellationToken cancellationToken)
         {
             var userId = _userInfo.GetUserId();
             if (userId == 0)
@@ -68,10 +66,12 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
             item.Description = command.Description;
 
             await _unitOfWork.Save(cancellationToken);
+
+            return Unit.Value;
         }
 
 
-        public async Task Handle(DeleteQuestCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteQuestCommand command, CancellationToken cancellationToken)
         {
             var item = await _repo.Quests.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
@@ -82,6 +82,8 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
             await _repo.DeleteAsync<Quest>(x => x.Id == item.Id, cancellationToken);
 
             await _unitOfWork.Save(cancellationToken);
+
+            return Unit.Value;
         }
     }
 }

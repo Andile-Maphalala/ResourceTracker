@@ -1,13 +1,8 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ResourceTracker.Application.Common.CQRS;
 
 namespace ResourceTracker.Application.Features.Commands.QuestCommands.UpdateQuest
 {
-    public class UpdateQuestCommand : IRequest
+    public class UpdateQuestCommand : ICommand
     {
         public int Id { get; set; }
         public string Name { get; set; }

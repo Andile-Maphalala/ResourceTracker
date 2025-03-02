@@ -13,5 +13,7 @@ namespace ResourceTracker.Application.Repositories
         Task InsertAsync<T>(T entity, CancellationToken cancellationToken) where T : class;
         Task UpdateAsync<T>(T entity, CancellationToken cancellationToken) where T : class;
         Task DeleteAsync<T>(Expression<Func<T, bool>> findPredicate, CancellationToken cancellationToken) where T : class;
+        Task BulkUpdateAsync<T>(List<T> entities, CancellationToken cancellationToken) where T : class;
+
     }
 }
