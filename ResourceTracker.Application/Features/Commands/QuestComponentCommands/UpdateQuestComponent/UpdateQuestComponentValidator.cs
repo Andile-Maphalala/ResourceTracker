@@ -14,8 +14,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands.U
         {
             RuleFor(x => x.Id)
                 .NotEmpty().WithMessage("Id is required");
-            RuleFor(x => x.AmountRequired)
-                .GreaterThan(0).WithMessage("Amount required must at least be 1");
             RuleFor(x => x.AmountAquired)
                 .GreaterThanOrEqualTo(0).WithMessage("Amount aquired cannot be less than 1");
         }

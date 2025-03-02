@@ -15,5 +15,8 @@ namespace ResourceTracker.Domain.Entities
 
         public virtual ICollection<Quest> Quests { get; set; }
 
+        public virtual ICollection<BuildPlan> BuildPlans { get; set; }
+
+
     }
 }

@@ -29,6 +29,11 @@ namespace ResourceTracker.Persistence.Data.Configurations
                .WithOne(x => x.User)
                .HasForeignKey(x => x.UserId)
                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(x => x.BuildPlans)
+               .WithOne(x => x.User)
+               .HasForeignKey(x => x.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

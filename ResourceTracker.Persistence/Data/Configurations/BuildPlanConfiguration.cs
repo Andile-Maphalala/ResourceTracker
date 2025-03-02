@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace ResourceTracker.Persistence.Data.Configurations
 {
-    public class QuestConfiguration : IEntityTypeConfiguration<Quest>
+    public class BuildPlanConfiguration : IEntityTypeConfiguration<BuildPlan>
     {
-        public void Configure(EntityTypeBuilder<Quest> builder)
+        public void Configure(EntityTypeBuilder<BuildPlan> builder)
         {
-            builder.ToTable(nameof(Quest));
+            builder.ToTable(nameof(BuildPlan));
 
             // Key
             builder.HasKey(x => x.Id);
@@ -28,24 +28,16 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .HasMaxLength(250)
                 .IsUnicode(false);
 
-            builder.Property(e => e.Location)
-                .HasMaxLength(250)
-                .IsUnicode(false);
-
-            builder.Property(e => e.Image)
-                .IsRequired(false);
-
             // Relationships
-            builder.HasOne(q => q.User)
-                .WithMany(u => u.Quests)
-                .HasForeignKey(q => q.UserId)
+            builder.HasOne(bp => bp.User)
+                .WithMany(u => u.BuildPlans)
+                .HasForeignKey(bp => bp.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(q => q.QuestComponents)
-                .WithOne(qc => qc.Quest)
-                .HasForeignKey(qc => qc.QuestId)
+            builder.HasMany(bp => bp.BuildPlanComponents)
+                .WithOne(bpc => bpc.BuildPlan)
+                .HasForeignKey(bpc => bpc.BuildPlanId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
-
 }

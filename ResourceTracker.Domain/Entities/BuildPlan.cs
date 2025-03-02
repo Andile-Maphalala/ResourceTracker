@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ResourceTracker.Domain.Entities
 {
-    public class Quest
+    public class BuildPlan
     {
         public int Id { get; set; }
 
@@ -14,14 +14,12 @@ namespace ResourceTracker.Domain.Entities
 
         public string Description { get; set; }
 
-        public string Location { get; set; }
-
-        public byte[] Image { get; set; }
-
         public int UserId { get; set; }
 
         public virtual User User { get; set; }
 
-        public virtual ICollection<QuestComponents> QuestComponents { get; set; }
+        public virtual ICollection<BuildPlanComponent> BuildPlanComponents { get; set; }
+        public virtual ICollection<BuildPlanResource> BuildPlanResources { get; set; }
+
     }
 }

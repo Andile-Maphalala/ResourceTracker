@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using ResourceTracker.Persistence.Data.Configurations;
 
 
 namespace ResourceTracker.Persistence.Data
@@ -19,18 +20,24 @@ namespace ResourceTracker.Persistence.Data
         public virtual DbSet<Component> Components { get; set; }
         public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<QuestComponents> QuestComponents { get; set; }
+        public virtual DbSet<BuildPlan> BuildPlans { get; set; }
+        public virtual DbSet<BuildPlanComponent> BuildPlanComponents { get; set; }
+        public virtual DbSet<BuildPlanResource> BuildPlanResources { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ResourceTrackerDbContext).Assembly);
-            modelBuilder.ApplyConfiguration(new Configurations.UserConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.ComponentConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.QuestComponentsConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.QuestConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.RecipeConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.RecipeComponentConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new ComponentConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestComponentsConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestConfiguration());
+            modelBuilder.ApplyConfiguration(new RecipeConfiguration());
+            modelBuilder.ApplyConfiguration(new RecipeComponentConfiguration());
+            modelBuilder.ApplyConfiguration(new BuildPlanConfiguration());
+            modelBuilder.ApplyConfiguration(new BuildPlanComponentConfiguration());
+            modelBuilder.ApplyConfiguration(new BuildPlanResourceConfiguration());
 
             OnModelCreatingPartial(modelBuilder);
         }

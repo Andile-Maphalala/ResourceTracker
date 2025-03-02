@@ -18,8 +18,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands.C
 
             RuleForEach(x => x.Commands).ChildRules(commands =>
             {
-                commands.RuleFor(x => x.AmountRequired)
-               .GreaterThan(0).WithMessage("Amount required must at least be 1");
                 commands.RuleFor(x => x.AmountAquired)
                     .GreaterThanOrEqualTo(0).WithMessage("Amount aquired cannot be less than 1");
                 commands.RuleFor(x => x.ComponentId)

@@ -4,8 +4,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands.C
 {
     public class CreateQuestComponentCommand : ICommand<CreateQuestComponentResponse>
     {
-        public int AmountRequired { get; set; }
-
         public int AmountAquired { get; set; }
 
         public int ComponentId { get; set; }

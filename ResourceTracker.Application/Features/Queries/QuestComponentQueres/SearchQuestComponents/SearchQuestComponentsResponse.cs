@@ -5,8 +5,6 @@ namespace ResourceTracker.Application.Features.Queries.QuestComponentQueres.Sear
     {
         public int Id { get; set; }
 
-        public int AmountRequired { get; set; }
-
         public int AmountAquired { get; set; }
 
         public string ComponentName { get; set; }

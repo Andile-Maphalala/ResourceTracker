@@ -43,7 +43,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
             QuestComponents item = new QuestComponents
             {
                 AmountAquired = command.AmountAquired,
-                AmountRequired = command.AmountRequired,
                 ComponentId = command.ComponentId,
                 QuestId = command.QuestId,
 
@@ -69,7 +68,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
                 QuestComponents item = new QuestComponents
                 {
                     AmountAquired = questComponent.AmountAquired,
-                    AmountRequired = questComponent.AmountRequired,
                     ComponentId = questComponent.ComponentId,
                     QuestId = command.QuestId,
                 };
@@ -96,7 +94,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
                 throw new BadRequestException("Invalid Quest Component");
             }
 
-            item.AmountRequired = command.AmountRequired;
             item.AmountAquired = command.AmountAquired;
 
             await _unitOfWork.Save(cancellationToken);
@@ -121,12 +118,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
                 }
 
                 bool isUpdated = false;
-
-                if (item.AmountRequired != questComponent.AmountRequired)
-                {
-                    item.AmountRequired = questComponent.AmountRequired;
-                    isUpdated = true;
-                }
 
                 if (item.AmountAquired != questComponent.AmountAquired)
                 {

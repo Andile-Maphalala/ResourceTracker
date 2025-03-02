@@ -34,7 +34,6 @@ namespace ResourceTracker.Application.Features.Queries.QuestComponentQueres
                  {
                     Id = x.Id,
                     AmountAquired = x.AmountAquired,
-                    AmountRequired = x.AmountRequired,
                     ComponentName = x.Component.Name,
                     ComponentType = x.Component.Type,
                     ComponentTypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Component.Type),
@@ -59,7 +58,6 @@ namespace ResourceTracker.Application.Features.Queries.QuestComponentQueres
                    {
                        Id = x.Id,
                        AmountAquired = x.AmountAquired,
-                       AmountRequired = x.AmountRequired,
                        ComponentName = x.Component.Name,
                        ComponentType = x.Component.Type,
                        ComponentTypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Component.Type),

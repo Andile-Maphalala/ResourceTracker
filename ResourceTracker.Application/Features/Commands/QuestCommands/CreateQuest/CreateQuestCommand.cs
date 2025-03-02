@@ -8,5 +8,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands.CreateQues
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Location { get; set; }
     }
 }

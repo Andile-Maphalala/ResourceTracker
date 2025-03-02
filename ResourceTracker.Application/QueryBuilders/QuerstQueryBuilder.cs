@@ -33,6 +33,10 @@ namespace ResourceTracker.Application.QueryBuilders
             if (!string.IsNullOrEmpty(request.Description))
                 predicate = predicate.And(x => x.Description.StartsWith(request.Description));
 
+            if (!string.IsNullOrEmpty(request.Location))
+                predicate = predicate.And(x => x.Description.StartsWith(request.Location));
+
+
             return predicate;
         }
 
@@ -47,7 +51,7 @@ namespace ResourceTracker.Application.QueryBuilders
             foreach (var term in terms)
             {
                 var pattern = term.BuildSearchPattern(patternFormat);
-                predicate = predicate.And(o => EF.Functions.Like(o.Name, pattern) || EF.Functions.Like(o.Description, pattern));
+                predicate = predicate.And(o => EF.Functions.Like(o.Name, pattern) || EF.Functions.Like(o.Description, pattern) || EF.Functions.Like(o.Location, pattern));
             }
             return predicate;
         }

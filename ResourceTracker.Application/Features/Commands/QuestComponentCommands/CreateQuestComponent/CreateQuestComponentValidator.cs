@@ -12,8 +12,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands.C
     {
         public CreateQuestComponentValidator()
         {
-            RuleFor(x => x.AmountRequired)
-                .GreaterThan(0).WithMessage("Amount required must at least be 1");
             RuleFor(x => x.AmountAquired)
                 .GreaterThanOrEqualTo(0).WithMessage("Amount aquired cannot be less than 1");
             RuleFor(x => x.ComponentId)

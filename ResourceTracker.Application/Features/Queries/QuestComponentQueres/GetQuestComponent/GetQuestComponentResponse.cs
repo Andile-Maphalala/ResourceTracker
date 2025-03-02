@@ -10,8 +10,6 @@ namespace ResourceTracker.Application.Features.Queries.QuestComponentQueres.GetQ
     {
         public int Id { get; set; }
 
-        public int AmountRequired { get; set; }
-
         public int AmountAquired { get; set; }
 
         public string ComponentName { get; set; }

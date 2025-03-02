@@ -39,6 +39,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
             {
                 Name = command.Name,
                 Description = command.Description,
+                Location = command.Location,
                 UserId = userId,
 
             };
@@ -64,6 +65,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
 
             item.Name = command.Name;
             item.Description = command.Description;
+            item.Location = command.Location;
 
             await _unitOfWork.Save(cancellationToken);
 

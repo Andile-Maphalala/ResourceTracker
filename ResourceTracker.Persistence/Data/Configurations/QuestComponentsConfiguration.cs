@@ -18,9 +18,6 @@ namespace ResourceTracker.Persistence.Data.Configurations
             // Key
             builder.HasKey(x => x.Id);
 
-            // Properties
-            builder.Property(e => e.AmountRequired)
-                .IsRequired();
             builder.Property(e => e.AmountAquired)
                 .IsRequired();
 

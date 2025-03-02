@@ -18,6 +18,8 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands.CreateQues
                 .NotEmpty().WithMessage("Name is required");
             RuleFor(x => x.Description)
                 .MaximumLength(225).WithMessage("Description cannot exceed 225 characters");
+            RuleFor(x => x.Location)
+               .MaximumLength(225).WithMessage("Location cannot exceed 225 characters");
         }
 
     }

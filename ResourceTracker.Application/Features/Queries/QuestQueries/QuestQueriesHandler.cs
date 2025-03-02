@@ -31,7 +31,8 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries
                  {
                      Id = x.Id,
                      Name = x.Name,
-                     Description = x.Description
+                     Description = x.Description,
+                     Location = x.Location,
                  }).FirstOrDefaultAsync(cancellationToken);
 
             if (quest is null)
@@ -51,7 +52,8 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries
                  {
                      Id = x.Id,
                      Name = x.Name,
-                     Description = x.Description
+                     Description = x.Description,
+                     Location = x.Location,
                  }).ToPageableListAsync(request,cancellationToken);
 
             return quests;
