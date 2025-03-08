@@ -22,7 +22,7 @@ public class Program
         builder.Services.AddScoped<IInfoSetter, InfoSetter>();
         builder.Services.ConfigurePersistenceServices((DbContextOptionsBuilder options) =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
+            options.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionString"));
         }, builder.Configuration);
 
         builder.Services.AddControllers();
