@@ -1,19 +1,22 @@
-using Microsoft.EntityFrameworkCore;
-using ResourceTracker.Persistence;
-using ResourceTracker.Application;
-using Microsoft.OpenApi.Models;
-using ResourceTracker.Api.Middleware;
-using EntitySecurity.Domain;
 using EntitySecurity.Contract.Security;
+using EntitySecurity.Domain;
 using EntitySecurity.Logic;
 using EntitySecurity.Logic.Security;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using ResourceTracker.Api.Middleware;
+using ResourceTracker.Application;
+using ResourceTracker.Persistence;
 using ResourceTracker.Persistence.Data;
+using System.IO;
 
 public class Program
 {
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Configuration.AddKeyPerFile("/secrets", optional: true, reloadOnChange: true);
 
         // Register necessary services
         builder.Services.AddHttpContextAccessor();
@@ -66,14 +69,18 @@ public class Program
         });
 
         var app = builder.Build();
-
+        app.UseCors(policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+);
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
 
-        app.UseHttpsRedirection();
+        //app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
 

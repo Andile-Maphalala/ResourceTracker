@@ -1,0 +1,60 @@
+
+services:
+  db:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ResourceTrackerDatabase"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/Db__Password
+      POSTGRES_DB: ResourceTrackerDatabase
+      POSTGRES_USER: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./custom-pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+    secrets:
+      - Db__Password
+
+  resourcetracker.api:
+    build:
+      context: .
+      dockerfile: ResourceTracker.Api/Dockerfile
+    volumes:
+      - ./secrets:/secrets
+      - ~/.aspnet/https:/https:ro
+    container_name: webapi
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_Kestrel__Certificates__Default__Password_FILE: /run/secrets/ASPNETCORE_Kestrel__Certificates__Default__Password
+      ASPNETCORE_Kestrel__Certificates__Default__Path_FILE: /run/secrets/ASPNETCORE_Kestrel__Certificates__Default__Path
+      ASPNETCORE_HTTPS_PORTS: 8081
+      ASPNETCORE_HTTP_PORTS: 8080
+      ASPNETCORE_URLS: https://+:8081;http://+:8080
+    secrets:
+      - Db__Password
+      - ConnectionStrings__ConnectionString
+      - ASPNETCORE_Kestrel__Certificates__Default__Password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+     - "8080:8080"
+     - "8081:8081"
+
+volumes:
+  pgdata:
+
+secrets:
+  Db__Password:
+    file: ./secrets/Db__Password
+  ConnectionStrings__ConnectionString:
+    file: ./secrets/ConnectionStrings__ConnectionString
+  ASPNETCORE_Kestrel__Certificates__Default__Password:
+    file: ./secrets/ASPNETCORE_Kestrel__Certificates__Default__Password
+  ASPNETCORE_Kestrel__Certificates__Default__Path:
+    file: ./secrets/ASPNETCORE_Kestrel__Certificates__Default__Path
