@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ResourceTracker.Persistence.Data;
-using ResourceTracker.Application.Repositories;
+﻿using EFCore.BulkExtensions;
+using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Common.Exceptions;
-
+using ResourceTracker.Application.Repositories;
+using ResourceTracker.Persistence.Data;
 using System.Linq.Expressions;
-using EFCore.BulkExtensions;
+using System.Security.Principal;
 
 namespace ResourceTracker.Persistence.Repositories
 {
@@ -23,15 +23,12 @@ namespace ResourceTracker.Persistence.Repositories
             return _dbContext.Set<T>();
         }
 
-        public async Task DeleteAsync<T>(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken) where T : class
+        public async Task DeleteAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class
         {
-            var obj = await Set<T>().FirstOrDefaultAsync(predicate, cancellationToken);
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
 
-            if (obj == null)
-            {
-                throw new BadRequestException("Record not found");
-            }
-            _dbContext.Remove(obj);
+            _dbContext.Remove(entity);
         }
 
         public async Task InsertAsync<T>(T entity, CancellationToken cancellationToken) where T : class

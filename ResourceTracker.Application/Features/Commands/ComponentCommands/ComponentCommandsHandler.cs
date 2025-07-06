@@ -69,7 +69,7 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands
                 throw new BadRequestException("Invalid component");
             }
 
-            await _repo.DeleteAsync<Component>(x => x.Id == item.Id, cancellationToken);
+            await _repo.DeleteAsync(item, cancellationToken);
 
             await _unitOfWork.Save(cancellationToken);
         }

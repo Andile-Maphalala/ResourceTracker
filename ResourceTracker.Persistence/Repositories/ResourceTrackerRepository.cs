@@ -17,11 +17,15 @@ namespace ResourceTracker.Persistence.Repositories
 
         }
 
-       public IQueryable<User> Users  => Set<User>();
-       public IQueryable<Quest> Quests  => Set<Quest>();
-       public IQueryable<Component> Components  => Set<Component>();
-       public IQueryable<Recipe> Recipes  => Set<Recipe>();
-       public IQueryable<QuestComponents> QuestComponents  => Set<QuestComponents>();
-       public IQueryable<RecipeComponent> RecipeComponents => Set<RecipeComponent>();
+        public IQueryable<User> Users  => Set<User>();
+        public IQueryable<Quest> Quests  => Set<Quest>();
+        public IQueryable<Component> Components  => Set<Component>();
+        public IQueryable<Recipe> Recipes  => Set<Recipe>();
+        public IQueryable<QuestComponents> QuestComponents  => Set<QuestComponents>();
+        public IQueryable<RecipeComponent> RecipeComponents => Set<RecipeComponent>();
+        public IQueryable<BuildPlan> BuildPlans => Set<BuildPlan>();
+        public IQueryable<BuildPlanComponent> BuildPlanComponents => Set<BuildPlanComponent>();
+        public IQueryable<BuildPlanResource> BuildPlanResources => Set<BuildPlanResource>();
+        public IQueryable<Game> Games => Set<Game>();
     }
 }

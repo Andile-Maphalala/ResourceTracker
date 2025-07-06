@@ -11,7 +11,7 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands.Delete
     {
         public DeleteComponentValidator() 
         {
-            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.Id).GreaterThan(0);
         }
     }
 }

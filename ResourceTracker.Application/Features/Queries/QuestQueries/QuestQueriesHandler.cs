@@ -33,6 +33,8 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries
                      Name = x.Name,
                      Description = x.Description,
                      Location = x.Location,
+                     GameId = x.GameId
+
                  }).FirstOrDefaultAsync(cancellationToken);
 
             if (quest is null)
@@ -54,6 +56,9 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries
                      Name = x.Name,
                      Description = x.Description,
                      Location = x.Location,
+                     GameId = x.GameId,
+                     GameName = x.Game.Name
+
                  }).ToPageableListAsync(request,cancellationToken);
 
             return quests;

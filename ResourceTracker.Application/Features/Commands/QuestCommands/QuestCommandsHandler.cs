@@ -41,7 +41,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
                 Description = command.Description,
                 Location = command.Location,
                 UserId = userId,
-
+                GameId = command.GameId
             };
 
             await _repo.InsertAsync(item, cancellationToken);
@@ -66,6 +66,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
             item.Name = command.Name;
             item.Description = command.Description;
             item.Location = command.Location;
+            item.GameId = command.GameId;
 
             await _unitOfWork.Save(cancellationToken);
 
@@ -81,7 +82,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
                 throw new BadRequestException("Invalid quest");
             }
 
-            await _repo.DeleteAsync<Quest>(x => x.Id == item.Id, cancellationToken);
+            await _repo.DeleteAsync(item, cancellationToken);
 
             await _unitOfWork.Save(cancellationToken);
 

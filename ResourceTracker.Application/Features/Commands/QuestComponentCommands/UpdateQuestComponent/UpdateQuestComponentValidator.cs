@@ -13,7 +13,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands.U
         public UpdateQuestComponentValidator()
         {
             RuleFor(x => x.Id)
-                .NotEmpty().WithMessage("Id is required");
+                .GreaterThan(0).WithMessage("Id is required");
             RuleFor(x => x.AmountAquired)
                 .GreaterThanOrEqualTo(0).WithMessage("Amount aquired cannot be less than 1");
         }

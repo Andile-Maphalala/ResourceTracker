@@ -15,5 +15,9 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests
         public string Description { get; set; }
 
         public string Location { get; set; }
+
+        public int GameId { get; set; }
+
+        public string GameName { get; set; }
     }
 }

@@ -150,7 +150,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
                 throw new BadRequestException("Invalid Quest Compoent");
             }
 
-            await _repo.DeleteAsync<QuestComponents>(x => x.Id == item.Id, cancellationToken);
+            await _repo.DeleteAsync(item, cancellationToken);
 
             await _unitOfWork.Save(cancellationToken);
 
