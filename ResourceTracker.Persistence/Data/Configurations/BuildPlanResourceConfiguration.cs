@@ -37,9 +37,9 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(bpr => bpr.SourceComponent)
-                .WithMany()
+                .WithMany(c => c.SourceBuildPlanResources)
                 .HasForeignKey(bpr => bpr.SourceComponentId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete for source component
+                .OnDelete(DeleteBehavior.Restrict); 
         }
     }
 }

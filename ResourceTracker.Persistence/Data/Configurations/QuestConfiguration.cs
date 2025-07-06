@@ -45,6 +45,11 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .WithOne(qc => qc.Quest)
                 .HasForeignKey(qc => qc.QuestId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(q => q.Game)
+                .WithMany(g => g.Quests)
+                .HasForeignKey(q => q.GameId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 

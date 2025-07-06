@@ -30,18 +30,18 @@ namespace ResourceTracker.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Component",
+                name: "Game",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(100)", unicode: false, maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "character varying(250)", unicode: false, maxLength: 250, nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false)
+                    CoverImage = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Component", x => x.Id);
+                    table.PrimaryKey("PK_Game", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,21 +95,23 @@ namespace ResourceTracker.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recipe",
+                name: "Component",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AmountMade = table.Column<int>(type: "integer", nullable: false),
-                    ComponentId = table.Column<int>(type: "integer", nullable: false)
+                    Name = table.Column<string>(type: "character varying(100)", unicode: false, maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "character varying(250)", unicode: false, maxLength: 250, nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recipe", x => x.Id);
+                    table.PrimaryKey("PK_Component", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipe_Component_ComponentId",
-                        column: x => x.ComponentId,
-                        principalTable: "Component",
+                        name: "FK_Component_Game_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Game",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -207,11 +209,18 @@ namespace ResourceTracker.Persistence.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(100)", unicode: false, maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "character varying(250)", unicode: false, maxLength: 250, nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BuildPlan", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BuildPlan_Game_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Game",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BuildPlan_User_UserId",
                         column: x => x.UserId,
@@ -230,11 +239,18 @@ namespace ResourceTracker.Persistence.Migrations
                     Description = table.Column<string>(type: "character varying(250)", unicode: false, maxLength: 250, nullable: false),
                     Location = table.Column<string>(type: "character varying(250)", unicode: false, maxLength: 250, nullable: false),
                     Image = table.Column<byte[]>(type: "bytea", nullable: true),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Quest", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Quest_Game_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Game",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Quest_User_UserId",
                         column: x => x.UserId,
@@ -244,28 +260,23 @@ namespace ResourceTracker.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RecipeComponent",
+                name: "Recipe",
                 columns: table => new
                 {
-                    RecipeId = table.Column<int>(type: "integer", nullable: false),
-                    ComponentId = table.Column<int>(type: "integer", nullable: false),
-                    AmountRequired = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AmountMade = table.Column<int>(type: "integer", nullable: false),
+                    ComponentId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RecipeComponent", x => new { x.RecipeId, x.ComponentId });
+                    table.PrimaryKey("PK_Recipe", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RecipeComponent_Component_ComponentId",
+                        name: "FK_Recipe_Component_ComponentId",
                         column: x => x.ComponentId,
                         principalTable: "Component",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RecipeComponent_Recipe_RecipeId",
-                        column: x => x.RecipeId,
-                        principalTable: "Recipe",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -306,8 +317,7 @@ namespace ResourceTracker.Persistence.Migrations
                     QuantityGathered = table.Column<int>(type: "integer", nullable: false),
                     ComponentId = table.Column<int>(type: "integer", nullable: false),
                     SourceComponentId = table.Column<int>(type: "integer", nullable: false),
-                    BuildPlanId = table.Column<int>(type: "integer", nullable: false),
-                    ComponentId1 = table.Column<int>(type: "integer", nullable: true)
+                    BuildPlanId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -324,11 +334,6 @@ namespace ResourceTracker.Persistence.Migrations
                         principalTable: "Component",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BuildPlanResource_Component_ComponentId1",
-                        column: x => x.ComponentId1,
-                        principalTable: "Component",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_BuildPlanResource_Component_SourceComponentId",
                         column: x => x.SourceComponentId,
@@ -360,6 +365,31 @@ namespace ResourceTracker.Persistence.Migrations
                         name: "FK_QuestComponents_Quest_QuestId",
                         column: x => x.QuestId,
                         principalTable: "Quest",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RecipeComponent",
+                columns: table => new
+                {
+                    RecipeId = table.Column<int>(type: "integer", nullable: false),
+                    ComponentId = table.Column<int>(type: "integer", nullable: false),
+                    AmountRequired = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecipeComponent", x => new { x.RecipeId, x.ComponentId });
+                    table.ForeignKey(
+                        name: "FK_RecipeComponent_Component_ComponentId",
+                        column: x => x.ComponentId,
+                        principalTable: "Component",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RecipeComponent_Recipe_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipe",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -400,6 +430,11 @@ namespace ResourceTracker.Persistence.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BuildPlan_GameId",
+                table: "BuildPlan",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BuildPlan_UserId",
                 table: "BuildPlan",
                 column: "UserId");
@@ -425,14 +460,19 @@ namespace ResourceTracker.Persistence.Migrations
                 column: "ComponentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BuildPlanResource_ComponentId1",
-                table: "BuildPlanResource",
-                column: "ComponentId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BuildPlanResource_SourceComponentId",
                 table: "BuildPlanResource",
                 column: "SourceComponentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Component_GameId",
+                table: "Component",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Quest_GameId",
+                table: "Quest",
+                column: "GameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Quest_UserId",
@@ -518,6 +558,9 @@ namespace ResourceTracker.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Component");
+
+            migrationBuilder.DropTable(
+                name: "Game");
         }
     }
 }

@@ -16,6 +16,9 @@ namespace ResourceTracker.Domain.Entities
 
         public int Type { get; set; }
 
+        public int GameId { get; set; }
+
+        public  virtual Game Game { get; set; }
         public virtual ICollection<Recipe> Recipes { get; set; }
         public virtual ICollection<RecipeComponent> RecipeComponents { get; set; }
         public virtual ICollection<QuestComponents> QuestComponents { get; set; }

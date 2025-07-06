@@ -37,9 +37,9 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .HasForeignKey(qc => qc.ComponentId);
 
             builder.HasMany(c => c.BuildPlanComponents)
-           .WithOne(bpc => bpc.Component)
-           .HasForeignKey(bpc => bpc.ComponentId)
-           .OnDelete(DeleteBehavior.Cascade);
+               .WithOne(bpc => bpc.Component)
+               .HasForeignKey(bpc => bpc.ComponentId)
+               .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(c => c.BuildPlanResources)
                 .WithOne(bpr => bpr.Component)
@@ -47,9 +47,14 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(c => c.SourceBuildPlanResources)
-           .WithOne(bpr => bpr.SourceComponent)
-           .HasForeignKey(bpr => bpr.SourceComponentId)
-           .OnDelete(DeleteBehavior.Restrict);
+               .WithOne(bpr => bpr.SourceComponent)
+               .HasForeignKey(bpr => bpr.SourceComponentId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(q => q.Game)
+                .WithMany(g => g.Components)
+                .HasForeignKey(q => q.GameId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }
