@@ -4,7 +4,7 @@ namespace ResourceTracker.Application.Features.Queries.GameQueries.SearchGames
 {
     public class SearchGamesResponse
     {
-        public int GameId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

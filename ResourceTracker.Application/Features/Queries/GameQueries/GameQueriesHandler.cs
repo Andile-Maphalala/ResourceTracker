@@ -41,13 +41,13 @@ namespace ResourceTracker.Application.Features.Queries.GameQueries
         {
 
             if (string.IsNullOrEmpty(request.OrderBy))
-                request.OrderBy = nameof(Quest.Id);
+                request.OrderBy = nameof(SearchGamesResponse.Id);
 
             var result = await _repo.Games
                 .ApplyFilters(request)
                 .Select(x => new SearchGamesResponse
                 {
-                    GameId = x.Id,
+                    Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
                 }).ToPageableListAsync(request, cancellationToken);

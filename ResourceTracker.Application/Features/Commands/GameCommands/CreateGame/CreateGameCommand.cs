@@ -6,6 +6,5 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands.CreateGame
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public int GameId { get; set; }
     }
 }

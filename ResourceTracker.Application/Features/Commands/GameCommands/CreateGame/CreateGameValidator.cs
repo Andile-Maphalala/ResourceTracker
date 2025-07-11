@@ -12,8 +12,6 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands.CreateGame
                 .NotEmpty().WithMessage("Name is required");
             RuleFor(x => x.Description)
                 .MaximumLength(225).WithMessage("Description cannot exceed 225 characters");
-            RuleFor(x => x.GameId)
-               .GreaterThan(0).WithMessage("Game is required");
         }
     }
 }

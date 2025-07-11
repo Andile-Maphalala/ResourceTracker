@@ -34,14 +34,15 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
 
         public async Task<CreateGameResponse> Handle(CreateGameCommand command, CancellationToken cancellationToken)
         {
-            var userId = _userInfo.IsAdmin();
-            if (!userId)
+            var isAdmin = _userInfo.IsAdmin();
+            if (!isAdmin)
                 throw new BadRequestException("Unauthorised action");
 
             Game item = new Game
             {
                 Name = command.Name,
                 Description = command.Description,
+                CoverImage = new byte[0],   
             };
             await _repo.InsertAsync(item, cancellationToken);
             await _unitOfWork.Save(cancellationToken);
@@ -51,8 +52,8 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
 
         public async Task<Unit> Handle(UpdateGameCommand command, CancellationToken cancellationToken)
         {
-            var userId = _userInfo.IsAdmin();
-            if (!userId)
+            var isAdmin = _userInfo.IsAdmin();
+            if (!isAdmin)
                 throw new BadRequestException("Unauthorised action");
 
             var item = await _repo.Games.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
@@ -69,8 +70,8 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
 
         public async Task<Unit> Handle(DeleteGameCommand command, CancellationToken cancellationToken)
         {
-            var userId = _userInfo.IsAdmin();
-            if (!userId)
+            var isAdmin = _userInfo.IsAdmin();
+            if (!isAdmin)
                 throw new BadRequestException("Unauthorised action");
 
             var item = await _repo.Games.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
