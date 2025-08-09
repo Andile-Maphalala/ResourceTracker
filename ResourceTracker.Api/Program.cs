@@ -8,7 +8,8 @@ using ResourceTracker.Api.Middleware;
 using ResourceTracker.Application;
 using ResourceTracker.Persistence;
 using ResourceTracker.Persistence.Data;
-using System.IO;
+using ResourceTracker.ImageStorageService;
+
 
 public class Program
 {
@@ -21,6 +22,7 @@ public class Program
         // Register necessary services
         builder.Services.AddHttpContextAccessor();
         builder.Services.ConfigureApplicationServices();
+        builder.Services.ConfigureImageStorageServices();
         builder.Services.AddEntitySecurity();
         builder.Services.AddScoped<IInfoSetter, InfoSetter>();
         builder.Services.ConfigurePersistenceServices((DbContextOptionsBuilder options) =>
@@ -88,6 +90,8 @@ public class Program
 
         app.MapControllers()
             .RequireAuthorization();
+
+        app.UseStaticFiles();
 
         ApplyDbMigrations(app);
 

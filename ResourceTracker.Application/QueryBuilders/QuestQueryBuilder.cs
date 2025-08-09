@@ -5,10 +5,9 @@ using ResourceTracker.Domain.Entities;
 using System.Linq.Expressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
 namespace ResourceTracker.Application.QueryBuilders
 {
-    internal static class QuerstQueryBuilder
+    internal static class QuestQueryBuilder
     {
         internal static IQueryable<Quest> ApplyFilters( this IQueryable<Quest> query, SearchQuestsQuery request)
         {
@@ -35,6 +34,12 @@ namespace ResourceTracker.Application.QueryBuilders
 
             if (!string.IsNullOrEmpty(request.Location))
                 predicate = predicate.And(x => x.Description.StartsWith(request.Location));
+
+            if (request.GameId.HasValue)
+                predicate = predicate.And(x => x.GameId == request.GameId);
+
+            if(!string.IsNullOrEmpty(request.GameName))
+                predicate = predicate.And(x => x.Game.Name.StartsWith(request.GameName));
 
 
             return predicate;

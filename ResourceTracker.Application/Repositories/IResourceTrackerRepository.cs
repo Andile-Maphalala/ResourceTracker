@@ -15,6 +15,12 @@ namespace ResourceTracker.Application.Repositories
         IQueryable<Recipe> Recipes { get; }
         IQueryable<QuestComponents> QuestComponents { get; }
         IQueryable<RecipeComponent> RecipeComponents { get; }
+        IQueryable<BuildPlan> BuildPlans { get; }
+        IQueryable<BuildPlanComponent> BuildPlanComponents { get; }
+        IQueryable<BuildPlanResource> BuildPlanResources { get; }
+        IQueryable<Game> Games { get; }
+        IQueryable<Picture> Pictures { get; }
+
 
     }
 }

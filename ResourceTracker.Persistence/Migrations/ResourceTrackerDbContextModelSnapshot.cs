@@ -84,6 +84,9 @@ namespace ResourceTracker.Persistence.Migrations
                         .IsUnicode(false)
                         .HasColumnType("character varying(250)");
 
+                    b.Property<int>("GameId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -94,6 +97,8 @@ namespace ResourceTracker.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameId");
 
                     b.HasIndex("UserId");
 
@@ -143,9 +148,6 @@ namespace ResourceTracker.Persistence.Migrations
                     b.Property<int>("ComponentId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ComponentId1")
-                        .HasColumnType("integer");
-
                     b.Property<int>("QuantityGathered")
                         .HasColumnType("integer");
 
@@ -160,8 +162,6 @@ namespace ResourceTracker.Persistence.Migrations
                     b.HasIndex("BuildPlanId");
 
                     b.HasIndex("ComponentId");
-
-                    b.HasIndex("ComponentId1");
 
                     b.HasIndex("SourceComponentId");
 
@@ -182,18 +182,104 @@ namespace ResourceTracker.Persistence.Migrations
                         .IsUnicode(false)
                         .HasColumnType("character varying(250)");
 
+                    b.Property<int>("GameId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<int?>("PictureId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("PictureId");
+
                     b.ToTable("Component", (string)null);
+                });
+
+            modelBuilder.Entity("ResourceTracker.Domain.Entities.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int?>("PictureId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PictureId");
+
+                    b.ToTable("Game", (string)null);
+                });
+
+            modelBuilder.Entity("ResourceTracker.Domain.Entities.Picture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AltText")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("UploadedBy")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Picture", (string)null);
                 });
 
             modelBuilder.Entity("ResourceTracker.Domain.Entities.Quest", b =>
@@ -210,8 +296,8 @@ namespace ResourceTracker.Persistence.Migrations
                         .IsUnicode(false)
                         .HasColumnType("character varying(250)");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("bytea");
+                    b.Property<int>("GameId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -225,10 +311,17 @@ namespace ResourceTracker.Persistence.Migrations
                         .IsUnicode(false)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<int?>("PictureId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("PictureId");
 
                     b.HasIndex("UserId");
 
@@ -500,11 +593,19 @@ namespace ResourceTracker.Persistence.Migrations
 
             modelBuilder.Entity("ResourceTracker.Domain.Entities.BuildPlan", b =>
                 {
+                    b.HasOne("ResourceTracker.Domain.Entities.Game", "Game")
+                        .WithMany("BuildPlans")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ResourceTracker.Domain.Entities.User", "User")
                         .WithMany("BuildPlans")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Game");
 
                     b.Navigation("User");
                 });
@@ -542,12 +643,8 @@ namespace ResourceTracker.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ResourceTracker.Domain.Entities.Component", null)
-                        .WithMany("SourceBuildPlanResources")
-                        .HasForeignKey("ComponentId1");
-
                     b.HasOne("ResourceTracker.Domain.Entities.Component", "SourceComponent")
-                        .WithMany()
+                        .WithMany("SourceBuildPlanResources")
                         .HasForeignKey("SourceComponentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -559,13 +656,56 @@ namespace ResourceTracker.Persistence.Migrations
                     b.Navigation("SourceComponent");
                 });
 
+            modelBuilder.Entity("ResourceTracker.Domain.Entities.Component", b =>
+                {
+                    b.HasOne("ResourceTracker.Domain.Entities.Game", "Game")
+                        .WithMany("Components")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ResourceTracker.Domain.Entities.Picture", "Picture")
+                        .WithMany("Components")
+                        .HasForeignKey("PictureId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Picture");
+                });
+
+            modelBuilder.Entity("ResourceTracker.Domain.Entities.Game", b =>
+                {
+                    b.HasOne("ResourceTracker.Domain.Entities.Picture", "Picture")
+                        .WithMany("Games")
+                        .HasForeignKey("PictureId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Picture");
+                });
+
             modelBuilder.Entity("ResourceTracker.Domain.Entities.Quest", b =>
                 {
+                    b.HasOne("ResourceTracker.Domain.Entities.Game", "Game")
+                        .WithMany("Quests")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ResourceTracker.Domain.Entities.Picture", "Picture")
+                        .WithMany("Quests")
+                        .HasForeignKey("PictureId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("ResourceTracker.Domain.Entities.User", "User")
                         .WithMany("Quests")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Picture");
 
                     b.Navigation("User");
                 });
@@ -672,6 +812,24 @@ namespace ResourceTracker.Persistence.Migrations
                     b.Navigation("Recipes");
 
                     b.Navigation("SourceBuildPlanResources");
+                });
+
+            modelBuilder.Entity("ResourceTracker.Domain.Entities.Game", b =>
+                {
+                    b.Navigation("BuildPlans");
+
+                    b.Navigation("Components");
+
+                    b.Navigation("Quests");
+                });
+
+            modelBuilder.Entity("ResourceTracker.Domain.Entities.Picture", b =>
+                {
+                    b.Navigation("Components");
+
+                    b.Navigation("Games");
+
+                    b.Navigation("Quests");
                 });
 
             modelBuilder.Entity("ResourceTracker.Domain.Entities.Quest", b =>

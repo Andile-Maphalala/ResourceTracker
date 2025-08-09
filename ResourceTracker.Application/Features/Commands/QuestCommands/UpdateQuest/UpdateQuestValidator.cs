@@ -14,7 +14,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands.UpdateQues
         public UpdateQuestValidator()
         {
             RuleFor(x => x.Id)
-                .NotEmpty().WithMessage("Id is required");
+                .GreaterThan(0).WithMessage("Id is required");
             RuleFor(x => x.Name)
                 .MaximumLength(30).WithMessage("Name cannot exceed 30 characters")
                 .NotEmpty().WithMessage("Name is required");

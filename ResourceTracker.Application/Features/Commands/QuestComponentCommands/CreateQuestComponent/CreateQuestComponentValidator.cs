@@ -15,9 +15,9 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands.C
             RuleFor(x => x.AmountAquired)
                 .GreaterThanOrEqualTo(0).WithMessage("Amount aquired cannot be less than 1");
             RuleFor(x => x.ComponentId)
-                .NotEmpty().WithMessage("Component is required");
+                .GreaterThan(0).WithMessage("Component is required");
             RuleFor(x => x.QuestId)
-               .NotEmpty().WithMessage("Quest is required");
+               .GreaterThan(0).WithMessage("Quest is required");
         }
     }
 }

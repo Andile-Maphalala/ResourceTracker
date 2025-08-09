@@ -11,7 +11,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands.DeleteQues
     {
         public DeleteQuestValidator() 
         {
-            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.Id).GreaterThan(0);
         }
     }
 }

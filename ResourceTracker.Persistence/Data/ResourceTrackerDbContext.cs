@@ -23,6 +23,8 @@ namespace ResourceTracker.Persistence.Data
         public virtual DbSet<BuildPlan> BuildPlans { get; set; }
         public virtual DbSet<BuildPlanComponent> BuildPlanComponents { get; set; }
         public virtual DbSet<BuildPlanResource> BuildPlanResources { get; set; }
+        public virtual DbSet<Game> Games { get; set; }
+        public virtual DbSet<Picture> Pictures { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,6 +40,8 @@ namespace ResourceTracker.Persistence.Data
             modelBuilder.ApplyConfiguration(new BuildPlanConfiguration());
             modelBuilder.ApplyConfiguration(new BuildPlanComponentConfiguration());
             modelBuilder.ApplyConfiguration(new BuildPlanResourceConfiguration());
+            modelBuilder.ApplyConfiguration(new GameConfiguration());
+            modelBuilder.ApplyConfiguration(new PictureConfiguration());
 
             OnModelCreatingPartial(modelBuilder);
         }

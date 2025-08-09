@@ -37,7 +37,7 @@ namespace ResourceTracker.Persistence.Common
 
         public bool IsAdmin()
         {
-            return _httpContextAccessor.HttpContext?.User.IsInRole("Admin") ?? false;
+            return _httpContextAccessor.HttpContext?.User.IsInRole("Administrator") ?? false;
         }
 
         public bool IsLoginAsActive()
