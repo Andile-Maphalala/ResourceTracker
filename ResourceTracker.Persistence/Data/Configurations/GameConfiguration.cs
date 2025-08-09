@@ -43,6 +43,12 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .WithOne(bpc => bpc.Game)
                 .HasForeignKey(bpc => bpc.GameId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(q => q.Picture)
+                .WithMany(p => p.Games)
+                .HasForeignKey(q => q.PictureId)
+                .OnDelete(DeleteBehavior.SetNull);
+
         }
     }
 }

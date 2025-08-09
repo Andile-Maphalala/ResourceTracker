@@ -21,7 +21,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ResourceTracker.Application\ResourceTracker.Application.csproj" />
+    <ProjectReference Include="..\ResourceTracker.ImageStorageService\ResourceTracker.ImageStorageService.csproj" />
     <ProjectReference Include="..\ResourceTracker.Persistence\ResourceTracker.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

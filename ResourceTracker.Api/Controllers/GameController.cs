@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ResourceTracker.Application.Features.Commands.GameCommands.CreateGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.DeleteGame;
@@ -8,12 +9,13 @@ using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
 
 namespace ResourceTracker.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class GameController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CreateGame([FromBody] CreateGameCommand request)
+        public async Task<IActionResult> CreateGame([FromForm] CreateGameCommand request)
         {
             var response = await sender.Send(request);
 

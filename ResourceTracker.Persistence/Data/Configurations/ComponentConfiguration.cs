@@ -56,6 +56,12 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .HasForeignKey(q => q.GameId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne(q => q.Picture)
+                .WithMany(p => p.Components)
+                .HasForeignKey(q => q.PictureId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+
         }
     }
 

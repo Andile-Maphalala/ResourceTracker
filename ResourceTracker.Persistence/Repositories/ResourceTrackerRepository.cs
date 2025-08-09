@@ -27,5 +27,6 @@ namespace ResourceTracker.Persistence.Repositories
         public IQueryable<BuildPlanComponent> BuildPlanComponents => Set<BuildPlanComponent>();
         public IQueryable<BuildPlanResource> BuildPlanResources => Set<BuildPlanResource>();
         public IQueryable<Game> Games => Set<Game>();
+        public IQueryable<Picture> Pictures => Set<Picture>();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Common.CQRS;
 using ResourceTracker.Application.Common.Exceptions;
@@ -25,11 +26,13 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
         private readonly IResourceTrackerRepository _repo;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserInfo _userInfo;
-        public GameCommandsHandler(IResourceTrackerRepository repo, IUnitOfWork unitOfWork, IUserInfo userInfo)
+        private readonly IImageService _imageStorageService;
+        public GameCommandsHandler(IResourceTrackerRepository repo, IUnitOfWork unitOfWork, IUserInfo userInfo, IImageService imageStorageService)
         {
             _repo = repo;
             _unitOfWork = unitOfWork;
             _userInfo = userInfo;
+            _imageStorageService = imageStorageService;
         }
 
         public async Task<CreateGameResponse> Handle(CreateGameCommand command, CancellationToken cancellationToken)
@@ -38,17 +41,43 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
             if (!isAdmin)
                 throw new BadRequestException("Unauthorised action");
 
+            Picture picture = new Picture();
+            if (command.Image != null)
+            {
+                var stream = await ConvertIFormFileToByteArray(command.Image);
+                picture = await _imageStorageService.UploadImage(stream, nameof(Game), command.Image.FileName, command.Image.ContentType, 2, command.AltText, cancellationToken);
+                
+            }
             Game item = new Game
             {
                 Name = command.Name,
                 Description = command.Description,
-                CoverImage = new byte[0],   
             };
             await _repo.InsertAsync(item, cancellationToken);
             await _unitOfWork.Save(cancellationToken);
 
+
             return new CreateGameResponse(item.Id);
         }
+        public async Task<byte[]> ConvertIFormFileToByteArray(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                throw new ArgumentException("No file provided");
+            }
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+
+                if (memoryStream.Length == 0)
+                {
+                    throw new InvalidOperationException("Failed to read file content");
+                }
+
+                return memoryStream.ToArray();
+            }
+        }
+
 
         public async Task<Unit> Handle(UpdateGameCommand command, CancellationToken cancellationToken)
         {

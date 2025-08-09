@@ -32,9 +32,6 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .HasMaxLength(250)
                 .IsUnicode(false);
 
-            builder.Property(e => e.Image)
-                .IsRequired(false);
-
             // Relationships
             builder.HasOne(q => q.User)
                 .WithMany(u => u.Quests)
@@ -50,6 +47,12 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .WithMany(g => g.Quests)
                 .HasForeignKey(q => q.GameId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(q => q.Picture)
+                .WithMany(p => p.Quests)
+                .HasForeignKey(q => q.PictureId)
+                .OnDelete(DeleteBehavior.SetNull);
+
         }
     }
 
