@@ -1,5 +1,4 @@
-﻿using MediatR;
-using ResourceTracker.Application.Common.CQRS;
+﻿using ResourceTracker.Application.Common.CQRS;
 
 
 namespace ResourceTracker.Application.Features.Commands.QuestCommands.CreateQuest
@@ -9,6 +8,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands.CreateQues
         public string Name { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
-        public int GameId { get; set; }
+        public int GameSaveId{ get; set; }
     }
 }

@@ -16,7 +16,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> CreateQuest([FromBody] CreateQuestCommand request)
         {
             var response = await sender.Send(request);
-
             return Ok(response);
         }
 
@@ -24,7 +23,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> UpdateQuest([FromBody] UpdateQuestCommand request)
         {
             await sender.Send(request);
-
             return NoContent();
         }
 
@@ -32,7 +30,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> DeleteQuest([FromBody] DeleteQuestCommand request)
         {
             await sender.Send(request);
-
             return NoContent();
         }
 
@@ -40,7 +37,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> GetQuest([FromQuery] GetQuestQuery request)
         {
             var response = await sender.Send(request);
-
             return Ok(response);
         }
 
@@ -48,7 +44,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> SearchQuest([FromQuery] SearchQuestsQuery request)
         {
             var response = await sender.Send(request);
-
             return Ok(response);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.CreateComponent;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.DeleteComponent;
@@ -8,6 +9,7 @@ using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchCompon
 
 namespace ResourceTracker.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class ComponentController(ISender sender) : ControllerBase
@@ -16,7 +18,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> CreateCompoent([FromBody] CreateComponentCommand request)
         {
             var response = await sender.Send(request);
-
             return Ok(response);
         }
 
@@ -24,7 +25,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> UpdateComponent([FromBody] UpdateComponentCommand request)
         {
             await sender.Send(request);
-
             return NoContent();
         }
 
@@ -32,7 +32,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> DeleteComponent([FromBody] DeleteComponentCommand request)
         {
             await sender.Send(request);
-
             return NoContent();
         }
 
@@ -40,7 +39,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> GetComponent([FromQuery] GetComponentQuery request)
         {
             var response = await sender.Send(request);
-
             return Ok(response);
         }
 
@@ -48,7 +46,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> SearchComponent([FromQuery] SearchComponentsQuery request)
         {
             var response = await sender.Send(request);
-
             return Ok(response);
         }
     }

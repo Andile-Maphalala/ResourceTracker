@@ -1,11 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ResourceTracker.Persistence.Data.Configurations
 {
@@ -29,25 +25,20 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .IsUnicode(false);
 
             // Relationships
-            builder.HasOne(bp => bp.User)
-                .WithMany(u => u.BuildPlans)
-                .HasForeignKey(bp => bp.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             builder.HasMany(bp => bp.BuildPlanComponents)
                 .WithOne(bpc => bpc.BuildPlan)
                 .HasForeignKey(bpc => bpc.BuildPlanId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(q => q.Game)
+            builder.HasOne(q => q.GameSave)
                 .WithMany(g => g.BuildPlans)
-                .HasForeignKey(q => q.GameId)
+                .HasForeignKey(q => q.GameSaveId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(c => c.BuildPlanResources)
-               .WithOne(bpr => bpr.BuildPlan)
+            builder.HasMany(x => x.BuildPlanQuests)
+               .WithOne(x => x.BuildPlan)
                .HasForeignKey(bpr => bpr.BuildPlanId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

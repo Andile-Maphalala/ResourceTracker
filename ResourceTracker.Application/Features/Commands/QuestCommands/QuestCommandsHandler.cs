@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Common.CQRS;
 using ResourceTracker.Application.Common.Exceptions;
@@ -7,8 +6,8 @@ using ResourceTracker.Application.Features.Commands.QuestCommands.CreateQuest;
 using ResourceTracker.Application.Features.Commands.QuestCommands.UpdateQuest;
 using ResourceTracker.Application.Features.Commands.QuestCommands.DeleteQuest;
 using ResourceTracker.Application.Repositories;
-using Quest = ResourceTracker.Domain.Entities.Quest;
 using ResourceTracker.Application.Common.User;
+using ResourceTracker.Domain.Entities;
 
 namespace ResourceTracker.Application.Features.Commands.QuestCommands
 {
@@ -31,17 +30,12 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
 
         public async Task<CreateQuestResponse> Handle(CreateQuestCommand command, CancellationToken cancellationToken)
         {
-            var userId = _userInfo.GetUserId();
-            if(userId == 0)
-                throw new BadRequestException("Invalid User");
-
             Quest item = new Quest
             {
                 Name = command.Name,
                 Description = command.Description,
                 Location = command.Location,
-                UserId = userId,
-                GameId = command.GameId
+                GameSaveId = command.GameSaveId
             };
 
             await _repo.InsertAsync(item, cancellationToken);
@@ -53,11 +47,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
 
         public async Task<Unit> Handle(UpdateQuestCommand command, CancellationToken cancellationToken)
         {
-            var userId = _userInfo.GetUserId();
-            if (userId == 0)
-                throw new BadRequestException("Invalid User");
-
-            var item = await _repo.Quests.FirstOrDefaultAsync(x => x.Id == command.Id && x.UserId == userId, cancellationToken);
+            var item = await _repo.Quests.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
             {
                 throw new BadRequestException("Invalid Quest");
@@ -66,7 +56,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
             item.Name = command.Name;
             item.Description = command.Description;
             item.Location = command.Location;
-            item.GameId = command.GameId;
+            item.GameSaveId = command.GameSaveId;
 
             await _unitOfWork.Save(cancellationToken);
 

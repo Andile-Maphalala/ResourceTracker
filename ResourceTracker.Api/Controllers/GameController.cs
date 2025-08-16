@@ -18,7 +18,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> CreateGame([FromForm] CreateGameCommand request)
         {
             var response = await sender.Send(request);
-
             return Ok(response);
         }
 
@@ -26,7 +25,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> UpdateGame([FromBody] UpdateGameCommand request)
         {
             await sender.Send(request);
-
             return NoContent();
         }
 
@@ -34,7 +32,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> DeleteGame([FromBody] DeleteGameCommand request)
         {
             await sender.Send(request);
-
             return NoContent();
         }
 
@@ -42,7 +39,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> GetGame([FromQuery] GetGameQuery request)
         {
             var response = await sender.Send(request);
-
             return Ok(response);
         }
 
@@ -50,7 +46,6 @@ namespace ResourceTracker.Api.Controllers
         public async Task<IActionResult> SearchGame([FromQuery] SearchGamesQuery request)
         {
             var response = await sender.Send(request);
-
             return Ok(response);
         }
     }

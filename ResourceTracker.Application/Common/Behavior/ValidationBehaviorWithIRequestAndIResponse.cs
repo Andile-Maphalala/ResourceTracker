@@ -21,13 +21,21 @@ namespace ResourceTracker.Application.Common.Behavior
 
             var context = new ValidationContext<TRequest>(request);
 
+            var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+
             var errors = _validators
                 .Select(x => x.Validate(context))
                 .SelectMany(x => x.Errors)
                 .Where(x => x != null)
-                .Select(x => x.ErrorMessage)
-                .Distinct()
-                .ToArray();
+                .GroupBy(
+                    x => x.PropertyName,
+                    x => x.ErrorMessage,
+                    (propertyName, errorMessages) => new
+                    {
+                        Key = propertyName,
+                        Values = errorMessages.Distinct().ToArray()
+                    })
+                .ToDictionary(x => x.Key, x => x.Values);
 
             if (errors.Any())
                 throw new BadRequestException(errors);

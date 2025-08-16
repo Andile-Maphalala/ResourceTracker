@@ -24,9 +24,15 @@ namespace ResourceTracker.Application.Common.Behavior
                 .Select(x => x.Validate(context))
                 .SelectMany(x => x.Errors)
                 .Where(x => x != null)
-                .Select(x => x.ErrorMessage)
-                .Distinct()
-                .ToArray();
+                .GroupBy(
+                    x => x.PropertyName,
+                    x => x.ErrorMessage,
+                    (propertyName, errorMessages) => new
+                    {
+                        Key = propertyName,
+                        Values = errorMessages.Distinct().ToArray()
+                    })
+                .ToDictionary(x => x.Key, x => x.Values);
 
             if (errors.Any())
                 throw new BadRequestException(errors);

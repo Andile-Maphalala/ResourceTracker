@@ -1,9 +1,4 @@
 ﻿using ResourceTracker.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ResourceTracker.Application.Repositories
 {
@@ -17,10 +12,9 @@ namespace ResourceTracker.Application.Repositories
         IQueryable<RecipeComponent> RecipeComponents { get; }
         IQueryable<BuildPlan> BuildPlans { get; }
         IQueryable<BuildPlanComponent> BuildPlanComponents { get; }
-        IQueryable<BuildPlanResource> BuildPlanResources { get; }
         IQueryable<Game> Games { get; }
         IQueryable<Picture> Pictures { get; }
-
-
+        IQueryable<GameSave> GameSaves { get; }
+        IQueryable<BuildPlanQuest> BuildPlanQuests { get; }
     }
 }

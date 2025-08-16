@@ -6,12 +6,12 @@
         {
         }
 
-        public BadRequestException(string[] errors) : base("Multiple errors occurred. See error details.")
+        public BadRequestException(IDictionary<string, string[]> errors): base("Multiple errors occurred. See error details.")
         {
             Errors = errors;
         }
 
-        public string[] Errors { get; set; }
+        public IDictionary<string, string[]> Errors { get; set; }
     }
 }
 

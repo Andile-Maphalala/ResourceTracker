@@ -6,9 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ResourceTracker.Api.Middleware;
 using ResourceTracker.Application;
+using ResourceTracker.Application.Common.Behavior;
+using ResourceTracker.ImageStorageService;
 using ResourceTracker.Persistence;
 using ResourceTracker.Persistence.Data;
-using ResourceTracker.ImageStorageService;
 
 
 public class Program
@@ -87,6 +88,7 @@ public class Program
         app.UseAuthorization();
 
         app.UseMiddleware<UserIdentifierMiddleware>();
+        app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 
         app.MapControllers()
             .RequireAuthorization();

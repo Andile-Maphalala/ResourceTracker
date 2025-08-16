@@ -29,12 +29,7 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .IsUnicode(false);
 
             // Relationships
-            builder.HasMany(bp => bp.Quests)
-                .WithOne(bpc => bpc.Game)
-                .HasForeignKey(bpc => bpc.GameId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(bp => bp.BuildPlans)
+            builder.HasMany(bp => bp.GameSaves)
                 .WithOne(bpc => bpc.Game)
                 .HasForeignKey(bpc => bpc.GameId)
                 .OnDelete(DeleteBehavior.Restrict);

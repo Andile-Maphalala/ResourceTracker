@@ -36,10 +36,10 @@ namespace ResourceTracker.Application.QueryBuilders
                 predicate = predicate.And(x => x.Description.StartsWith(request.Location));
 
             if (request.GameId.HasValue)
-                predicate = predicate.And(x => x.GameId == request.GameId);
+                predicate = predicate.And(x => x.GameSave.GameId == request.GameId);
 
             if(!string.IsNullOrEmpty(request.GameName))
-                predicate = predicate.And(x => x.Game.Name.StartsWith(request.GameName));
+                predicate = predicate.And(x => x.GameSave.Game.Name.StartsWith(request.GameName));
 
 
             return predicate;
