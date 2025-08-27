@@ -26,8 +26,8 @@ namespace ResourceTracker.Persistence.Data.Configurations
 
             //Relationships
             builder.HasMany(x => x.GameSaves)
-               .WithOne(x => x.User)
-               .HasForeignKey(x => x.UserId)
+               .WithOne(e => e.User)
+               .HasForeignKey(e => e.UserId)
                .OnDelete(DeleteBehavior.Cascade);
         }
     }

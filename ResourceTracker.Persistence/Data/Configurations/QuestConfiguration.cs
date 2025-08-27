@@ -28,20 +28,20 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .IsUnicode(false);
 
             // Relationships
-            builder.HasMany(q => q.QuestComponents)
-                .WithOne(qc => qc.Quest)
-                .HasForeignKey(qc => qc.QuestId)
+            builder.HasMany(x => x.QuestComponents)
+                .WithOne(e => e.Quest)
+                .HasForeignKey(e => e.QuestId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(q => q.GameSave)
-                .WithMany(g => g.Quests)
-                .HasForeignKey(q => q.GameSaveId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.PlayerFacilities)
+                .WithOne(e => e.Quest)
+                .HasForeignKey(e => e.QuestId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(q => q.Picture)
-                .WithMany(p => p.Quests)
-                .HasForeignKey(q => q.PictureId)
-                .OnDelete(DeleteBehavior.SetNull);
+            builder.HasMany(x => x.BuildPlanQuests)
+                .WithOne(e => e.Quest)
+                .HasForeignKey(e => e.QuestId)
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
     }

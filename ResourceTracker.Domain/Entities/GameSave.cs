@@ -11,7 +11,8 @@ namespace ResourceTracker.Domain.Entities
         public int GameId { get; set; }
         public virtual User User { get; set; }
         public virtual Game Game { get; set; }
-        public virtual ICollection<Quest> Quests { get; set; } = new List<Quest>();
-        public virtual ICollection<BuildPlan> BuildPlans { get; set; } = new List<BuildPlan>();
+        public virtual ICollection<Quest> Quests { get; set; }
+        public virtual ICollection<BuildPlan> BuildPlans { get; set; }
+        public virtual ICollection<PlayerFacility> PlayerFacilities { get; set; }
     }
 }

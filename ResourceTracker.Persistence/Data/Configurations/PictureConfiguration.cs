@@ -37,6 +37,22 @@ namespace ResourceTracker.Persistence.Data.Configurations
 
             builder.Property(e => e.CreatedDate)
                 .IsRequired();
+
+            //Relationships
+            builder.HasMany(x => x.Games)
+              .WithOne(e => e.Picture)
+              .HasForeignKey(e => e.PictureId)
+              .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasMany(x => x.Quests)
+              .WithOne(e => e.Picture)
+              .HasForeignKey(e => e.PictureId)
+              .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasMany(x => x.Components)
+              .WithOne(e => e.Picture)
+              .HasForeignKey(e => e.PictureId)
+              .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

@@ -9,6 +9,9 @@ namespace ResourceTracker.Domain.Enums
         Resource = 1,
 
         [Description("Composite Component")]
-        Composite = 2
+        Composite = 2,
+
+        [Description("Facility Component")]
+        Facility = 3
     }
 }

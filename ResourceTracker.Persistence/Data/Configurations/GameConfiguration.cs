@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ResourceTracker.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ResourceTracker.Persistence.Data.Configurations
 {
@@ -29,20 +24,15 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .IsUnicode(false);
 
             // Relationships
-            builder.HasMany(bp => bp.GameSaves)
-                .WithOne(bpc => bpc.Game)
-                .HasForeignKey(bpc => bpc.GameId)
+            builder.HasMany(x => x.GameSaves)
+                .WithOne(e => e.Game)
+                .HasForeignKey(e => e.GameId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(bp => bp.Components)
-                .WithOne(bpc => bpc.Game)
-                .HasForeignKey(bpc => bpc.GameId)
+            builder.HasMany(x => x.Components)
+                .WithOne(e => e.Game)
+                .HasForeignKey(e => e.GameId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(q => q.Picture)
-                .WithMany(p => p.Games)
-                .HasForeignKey(q => q.PictureId)
-                .OnDelete(DeleteBehavior.SetNull);
 
         }
     }

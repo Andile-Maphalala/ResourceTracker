@@ -25,19 +25,19 @@ namespace ResourceTracker.Persistence.Data.Configurations
 
             // Relationships
             builder.HasMany(x => x.Quests)
-                .WithOne(x => x.GameSave)
-                .HasForeignKey(x => x.GameSaveId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithOne(e => e.GameSave)
+                .HasForeignKey(e => e.GameSaveId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(x => x.BuildPlans)
-                .WithOne(x => x.GameSave)
-                .HasForeignKey(x => x.GameSaveId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithOne(e => e.GameSave)
+                .HasForeignKey(e => e.GameSaveId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(x => x.User)
-                .WithMany(x => x.GameSaves)
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.PlayerFacilities)
+                .WithOne(e => e.GameSave)
+                .HasForeignKey(e => e.GameSaveId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

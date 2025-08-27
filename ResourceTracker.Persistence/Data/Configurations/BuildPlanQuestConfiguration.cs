@@ -14,17 +14,6 @@ namespace ResourceTracker.Persistence.Data.Configurations
 
             // Key
             builder.HasKey(x => new { x.BuildPlanId, x.QuestId });
-
-            //relationships
-            builder.HasOne(x => x.BuildPlan)
-                .WithMany(x => x.BuildPlanQuests)
-                .HasForeignKey(x => x.BuildPlanId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.HasOne(x => x.Quest)
-               .WithMany(x => x.BuildPlanQuests)
-               .HasForeignKey(x => x.QuestId)
-               .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

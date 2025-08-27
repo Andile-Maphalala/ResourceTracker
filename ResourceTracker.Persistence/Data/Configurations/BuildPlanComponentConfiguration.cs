@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ResourceTracker.Persistence.Data.Configurations
 {
@@ -24,17 +19,6 @@ namespace ResourceTracker.Persistence.Data.Configurations
 
             builder.Property(e => e.QuantityNeeded)
                 .IsRequired();
-
-            // Relationships
-            builder.HasOne(bpc => bpc.BuildPlan)
-                .WithMany(bp => bp.BuildPlanComponents)
-                .HasForeignKey(bpc => bpc.BuildPlanId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne(bpc => bpc.Component)
-                .WithMany(c => c.BuildPlanComponents)
-                .HasForeignKey(bpc => bpc.ComponentId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

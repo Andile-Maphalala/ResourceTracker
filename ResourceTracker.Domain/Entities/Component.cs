@@ -15,5 +15,6 @@ namespace ResourceTracker.Domain.Entities
         public virtual ICollection<RecipeComponent> RecipeComponents { get; set; }
         public virtual ICollection<QuestComponents> QuestComponents { get; set; }
         public virtual ICollection<BuildPlanComponent> BuildPlanComponents { get; set; }
+        public virtual ICollection<PlayerFacility> PlayerFacilities { get; set; }
     }
 }

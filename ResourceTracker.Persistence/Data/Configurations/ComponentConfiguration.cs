@@ -24,32 +24,30 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .IsUnicode(false);
 
             // Relationships
-            builder.HasMany(c => c.Recipes)
-                .WithOne(r => r.Component)
-                .HasForeignKey(r => r.ComponentId);
+            builder.HasMany(x => x.Recipes)
+                .WithOne(e => e.Component)
+                .HasForeignKey(e => e.ComponentId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(c => c.RecipeComponents)
-                .WithOne(r => r.Component)
-                .HasForeignKey(r => r.ComponentId);
-
-            builder.HasMany(c => c.QuestComponents)
-                .WithOne(qc => qc.Component)
-                .HasForeignKey(qc => qc.ComponentId);
-
-            builder.HasMany(c => c.BuildPlanComponents)
-               .WithOne(bpc => bpc.Component)
-               .HasForeignKey(bpc => bpc.ComponentId)
-               .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne(q => q.Game)
-                .WithMany(g => g.Components)
-                .HasForeignKey(q => q.GameId)
+            builder.HasMany(x => x.RecipeComponents)
+                .WithOne(e => e.Component)
+                .HasForeignKey(e => e.ComponentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(q => q.Picture)
-                .WithMany(p => p.Components)
-                .HasForeignKey(q => q.PictureId)
-                .OnDelete(DeleteBehavior.SetNull);
+            builder.HasMany(x => x.QuestComponents)
+                .WithOne(e => e.Component)
+                .HasForeignKey(e => e.ComponentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.BuildPlanComponents)
+               .WithOne(e => e.Component)
+               .HasForeignKey(e => e.ComponentId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.PlayerFacilities)
+                .WithOne(e => e.Component)
+                .HasForeignKey(e => e.ComponentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
         }

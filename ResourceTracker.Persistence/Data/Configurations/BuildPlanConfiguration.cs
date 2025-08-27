@@ -25,19 +25,14 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .IsUnicode(false);
 
             // Relationships
-            builder.HasMany(bp => bp.BuildPlanComponents)
-                .WithOne(bpc => bpc.BuildPlan)
-                .HasForeignKey(bpc => bpc.BuildPlanId)
+            builder.HasMany(x => x.BuildPlanComponents)
+                .WithOne(e => e.BuildPlan)
+                .HasForeignKey(e => e.BuildPlanId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(q => q.GameSave)
-                .WithMany(g => g.BuildPlans)
-                .HasForeignKey(q => q.GameSaveId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder.HasMany(x => x.BuildPlanQuests)
-               .WithOne(x => x.BuildPlan)
-               .HasForeignKey(bpr => bpr.BuildPlanId)
+               .WithOne(e => e.BuildPlan)
+               .HasForeignKey(e => e.BuildPlanId)
                .OnDelete(DeleteBehavior.Cascade);
         }
     }

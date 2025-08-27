@@ -13,6 +13,7 @@ namespace ResourceTracker.Domain.Entities
         public virtual GameSave GameSave { get; set; }
         public virtual ICollection<QuestComponents> QuestComponents { get; set; }
         public virtual ICollection<BuildPlanQuest> BuildPlanQuests { get; set; }
+        public virtual ICollection<PlayerFacility> PlayerFacilities { get; set; }
 
     }
 }

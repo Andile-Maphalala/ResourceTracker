@@ -23,15 +23,10 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .IsRequired();
 
             // Relationships
-            builder.HasOne(r => r.Component)
-                .WithMany(c => c.Recipes)
-                .HasForeignKey(r => r.ComponentId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(r => r.RecipeComponents)
-                .WithOne(c => c.Recipe)
-                .HasForeignKey(r => r.RecipeId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.RecipeComponents)
+                .WithOne(e => e.Recipe)
+                .HasForeignKey(e => e.RecipeId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 
