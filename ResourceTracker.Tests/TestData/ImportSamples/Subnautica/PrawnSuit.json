@@ -1,0 +1,443 @@
+{
+  "game": "Subnautica",
+  "components": [
+    {
+      "name": "Prawn Suit",
+      "description": "Epic mech suit designed for navigating challenging environments on foot.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/42/Prawn_Suit.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Mobile Vehicle Bay",
+        "requirements": [
+          {
+            "component": "Plasteel Ingot",
+            "quantity": 2
+          },
+          {
+            "component": "Aerogel",
+            "quantity": 2
+          },
+          {
+            "component": "Enameled Glass",
+            "quantity": 1
+          },
+          {
+            "component": "Diamond",
+            "quantity": 2
+          },
+          {
+            "component": "Lead",
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mobile Vehicle Bay",
+      "description": "Fabricates vehicles from raw materials.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/30/Mobile_Vehicle_Bay.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Titanium Ingot",
+            "quantity": 1
+          },
+          {
+            "component": "Lubricant",
+            "quantity": 1
+          },
+          {
+            "component": "Power Cell",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Fabricator",
+      "description": "Basic survival fabricator. Atomically rearranges raw resources into useful objects.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/66/Fabricator.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Habitat Builder",
+        "requirements": [
+          {
+            "component": "Titanium",
+            "quantity": 1
+          },
+          {
+            "component": "Gold",
+            "quantity": 1
+          },
+          {
+            "component": "Table Coral Sample",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Habitat Builder",
+      "description": "Fabricates habitat compartments and appliances from raw materials.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/5c/Habitat_Builder.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Wiring Kit",
+            "quantity": 1
+          },
+          {
+            "component": "Computer Chip",
+            "quantity": 1
+          },
+          {
+            "component": "Battery",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wiring Kit",
+      "description": "Insulated silver wire. Essential electronic component.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7b/Wiring_Kit.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Silver Ore",
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "Silver Ore",
+      "description": "Ag. Conductive element and microbicide.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/97/Silver_Ore.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Computer Chip",
+      "description": "Multi-purpose CPU.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6f/Computer_Chip.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Table Coral Sample",
+            "quantity": 2
+          },
+          {
+            "component": "Gold",
+            "quantity": 1
+          },
+          {
+            "component": "Copper Wire",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Table Coral Sample",
+      "description": "Contains trace precious metals used in computer fabrication.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0a/Table_Coral_Sample.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Gold",
+      "description": "Au. Valuable conductive properties. Highly valuable social property.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/10/Gold.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Copper Wire",
+      "description": "Copper atoms fabricated into basic electrical wiring.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/43/Copper_Wire.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Copper Ore",
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "Copper Ore",
+      "description": "Cu. Essential wiring component.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/78/Copper_Ore.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Battery",
+      "description": "Mobile power source.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6d/Battery.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Acid Mushroom",
+            "quantity": 2
+          },
+          {
+            "component": "Copper Ore",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Acid Mushroom",
+      "description": "Purple fungus. Acidic flesh.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/ff/Acid_Mushroom.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Titanium",
+      "description": "Ti. Basic building material.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cc/Titanium.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 4,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Metal Salvage",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Metal Salvage",
+      "description": "Composed primarily of titanium.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a4/Metal_Salvage.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Titanium Ingot",
+      "description": "Ti. Condensed titanium bar.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/61/Titanium_Ingot.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Titanium",
+            "quantity": 10
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lubricant",
+      "description": "Naturally-derived, oil-based lubricant. Industrial applications.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/77/Lubricant.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Creepvine Seed Cluster",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Creepvine Seed Cluster",
+      "description": "Indigenous seeds with high silicone and oil content.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0c/Creepvine_Seed_Cluster.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Power Cell",
+      "description": "High-capacity mobile power source.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9a/Power_Cell.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Battery",
+            "quantity": 2
+          },
+          {
+            "component": "Silicone Rubber",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Silicone Rubber",
+      "description": "Synthetic, silicone-based rubber.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d0/Silicone_Rubber.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 2,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Creepvine Seed Cluster",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Plasteel Ingot",
+      "description": "Ultra-strong synthetic construction material.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fc/Plasteel_Ingot.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Titanium Ingot",
+            "quantity": 1
+          },
+          {
+            "component": "Lithium",
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lithium",
+      "description": "Li. Applications in high-strength alloys.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cf/Lithium.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Aerogel",
+      "description": "Light, porous, dried gel. High heat insulation.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/66/Aerogel.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Gel Sack",
+            "quantity": 1
+          },
+          {
+            "component": "Ruby",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Gel Sack",
+      "description": "Gel sack.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3f/Gel_Sack.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Ruby",
+      "description": null,
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a9/Ruby.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Enameled Glass",
+      "description": "Glass, hardened using a natural substrate.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/14/Enameled_Glass.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Stalker Tooth",
+            "quantity": 1
+          },
+          {
+            "component": "Glass",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Stalker Tooth",
+      "description": "A sharp, hardened calcium formation.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/94/Stalker_Tooth.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Glass",
+      "description": null,
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/15/Glass.png",
+      "rawMaterial": false,
+      "recipe": {
+        "output_quantity": 1,
+        "station": "Fabricator",
+        "requirements": [
+          {
+            "component": "Quartz",
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "Quartz",
+      "description": null,
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cf/Quartz.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Diamond",
+      "description": "C. Carbon allotrope with superlative physical properties.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ea/Diamond.png",
+      "rawMaterial": true,
+      "recipe": null
+    },
+    {
+      "name": "Lead",
+      "description": "Pb. Insulates against radiation.",
+      "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e8/Lead.png",
+      "rawMaterial": true,
+      "recipe": null
+    }
+  ]
+}

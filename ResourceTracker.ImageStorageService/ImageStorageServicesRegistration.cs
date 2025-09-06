@@ -8,7 +8,7 @@ namespace ResourceTracker.ImageStorageService
     {
         public static IServiceCollection ConfigureImageStorageServices(this IServiceCollection services)
         {
-            services.AddScoped<IImageService, ImageService>();
+            services.AddHttpClient<IImageService, ImageService>();
 
             return services;
         }

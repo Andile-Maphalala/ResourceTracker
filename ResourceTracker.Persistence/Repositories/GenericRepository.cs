@@ -33,7 +33,16 @@ namespace ResourceTracker.Persistence.Repositories
 
         public async Task InsertAsync<T>(T entity, CancellationToken cancellationToken) where T : class
         {
+
             await _dbContext.AddAsync(entity);
+        }
+
+        public async Task BulkInsertAsync<T>(List<T> entities, CancellationToken cancellationToken) where T : class
+        {
+            if (entities.Any())
+            {
+                await _dbContext.BulkInsertAsync(entities);
+            }
         }
 
         public async Task UpdateAsync<T>(T entity, CancellationToken cancellationToken) where T : class
@@ -46,6 +55,17 @@ namespace ResourceTracker.Persistence.Repositories
             if (entities.Any())
             {
                 await _dbContext.BulkUpdateAsync(entities);
+            }
+        }
+
+        public async Task BulkInsertAndUpdateIdsAsync<T>(List<T> entities, CancellationToken cancellationToken) where T : class
+        {
+            if (entities.Any())
+            {
+                await _dbContext.BulkInsertAsync(entities, options =>
+                {
+                    options.SetOutputIdentity = true;
+                });
             }
         }
     }

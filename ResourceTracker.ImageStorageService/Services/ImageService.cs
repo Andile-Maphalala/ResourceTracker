@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ResourceTracker.Application.Common.Exceptions;
+using ResourceTracker.Application.Features.Commands.ImportCommands.Dtos;
 using ResourceTracker.Application.Repositories;
 using ResourceTracker.Domain.Entities;
+using System.Security.Policy;
 
 
 namespace ResourceTracker.ImageStorageService.Services
@@ -14,13 +16,15 @@ namespace ResourceTracker.ImageStorageService.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHostingEnvironment _env;
         private readonly string _baseStoragePath;
+        private readonly HttpClient _httpClient;
 
-        public ImageService(IResourceTrackerRepository repo, IUnitOfWork unitOfWork , IHostingEnvironment env)
+        public ImageService(IResourceTrackerRepository repo, IUnitOfWork unitOfWork, IHostingEnvironment env, HttpClient httpClient)
         {
             _repo = repo;
             _unitOfWork = unitOfWork;
             _env = env;
             _baseStoragePath = Path.Combine(_env.WebRootPath, "images");
+            _httpClient = httpClient;
         }
         public async Task<Picture> UploadImage(byte[] imageStream, string folder, string fileName, string contentType, int? uploadedBy, string AltText, CancellationToken cancellationToken)
         {
@@ -79,5 +83,16 @@ namespace ResourceTracker.ImageStorageService.Services
             return picture;
         }
 
+        public async Task<Picture> UploadImage(string url, string folder, int? uploadedBy, string AltText, CancellationToken cancellationToken)
+        {
+            using var response = await _httpClient.GetAsync(url, cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+            var fileName = Path.GetFileName(new Uri(url).LocalPath);
+            var contentType = response.Content.Headers.ContentType?.MediaType ?? "application/octet-stream";
+
+            return await UploadImage(bytes, folder, fileName, contentType, uploadedBy, AltText, cancellationToken);
+        }
     }
 }

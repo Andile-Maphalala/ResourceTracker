@@ -9,11 +9,6 @@ using ResourceTracker.Application.Features.Commands.GameCommands.DeleteGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.UpdateGame;
 using ResourceTracker.Application.Repositories;
 using ResourceTracker.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ResourceTracker.Application.Features.Commands.GameCommands
 {
@@ -52,6 +47,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
             {
                 Name = command.Name,
                 Description = command.Description,
+                PictureId = picture.Id != 0 ? picture.Id : null
             };
             await _repo.InsertAsync(item, cancellationToken);
             await _unitOfWork.Save(cancellationToken);

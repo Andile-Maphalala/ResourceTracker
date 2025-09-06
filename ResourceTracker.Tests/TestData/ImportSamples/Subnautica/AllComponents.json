@@ -1,0 +1,4356 @@
+{
+    "game": "Subnautica",
+    "components": [
+        {
+            "name": "Acid Mushroom",
+            "description": "Purple fungus. Acidic flesh.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/ff/Acid_Mushroom.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Alien Feces",
+            "description": "Nutrient-rich manure, suitable for bio-energy production.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1a/Sea_Treader_Feces.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Blood Oil",
+            "description": "Red, oil-filled pustule. Contains bloodvine seeds. May be processed into benzene.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7b/Blood_Oil.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Coral Tube Sample",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3f/Coral_Tube_Sample.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Cave Sulfur",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/5d/Cave_Sulfur.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Copper Ore",
+            "description": "Cu. Essential wiring component.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/78/Copper_Ore.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Creepvine Sample",
+            "description": "Silicone-based plant material.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/65/Creepvine_Sample.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Creepvine Seed Cluster",
+            "description": "Indigenous seeds with high silicone and oil content.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0c/Creepvine_Seed_Cluster.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Crystalline Sulfur",
+            "description": "S. Oxidant and reducing agent.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ea/Crystalline_Sulfur.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Deep Shroom",
+            "description": "Highly acidic flesh.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e5/Deep_Shroom.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Diamond",
+            "description": "C. Carbon allotrope with superlative physical properties.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ea/Diamond.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Fungal Sample",
+            "description": "Indigenous flora. Contain fungal enzymes.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/95/Fungal_Sample.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Gas Pod",
+            "description": "An acidic compound produced by the gasopod. May be re-purposed.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/ac/Gas_Pod.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Gel Sack",
+            "description": "Gel sack.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3f/Gel_Sack.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Gold",
+            "description": "Au. Valuable conductive properties. Highly valuable social property.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/10/Gold.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Ion Cube",
+            "description": "High capacity energy source.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/5f/Ion_Crystal.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Kyanite",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e4/Kyanite.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Lead",
+            "description": "Pb. Insulates against radiation.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e8/Lead.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Lithium",
+            "description": "Li. Applications in high-strength alloys.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cf/Lithium.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Magnetite",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/c8/Magnetite.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Metal Salvage",
+            "description": "Composed primarily of titanium.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a4/Metal_Salvage.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Nickel Ore",
+            "description": "Ni. Versatile alloy ingredient required for advanced fabrication.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/f3/Nickel_Ore.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Pink Cap",
+            "description": "Alien flora sample.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/f5/Pink_Cap.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Quartz",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cf/Quartz.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Ruby",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a9/Ruby.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Salt Deposit",
+            "description": "NaCl. Culinary and sanitation applications.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/4c/Salt_Deposit.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Silver Ore",
+            "description": "Ag. Conductive element and microbicide.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/97/Silver_Ore.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Marblemelon",
+            "description": "An alien fruit - edible.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b1/Small_Marblemelon.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Speckled Rattler",
+            "description": "Alien flora sample.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/82/Speckled_Rattler.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+          "name": "Stalker Tooth",
+          "description": "A sharp, hardened calcium formation.",
+          "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/94/Stalker_Tooth.png",
+          "rawMaterial": true,
+          "recipe": null
+        },
+        {
+            "name": "Table Coral Sample",
+            "description": "Contains trace precious metals used in computer fabrication.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0a/Table_Coral_Sample.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Titanium",
+            "description": "Ti. Basic building material.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cc/Titanium.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 4,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Metal Salvage",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Uraninite Crystal",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/51/Uraninite_Crystal.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Bleach",
+            "description": "NaClO. Sodium hypochlorite bleach. Sanitizing applications.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ea/Bleach.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Salt Deposit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Coral Tube Sample",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Enameled Glass",
+            "description": "Glass, hardened using a natural substrate.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/14/Enameled_Glass.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Stalker Tooth",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Glass",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Fiber Mesh",
+            "description": "Strong natural fiber. Comfy.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fa/Fiber_Mesh.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Creepvine Sample",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Glass",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/15/Glass.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Quartz",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Lubricant",
+            "description": "Naturally-derived, oil-based lubricant. Industrial applications.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/77/Lubricant.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Creepvine Seed Cluster",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Plasteel Ingot",
+            "description": "Ultra-strong synthetic construction material.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fc/Plasteel_Ingot.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Titanium Ingot",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Silicone Rubber",
+            "description": "Synthetic, silicone-based rubber.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d0/Silicone_Rubber.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 2,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Creepvine Seed Cluster",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Titanium Ingot",
+            "description": "Ti. Condensed titanium bar.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/61/Titanium_Ingot.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 10
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Advanced Wiring Kit",
+            "description": "CPU used in advanced construction.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/92/Advanced_Wiring_Kit.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Gold",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Battery",
+            "description": "Mobile power source.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6d/Battery.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Acid Mushroom",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Copper Ore",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Computer Chip",
+            "description": "Multi-purpose CPU.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6f/Computer_Chip.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Table Coral Sample",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Gold",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Copper Wire",
+            "description": "Copper atoms fabricated into basic electrical wiring.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/43/Copper_Wire.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Copper Ore",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Ion Battery",
+            "description": "Ion-infused battery.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9d/Ion_Battery.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Ion Cube",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Gold",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Silver Ore",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Ion Power Cell",
+            "description": "Ion-infused power cell.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/45/Ion_Power_Cell.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Ion Battery",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Silicone Rubber",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Power Cell",
+            "description": "High-capacity mobile power source.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9a/Power_Cell.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Battery",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Silicone Rubber",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Reactor Rod",
+            "description": "Used to power nuclear reactors.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/04/Reactor_Rod.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Uraninite Crystal",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Lead",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Glass",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Wiring Kit",
+            "description": "Insulated silver wire. Essential electronic component.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7b/Wiring_Kit.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Silver Ore",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Compass",
+            "description": "Displays compass heading on the HUD.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/92/Compass.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Fins",
+            "description": "Translate vertical limb movements underwater into forward thrust. Enhance swim speed by approximately 15%.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/ce/Fins.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Silicone Rubber",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Fire Extinguisher",
+            "description": "Extinguishes fires.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0a/Fire_Extinguisher.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "First Aid Kit",
+            "description": "Treated bandages. Apply to staunch blood-flow and sanitize wounds.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/50/First_Aid_Kit.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Fiber Mesh",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Pipe",
+            "description": "A chain of pipes can be used to transport breathable air from a functional pump.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9d/Pipe_Surface_Floater.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 5,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "High Capacity O₂ Tank",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/61/High_Capacity_O%E2%82%82_Tank.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Standard O₂ Tank",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Glass",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 4
+                    },
+                    {
+                        "component": "Silver Ore",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Lightweight High Capacity Tank",
+            "description": "Lighter build allows for enhanced manoeuvrability.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fb/Lightweight_High_Capacity_Tank.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Modification Station",
+                "requirements": [
+                    {
+                        "component": "High Capacity O₂ Tank",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Plasteel Ingot",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Pipe",
+            "description": "A chain of pipes can be used to transport breathable air from a functional pump.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b9/Pipe.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 5,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Radiation Suit",
+            "description": "Lead-lined suit providing insulation from radiation.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3f/Radiation_Suit.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Fiber Mesh",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Lead",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Rebreather",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/bb/Rebreather.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Fiber Mesh",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Reinforced Dive Suit",
+            "description": "Heavy synthetic fiber dive suit providing 50% physical protection and enhanced survival in extreme temperatures.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/29/Reinforced_Dive_Suit.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Synthetic Fibers",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Diamond",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Standard O2 Tank",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cb/Standard_O%E2%82%82_Tank.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Water Filtration Suit",
+            "description": "Reclaims moisture from the body and provides clean, drinkable water.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/42/Water_Filtration_Suit.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Synthetic Fibers",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Aerogel",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Swim Charge Fins",
+            "description": "Wirelessly charges your held tool while you swim.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b7/Swim_Charge_Fins.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Modification Station",
+                "requirements": [
+                    {
+                        "component": "Fins",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Polyaniline",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Ultra Glide Fins",
+            "description": "Streamline construction enhances swim speed considerably by comparison to regular fins.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/64/Ultra_Glide_Fins.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Modification Station",
+                "requirements": [
+                    {
+                        "component": "Fins",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Silicone Rubber",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Ultra High Capacity Tank",
+            "description": "Additional air capacity.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ee/Ultra_High_Capacity_Tank.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Modification Station",
+                "requirements": [
+                    {
+                        "component": "High Capacity O₂ Tank",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 4
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Air Bladder",
+            "description": "Emergency flotation device. Chemical reaction produces lighter-than air gas for fast personal buoyancy.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/86/Air_Bladder.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Silicone Rubber",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Bladderfish",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Flare",
+            "description": "Disposable light source, useful for distracting certain predators.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/54/Flare.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 5,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Cave Sulfur",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Flashlight",
+            "description": "Battery-powered, all-environment light source.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/4d/Flashlight.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Glass",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Habitat Builder",
+            "description": "Fabricates habitat compartments and appliances from raw materials.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/5c/Habitat_Builder.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Laser Cutter",
+            "description": "Cutting device suitable for penetrating standard titanium doors.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/33/Laser_Cutter.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Diamond",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Cave Sulfur",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Light Stick",
+            "description": "Deployable battery-powered lighting.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/ad/LED_Light.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Glass",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Pathfinder Tool",
+            "description": "Deploys holographic pathfinder discs. Used to map a way back out of caves or hard to navigate spaces. Max 20 discs per path.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/13/Pathfinder_Tool.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Creepvine Seed Cluster",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Propulsion Cannon",
+            "description": "Warps gravity to pull and push objects.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/63/Propulsion_Cannon.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Repair Tool",
+            "description": "Multi-purpose repair tool, functional in all environments.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ea/Repair_Tool.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Silicone Rubber",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Cave Sulfur",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Repulsion Cannon",
+            "description": "Applies percussive force to entities in range.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7a/Repulsion_Cannon.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Modification Station",
+                "requirements": [
+                    {
+                        "component": "Propulsion Cannon",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Magnetite",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Scanner",
+            "description": "Spectroscope scanner used to acquire technology blueprints and data on living organisms.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/78/Scanner.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Stasis Rifle",
+            "description": "Freezes physical objects.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/c1/Stasis_Rifle.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Magnetite",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Survival Knife",
+            "description": "Standard survival tool. Multi-functional.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6e/Survival_Knife.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Silicone Rubber",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Thermoblade",
+            "description": "Cooks and sterilizes small organisms for immediate consumption.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/4b/Thermoblade.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Modification Station",
+                "requirements": [
+                    {
+                        "component": "Survival Knife",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Beacon",
+            "description": "Navigation aid. Maintains and broadcasts its position. Configurable name.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b3/Beacon.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Copper Ore",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Creature Decoy",
+            "description": "Attracts creatures to its location. Can be deployed by hand or by a submarine. Cannot be reclaimed once deployed.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/08/Creature_Decoy.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 3,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Grav Trap",
+            "description": "Uses artificial gravity to attract light objects and small creatures.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/5d/Grav_Trap.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Copper Ore",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Mobile Vehicle Bay",
+            "description": "Fabricates vehicles from raw materials.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/30/Mobile_Vehicle_Bay.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Titanium Ingot",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lubricant",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Power Cell",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Seaglide",
+            "description": "Converts torque into thrust underwater via propeller.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6a/Seaglide.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lubricant",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Waterproof Locker",
+            "description": "4×4 storage that maintains position in the water.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/92/Waterproof_Locker.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 4
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Camera Drone",
+            "description": "A controllable camera.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e3/Camera_Drone.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Scanner Room",
+                "requirements": [
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Battery",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Glass",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Scanner Room HUD Chip",
+            "description": "Streams data from scanner rooms to the HUD",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/99/Scanner_Room_HUD_Chip.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Scanner Room",
+                "requirements": [
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Magnetite",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Scanner Room Range Upgrade",
+            "description": "Enhances scanner room range.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d3/Scanner_Room_Range_Upgrade.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Scanner Room",
+                "requirements": [
+                    {
+                        "component": "Copper Ore",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Magnetite",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Scanner Room Speed Upgrade",
+            "description": "Enhances speed of scanner room functionality.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/ae/Scanner_Room_Speed_Upgrade.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Scanner Room",
+                "requirements": [
+                    {
+                        "component": "Silver Ore",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Gold",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Aerogel",
+            "description": "Light, porous, dried gel. High heat insulation.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/66/Aerogel.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Gel Sack",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Ruby",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Benzene",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9b/Benzene.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Blood Oil",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Hydrochloric Acid",
+            "description": "HCl. Powerful acidic compound. Employ due care.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9a/Hydrochloric_Acid.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Deep Shroom",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Salt Deposit",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Polyaniline",
+            "description": "High conductance polymer.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/82/Polyaniline.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Gold",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Hydrochloric Acid",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Synthetic Fibers",
+            "description": "High-strength synthetic fibers.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/86/Synthetic_Fibers.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Benzene",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Fiber Mesh",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Arcade Gorge Toy",
+            "description": "Comforting.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/62/Arcade_Gorge_Toy.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Aurora Miniature",
+            "description": "This ship model looks familiar. (Changes to “A miniature of the Aurora” later in game)",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/dc/Starship_Souvenir.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Aurora Poster",
+            "description": "Aurora Poster",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6a/Poster_Aurora.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Gray Cap",
+            "description": "Gray cap. Incompatible with protective environment suits.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/37/Blue_Cap.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Carry-all",
+            "description": "Common bag for transporting personal items.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1c/Carry-all.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Large Sample Flask",
+            "description": "Useless glass container.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9d/Lab_Container_3.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Microscope",
+            "description": "Non-functional laboratory equipment.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/24/Electron_Microscope.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Microscope",
+            "description": "Non-functional laboratory equipment.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/f7/Lab_Equipment_2-0.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Gray Cap",
+            "description": "Gray cap. Incompatible with protective environment suits.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/30/Gray_Cap.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Keep Calm Poster",
+            "description": "Keep Calm Poster",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e6/Poster_Kitty.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Large Sample Flask",
+            "description": "Useless glass container.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/ce/Lab_Container.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Natural Selection 2 Poster",
+            "description": "Natural Selection 2 Poster",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cc/Natural_Selection_2_Poster.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Prawn Suit Poster - Land",
+            "description": "Prawn Suit Poster - Land",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/26/Poster_Exosuit_2.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Prawn Suit Poster - Sea",
+            "description": "Prawn Suit Poster - Sea",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a7/Poster_Exosuit.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Microscope",
+            "description": "Non-functional laboratory equipment.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/05/Lab_Equipment_3.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Large Sample Flask",
+            "description": "Useless glass container.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fc/Lab_Container_2.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Toy Car",
+            "description": "Toy car",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/4b/Toy_Car.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Bladderfish",
+            "description": "Unique outer membrane has potential as a natural water filter.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a5/Bladderfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Boomerang",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7c/Boomerang.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Eyeye",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/2f/Eyeye.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Garryfish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b3/Garryfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Holefish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/61/Holefish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Hoopfish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/8c/Hoopfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Hoverfish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/95/Hoverfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Magmarang",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/68/Magmarang.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Oculus",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/50/Oculus.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Peeper",
+            "description": "Edible prey fish. High calorie count.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/f4/Peeper.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Red Eyeye",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d9/Red_Eyeye.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Reginald",
+            "description": "Small, edible prey fish. High calorie count.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d0/Reginald.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Spadefish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/f1/Spadefish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Spinefish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/36/Spinefish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Bladderfish",
+            "description": "Unique outer membrane has potential as a natural water filter.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/de/Cooked_Bladderfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Boomerang",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7f/Cooked_Boomerang.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Eyeye",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a8/Cooked_Eyeye.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Garryfish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9d/Cooked_Garryfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Holefish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e4/Cooked_Holefish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Hoopfish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9d/Cooked_Hoopfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Hoverfish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/ac/Cooked_Hoverfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Magmarang",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/c0/Cooked_Magmarang.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Oculus",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/bd/Cooked_Oculus.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Peeper",
+            "description": "Edible prey fish. High calorie count.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/64/Cooked_Peeper.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Red Eyeye",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/99/Cooked_Red_Eyeye.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Reginald",
+            "description": "Small, edible prey fish. High calorie count.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/26/Cooked_Reginald.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Spadefish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/28/Cooked_Spadefish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Spinefish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cf/Cooked_Spinefish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Bladderfish",
+            "description": "Unique outer membrane has potential as a natural water filter.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b0/Cured_Bladderfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Boomerang",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/dc/Cured_Boomerang.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Eyeye",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e2/Cured_Eyeye.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Garryfish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/16/Cured_Garryfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Holefish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/11/Cured_Holefish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Hoopfish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9c/Cured_Hoopfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Hoverfish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/14/Cured_Hoverfish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Magmarang",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/45/Cured_Magmarang.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Oculus",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a5/Cured_Oculus.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Peeper",
+            "description": "Edible prey fish. High calorie count.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/dc/Cured_Peeper.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Red Eyeye",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/63/Cured_Red_Eyeye.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Reginald",
+            "description": "Small, edible prey fish. High calorie count.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/4c/Cured_Reginald.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Spadefish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b0/Cured_Spadefish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Spinefish",
+            "description": "Small, edible prey fish.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/ba/Cured_Spinefish.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Chinese Potato",
+            "description": "A hardy vegetable common in federation space.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/af/Chinese_Potato.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Lantern Fruit",
+            "description": "Lantern fruit - edible.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1d/Lantern_Fruit.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Marblemelon",
+            "description": "An alien fruit - edible.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/21/Marblemelon.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Snacks",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ea/Snack1.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Nutrient Block",
+            "description": "Dense, processed food recovered from the Aurora.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/03/Nutrient_Block.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Snacks",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e1/Snack3.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Snacks",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/15/Snack2.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Coffee Americano",
+            "description": "Real Italian espresso, diluted with tasteless American water.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e9/Coffee.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Disinfected Water",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7e/Disinfected_Water.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 2,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Bleach",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Filtered Water",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cc/Filtered_Water.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Bladderfish",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Large Filtered Water",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/15/Large_Filtered_Water.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Water Filtration Machine",
+                "requirements": [
+                    {
+                        "component": "Water",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Reclaimed Water",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/17/Reclaimed_Water.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Engine Efficiency Module",
+            "description": "Recycles heat by-product to minimize power inefficiencies. Seamoth/Prawn compatible.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/85/Seamoth_Power_Efficiency_Module.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Polyaniline",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Hull Reinforcement",
+            "description": "Reduces collision damage to Seamoth or Prawn Suit.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/46/Seamoth_Hull_Reinforcement.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Diamond",
+                        "quantity": 4
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Storage Module (Subnautica)",
+            "description": "A 4×4 storage locker. Seamoth/Prawn compatible.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e7/Storage_Module.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Cyclops Decoy Tube Upgrade",
+            "description": "Increases the capacity of the Cyclops' Decoy Holding Tube.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1e/Cyclops_Decoy_Tube_Upgrade.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Cyclops Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Aerogel",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Cyclops Depth Module MK1",
+            "description": "Increases safe diving depth. Does not stack.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/71/Cyclops_Depth_Module_MK1.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Cyclops Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Plasteel Ingot",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Ruby",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Cyclops Depth Module MK2",
+            "description": "Increases safe diving depth considerably. Does not stack.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7d/Cyclops_Depth_Module_MK2.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Modification Station",
+                "requirements": [
+                    {
+                        "component": "Cyclops Depth Module MK1",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Plasteel Ingot",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Nickel Ore",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Cyclops Docking Bay Repair Module",
+            "description": "Repairs vehicles docked in the Cyclops.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fa/Cyclops_Docking_Bay_Repair_Module.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Cyclops Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Repair Tool",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Cyclops Engine Efficiency Module",
+            "description": "Recycles heat by-product to increase engine efficiency.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/33/Cyclops_Engine_Efficiency_Module.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Cyclops Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Benzene",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Polyaniline",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Cyclops Fire Suppression System",
+            "description": "Installs a fire suppression system on the Cyclops.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/27/Cyclops_Fire_Suppression_System.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Cyclops Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Aerogel",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Crystalline Sulfur",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Cyclops Shield Generator",
+            "description": "Creates a temporary barrier around the sub, rendering it invulnerable for a brief time.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/05/Cyclops_Shield_Generator.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Cyclops Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Advanced Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Polyaniline",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Power Cell",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Cyclops Sonar Upgrade",
+            "description": "Scans the terrain outside the Cyclops.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/c9/Cyclops_Sonar_Upgrade.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Cyclops Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Magnetite",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Cyclops Thermal Reactor Module",
+            "description": "Transfers environmental heat energy into electrical power.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/36/Cyclops_Thermal_Reactor_Module.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Cyclops Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Polyaniline",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Kyanite",
+                        "quantity": 4
+                    },
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Prawn Suit Depth Module MK1",
+            "description": "Enhances safe diving depth by 400m. Does not stack.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/ff/Prawn_Suit_Pressure_Compensator_Mark_1.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Plasteel Ingot",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Nickel Ore",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Ruby",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Prawn Suit Depth Module MK2",
+            "description": "Enhances safe diving depth by 800m. Does not stack.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/80/Prawn_Suit_Depth_Module_MK2.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Modification Station",
+                "requirements": [
+                    {
+                        "component": "Prawn Suit Depth Module MK1",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 5
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Kyanite",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Prawn Suit Drill Arm",
+            "description": "Enables the mining of resources.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3a/Prawn_Suit_Drill_Arm.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 5
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Diamond",
+                        "quantity": 4
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Prawn Suit Grappling Arm",
+            "description": "Fires a grappling hook for enhanced environment traversal.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/2e/Exosuit_Grappling_Arm_Module.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Advanced Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 5
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Benzene",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Prawn Suit Jump Jet Upgrade",
+            "description": "Powerful rear-mounted jets propel the Prawn suit into the air.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e9/Prawn_Suit_Jump_Jet_Upgrade.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Nickel Ore",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Crystalline Sulfur",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 5
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Prawn Suit Propulsion Cannon",
+            "description": "Industrial strength propulsion cannon fitting for the Prawn suit.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/44/Prawn_Suit_Propulsion_Cannon.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 5
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Magnetite",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Prawn Suit Thermal Reactor",
+            "description": "Recharges power cells in hot areas (doesn't stack).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1f/Prawn_Suit_Thermal_Reactor.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Kyanite",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Polyaniline",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Prawn Suit Torpedo Arm",
+            "description": null,
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b1/Prawn_Suit_Torpedo_Arm.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 5
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Aerogel",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Seamoth Depth Module MK1",
+            "description": "Enhances safe diving depth by 100m. Does not stack.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b3/Seamoth_Depth_Module_MK1.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Titanium Ingot",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Glass",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Seamoth Depth Module MK2",
+            "description": "Enhances safe diving depth by 300m. Does not stack.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/af/Seamoth_Depth_Module_MK2.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Modification Station",
+                "requirements": [
+                    {
+                        "component": "Seamoth Depth Module MK1",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Plasteel Ingot",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Magnetite",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Enameled Glass",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Seamoth Depth Module MK3",
+            "description": "Enhances safe diving depth by 700m. Does not stack.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/56/Seamoth_Depth_Module_MK3.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Modification Station",
+                "requirements": [
+                    {
+                        "component": "Seamoth Depth Module MK2",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Plasteel Ingot",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Ruby",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Seamoth Perimeter Defense System",
+            "description": "Generates a localized electric field designed to ward off aggressive fauna.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e1/Seamoth_Perimeter_Defense_System.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Polyaniline",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Seamoth Solar Charger",
+            "description": "Recharges the Seamoth's power cell while in sunlight.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a1/Seamoth_Solar_Charger.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Advanced Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Enameled Glass",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Seamoth Sonar",
+            "description": "A dedicated system for detecting and displaying topographical data on the HUD.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/dc/Seamoth_Sonar.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Magnetite",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Torpedo System",
+            "description": "A standard underwater payload delivery system adapted to fire torpedoes.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9d/Seamoth_Torpedo_System.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Vehicle Upgrade Console",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Lithium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Aerogel",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "I Compartment",
+            "description": "Basic tubular compartment (-1HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/2d/I_Compartment.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "L Compartment",
+            "description": "L-shaped compartment (-1HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3c/L_Compartment.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "T Compartment",
+            "description": "T-shaped compartment (-1HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/89/T_Compartment.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "X Compartment",
+            "description": "X-shaped compartment (-1HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ea/X_Compartment.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Foundation",
+            "description": "Reinforced habitat foundation (+2HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3b/Foundation.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Lead",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Glass Compartment",
+            "description": "Basic glass-walled compartment (-2HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e0/Glass_Compartment.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Glass",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "L Glass Compartment",
+            "description": "L-shaped glass compartment (-2HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/f4/L_Glass_Compartment.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Glass",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Hatch",
+            "description": "Provides an access point to the habitat (-1HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/55/Hatch.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Quartz",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Multipurpose Room",
+            "description": "Basic room (-1.25HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/68/Multipurpose_Room.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 6
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Moonpool",
+            "description": "Vehicle docking bay with high energy and structural requirements.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/39/Moon_Pool.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium Ingot",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Lubricant",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lead",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Observatory",
+            "description": "Compartment with 360 degree views and very low structural integrity.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b4/Observatory.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Enameled Glass",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Reinforcement",
+            "description": "Increases hull integrity (+7HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3b/Reinforcement.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Lithium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Scanner Room",
+            "description": "Locates resources and wrecks within range.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/bf/Scanner_Room.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 5
+                    },
+                    {
+                        "component": "Copper Ore",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Gold",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Table Coral Sample",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Vertical Connector",
+            "description": "Vertical base connector (-0.5HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b9/Vertical_Connector.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Window",
+            "description": "Observatory window",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/dc/Window.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Glass",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Pipe",
+            "description": "A chain of pipes can be used to transport breathable air from a functional pump.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/12/Base-attached_Air_Pump.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 5,
+                "station": "Fabricator",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Exterior Growbed",
+            "description": "Artificial plant bed, suitable for use on land or underwater.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ed/Exterior_Growbed.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Floodlight",
+            "description": "Industrial lighting designed for all environments.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1b/Floodlight.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Glass",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Power Transmitter",
+            "description": "Extends the range of a power source.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fb/Power_Transmitter.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Gold",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Solar Panel",
+            "description": "Powers habitat oxygen generation and other modules. Converts available sunlight into low power electrical energy.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/5d/Solar_Panel.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Quartz",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Copper Ore",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Spotlight",
+            "description": "Fixed lighting solution.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/32/Spotlight.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Glass",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Thermal Plant",
+            "description": "Converts heat to energy at medium efficiency.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a2/Thermal_Plant.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 5
+                    },
+                    {
+                        "component": "Magnetite",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Aerogel",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Aquarium",
+            "description": "Self-sustaining aquatic habitat.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e1/Aquarium.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Glass",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Basic Plant Pot",
+            "description": "Titanium pot containing synthetic soil.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/83/Plant_Pot.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Battery Charger",
+            "description": "Can charge up to 4 batteries simultaneously.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b8/Battery_Charger.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Basic Plant Pot",
+            "description": "Titanium pot containing synthetic soil.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e6/Plant_Pot_3.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Basic Plant Pot",
+            "description": "Titanium pot containing synthetic soil.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/83/Plant_Pot_2.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Fabricator",
+            "description": "Basic survival fabricator. Atomically rearranges raw resources into useful objects.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/66/Fabricator.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Gold",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Table Coral Sample",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Indoor Growbed",
+            "description": "Artificial plant bed, suitable for interior use only.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/5b/Indoor_Growbed.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 4
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Locker",
+            "description": "Large, freestanding storage.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/19/Locker.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Quartz",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Medical Kit Fabricator",
+            "description": "Fabricates a medical kit every 30 minutes.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/65/Medical_Kit_Fabricator.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Fiber Mesh",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Silver Ore",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Modification Station",
+            "description": "Advanced fabricator for modification of survival equipment.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6d/Modification_Station.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Diamond",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lead",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Plant Shelf",
+            "description": "Wall-mounted plant pot.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/c2/Plant_Shelf.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Power Cell Charger",
+            "description": "Can charge up to 2 power cells simultaneously.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/16/Power_Cell_Charger.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Advanced Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Ruby",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Radio",
+            "description": "Receive short-range communications.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/31/Radio.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Copper Ore",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Wall Locker",
+            "description": "5×6 wall-mounted storage solution.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3e/Wall_Locker.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Alien Containment",
+            "description": "Provides optimal conditions for flora and fauna. Add a hatch to enter.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/63/Alien_Containment.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Glass",
+                        "quantity": 5
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Bioreactor",
+            "description": "Composts organic matter into electrical energy.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1e/Bioreactor.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lubricant",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Bulkhead",
+            "description": "Provides structural support and prevents flooding (+3HP).",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0e/Bulkhead.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Silicone Rubber",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Ladder",
+            "description": "Connects two floors.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/63/Ladder.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Nuclear Reactor",
+            "description": "Processes nuclear reactor rods for huge power supply.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/99/Nuclear_Reactor.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Plasteel Ingot",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Advanced Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lead",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Vehicle Upgrade Console",
+            "description": "Build in the moonpool to upgrade docked vehicles",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/39/Vehicle_Upgrade_Console.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Computer Chip",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Water Filtration Machine",
+            "description": "Turns seawater into water and salt.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/f3/Water_Filtration_Machine.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Aerogel",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Bar Table",
+            "description": "Round glass table.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fd/Bar_Table.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Glass",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Basic Double Bed",
+            "description": "A double bed.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1e/Basic_Double_Bed.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Fiber Mesh",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Bench",
+            "description": "Simple metal relaxation appliance. Conserves energy when resting.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/f7/Bench.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Coffee Vending Machine (Subnautica)",
+            "description": "Synthesizes hydrating, caffeine-free coffee.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/78/Coffee_Vending_Machine.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Swivel Chair",
+            "description": "Turns 360 degrees.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/51/Chair_3.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Counter",
+            "description": "Counter.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/47/Lab_Counter.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Desk",
+            "description": "Common starship work desk.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6a/Desk.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Nuclear Waste Disposal",
+            "description": "Used to dispose of nuclear waste.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/85/Lab_Trash_Can.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Swivel Chair",
+            "description": "Turns 360 degrees.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/44/Chair_2.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Picture Frame",
+            "description": "Wall-mounted frame, upload desired image from compatible PDA photo galleries.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e1/Picture_Frame.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Basic Double Bed",
+            "description": "A double bed.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a4/Quilted_Double_Bed.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Fiber Mesh",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Sign",
+            "description": "Sign post with configurable text.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/5d/Sign.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Copper Wire",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Basic Double Bed",
+            "description": "A double bed.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/25/Single_Bed.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Fiber Mesh",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Single Wall Shelf",
+            "description": "Single wall shelf.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1a/Single_Wall_Shelf.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Swivel Chair",
+            "description": "Turns 360 degrees.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/76/Chair.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Trash Can",
+            "description": "Permanently deconstruct unwanted items and safely release their constituent atoms into the atmosphere.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/8d/Trash_Cans.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Vending Machine",
+            "description": "Vending machine.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d3/Vending_Machine.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Glass",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Wall Planter",
+            "description": "Wall-mounted foliage. Purely decorational.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e7/Wall_Planter.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Wall Shelves",
+            "description": "Wall shelves.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3b/Wall_Shelves.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Habitat Builder",
+                "requirements": [
+                    {
+                        "component": "Titanium",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Cyclops",
+            "description": "Vast industrial-use submarine.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a9/Cyclops.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Mobile Vehicle Bay",
+                "requirements": [
+                    {
+                        "component": "Plasteel Ingot",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Enameled Glass",
+                        "quantity": 3
+                    },
+                    {
+                        "component": "Lubricant",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Advanced Wiring Kit",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lead",
+                        "quantity": 3
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Prawn Suit",
+            "description": "Epic mech suit designed for navigating challenging environments on foot.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/42/Prawn_Suit.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Mobile Vehicle Bay",
+                "requirements": [
+                    {
+                        "component": "Plasteel Ingot",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Aerogel",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Enameled Glass",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Diamond",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Lead",
+                        "quantity": 2
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Seamoth",
+            "description": "One-person sea-and-space vehicle.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d6/Seamoth.png",
+            "rawMaterial": false,
+            "recipe": {
+                "output_quantity": 1,
+                "station": "Mobile Vehicle Bay",
+                "requirements": [
+                    {
+                        "component": "Titanium Ingot",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Power Cell",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Glass",
+                        "quantity": 2
+                    },
+                    {
+                        "component": "Lubricant",
+                        "quantity": 1
+                    },
+                    {
+                        "component": "Lead",
+                        "quantity": 1
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Acid Mushroom Spore",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7b/Acid_Mushroom_Spore.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Blood Oil",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7b/Blood_Oil.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Blue Palm Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fe/Blue_Palm_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Bulb Bush Sample",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/c2/Bulb_Bush_Sample.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Cave Bush Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7e/Cave_Bush_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Creepvine Seed Cluster",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/65/Creepvine_Sample.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Deep Shroom Spore",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d1/Deep_Shroom_Spore.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Eye Stalk Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0d/Eye_Stalk_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Furled Papyrus Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1f/Furled_Papyrus_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Gabe's Feather Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/8f/Gabe%27s_Feather_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Gel Sack Spores",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/73/Spore_Sack_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Ghost Weed Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fa/Ghost_Weed_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Jellyshroom Spore",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/8c/Jellyshroom_Spore.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Membrain Tree Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/c5/Membrain_Tree_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Pygmy Fan Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/39/Pygmy_Fan_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Redwort Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/c8/Redwort_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Regress Shell Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fb/Regress_Shell_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Rouge Cradle Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/94/Rouge_Cradle_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Sea Crown Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0f/Sea_Crown_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Spiked Horn Grass Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/c3/Spiked_Horn_Grass_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Spotted Dockleaf Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/aa/Spotted_Dockleaf_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Tiger Plant Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7d/Tiger_Plant_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Veined Nettle Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a1/Veined_Nettle_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Violet Beau Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/60/Violet_Beau_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Writhing Weed Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/2d/Writhing_Weed_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Bulbo Tree Sample",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d5/Bulbo_Tree_Sample.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Chinese Potato",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/af/Chinese_Potato.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Fern Palm Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/63/Fern_Palm_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Grub Basket Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/de/Grub_Basket_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Jaffa Cup Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/bf/Jaffa_Cup_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Lantern Fruit",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1d/Lantern_Fruit.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Marblemelon Seeds",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/39/Marblemelon_Seeds.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Ming Plant Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/4f/Ming_Plant_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Pink Cap Spore",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/f8/Pink_Cap_Spore.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Speckled Rattler Spore",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/b9/Speckled_Rattler_Spore.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Voxel Shrub Seed",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/46/Voxel_Shrub_Seed.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Brain Coral Sample",
+            "description": "",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/71/Purple_Brain_Coral_Sample.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Ampeel egg",
+            "description": "Ampeels hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ed/Shocker_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Boneshark egg",
+            "description": "Bonesharks hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/65/Bone_Shark_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Crabsnake egg",
+            "description": "Crabsnakes hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a4/Crabsnake_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Crabsquid egg",
+            "description": "Crabsquid hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/8/87/Crabsquid_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Crashfish egg",
+            "description": "Crashfish hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/37/CrashEgg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Cuddlefish egg",
+            "description": "Cuddlefish hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e4/Cute_Fish_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Gasopod egg",
+            "description": "Gasopods hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d4/Gasopod_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Jellyray egg",
+            "description": "Jellyrays hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/57/Jellyray_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Lava Lizard egg",
+            "description": "Lava Lizards hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/1b/LavaLizardEgg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Mesmer egg",
+            "description": "Mesmers hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/b/be/Mesmer_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Rabbit Ray egg",
+            "description": "Rabbit Rays hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0d/Rabbit_Ray_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Sand Shark egg",
+            "description": "Sand sharks hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d8/Sand_Shark_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Spadefish egg",
+            "description": "Spadefish hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/2f/Spadefish_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Stalker egg",
+            "description": "Stalkers hatch from these.",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3b/Stalker_Egg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Sea Dragon Leviathan Egg",
+            "description": "Disease Research Facility Primary Containment Facility Egg Lab",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e0/Sea_Dragon_Egg_Transparent.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Sea Emperor Leviathan Egg",
+            "description": "Primary Containment Facility",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0d/SeaEmpEgg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Ghost Leviathan Egg",
+            "description": "Lost River Tree Cove",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/2e/GLegg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Sea Dragon Leviathan Egg",
+            "description": "Disease Research Facility Primary Containment Facility Egg Lab",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e0/Sea_Dragon_Egg_Transparent.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Sea Emperor Leviathan Egg",
+            "description": "Primary Containment Facility",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0d/SeaEmpEgg.png",
+            "rawMaterial": true,
+            "recipe": null
+        },
+        {
+            "name": "Ghost Leviathan Egg",
+            "description": "Lost River Tree Cove",
+            "image_url": "https://static.wikia.nocookie.net/subnautica/images/2/2e/GLegg.png",
+            "rawMaterial": true,
+            "recipe": null
+        }
+    ]
+}

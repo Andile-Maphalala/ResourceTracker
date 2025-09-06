@@ -15,6 +15,6 @@ namespace ResourceTracker.Domain.Entities
         public int? RequiredFacilityId { get; set; }
         public virtual Component Component { get; set; }
         public virtual Component RequiredFacility { get; set; }
-        public virtual Collection<RecipeComponent> RecipeComponents { get; set; }
+        public virtual ICollection<RecipeComponent> RecipeComponents { get; set; }
     }
 }
