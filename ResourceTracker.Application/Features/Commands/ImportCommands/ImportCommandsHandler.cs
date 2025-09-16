@@ -5,8 +5,8 @@ using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Common.User;
 using ResourceTracker.Application.Features.Commands.ImportCommands.Dtos;
 using ResourceTracker.Application.Features.Commands.ImportCommands.ImportGame;
-using ResourceTracker.Application.Features.Commands.ImportCommands.Services;
 using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Services;
 using ResourceTracker.Domain.Entities;
 
 namespace ResourceTracker.Application.Features.Commands.ImportCommands

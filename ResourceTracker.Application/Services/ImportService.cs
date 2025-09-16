@@ -3,7 +3,7 @@ using ResourceTracker.Application.Features.Commands.ImportCommands.Dtos;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.Domain.Enums;
 
-namespace ResourceTracker.Application.Features.Commands.ImportCommands.Services
+namespace ResourceTracker.Application.Services
 {
     public static class ImportService
     {
