@@ -9,7 +9,12 @@ namespace ResourceTracker.Application.Features.Commands.ImportCommands.Dtos
         [JsonPropertyName("name")]
         public string Name { get; set; }
         [JsonPropertyName("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get => _description;
+            set => _description = value ?? string.Empty;
+        }
+        private string _description = string.Empty;
         [JsonPropertyName("image_url")]
         public string Image_url { get; set; }
         [JsonPropertyName("rawMaterial")]
