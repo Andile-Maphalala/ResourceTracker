@@ -1,0 +1,6 @@
+services:
+  resourcetracker.api:
+    image: ${DOCKER_REGISTRY-}resourcetrackerapi
+    build:
+      context: .
+      dockerfile: ResourceTracker.Api/Dockerfile

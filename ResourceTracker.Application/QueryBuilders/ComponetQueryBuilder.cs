@@ -1,15 +1,10 @@
 ﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using Pagination;
-using Pagination.Enums;
 using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
 using Component = ResourceTracker.Domain.Entities.Component;
-using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
+using ResourceTracker.Application.Models.Enums;
+using ResourceTracker.Application.Common.Search;
 namespace ResourceTracker.Application.QueryBuilders
 {
     internal static class ComponetQueryBuilder
@@ -17,7 +12,7 @@ namespace ResourceTracker.Application.QueryBuilders
         internal static IQueryable<Component> ApplyFilters(this IQueryable<Component> query, SearchComponentsQuery request)
         {
             var filterPredicate = BuildFilterExpression(request);
-            var searchPredicate = BuildSearchExpression(request.GetSearchTerms());
+            var searchPredicate = BuildSearchExpression(request.SearchTerms.GetSearchTerms());
             return query
                 .AsExpandable()
                 .Where(searchPredicate)
@@ -43,18 +38,18 @@ namespace ResourceTracker.Application.QueryBuilders
 
             return predicate;
         }
-        internal static Expression<Func<Component, bool>> BuildSearchExpression(IEnumerable<string> terms, ExpressionMatchTypeEnum matchType = ExpressionMatchTypeEnum.StartsWith)
+        internal static Expression<Func<Component, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.StartsWith)
         {
             if (terms == null || !terms.Any())
                 return PredicateBuilder.New<Component>(true);
 
             var predicate = PredicateBuilder.New<Component>(false);
-            var patternFormat = PageableExtensions.GetSearchPatternFormat(matchType);
+            
 
             foreach (var term in terms)
             {
-                var pattern = term.BuildSearchPattern(patternFormat);
-                predicate = predicate.Or(x => EF.Functions.Like(x.Name, pattern) || EF.Functions.Like(x.Description, pattern));
+                var pattern = PatternBuilder.BuildLikePattern(term, matchType);
+                predicate = predicate.Or(x => EF.Functions.Like(x.Name.ToLower(), pattern.ToLower()) || EF.Functions.Like(x.Description.ToLower(), pattern.ToLower()));
             }
 
             return predicate;

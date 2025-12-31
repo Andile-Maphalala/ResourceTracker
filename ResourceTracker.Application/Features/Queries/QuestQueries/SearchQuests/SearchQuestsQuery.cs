@@ -3,7 +3,7 @@ using Pagination.Models;
 
 namespace ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests
 {
-    public class SearchQuestsQuery : PageableSearchRequest, IRequest<PageableResponse<SearchQuestsResponse>>
+    public class SearchQuestsQuery : PageableRequest, IRequest<PageableResponse<SearchQuestsResponse>>
     {
         public int? QuestId { get; set; }
         public string? Name { get; set; }
@@ -11,5 +11,6 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests
         public string? Location { get; set; }
         public int? GameId { get; set; }
         public string? GameName { get; set; }
+        public string? SearchTerms { get; set; }
     }
 }

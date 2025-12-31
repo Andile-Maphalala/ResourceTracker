@@ -1,11 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ResourceTracker.Application.Features.Auth.Login;
 using ResourceTracker.Application.Features.Auth.Register;
 using ResourceTracker.Application.Models.Identity;
-using ResourceTracker.Application.Repositories;
 
 namespace ResourceTracker.Api.Controllers
 {
@@ -66,7 +64,7 @@ namespace ResourceTracker.Api.Controllers
             var response = await _mediator.Send(request);
 
 
-            var bearer = "Bearer" + " " + response.Token;
+            var bearer = response.Token;
 
             return Ok(bearer);
         }
