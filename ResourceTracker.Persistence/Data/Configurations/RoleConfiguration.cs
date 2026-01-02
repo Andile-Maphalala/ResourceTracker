@@ -14,13 +14,15 @@ namespace ResourceTracker.Persistence.Data.Configurations
                  {
                      Id = 1,
                      Name = "Administrator",
-                     NormalizedName = "ADMINISTRATOR"
+                     NormalizedName = "ADMINISTRATOR",
+                     ConcurrencyStamp = "ADMIN_ROLE"
                  },
                 new Role
                 {
                     Id = 2,
                     Name = "User",
-                    NormalizedName = "USER"
+                    NormalizedName = "USER",
+                    ConcurrencyStamp = "USER_ROLE"
                 }
                
             );

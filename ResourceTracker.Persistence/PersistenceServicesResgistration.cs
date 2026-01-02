@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using ResourceTracker.Application.Common.User;
+using ResourceTracker.Application.Models.Identity;
 using ResourceTracker.Application.Repositories;
 using ResourceTracker.Domain.Entities;
+using ResourceTracker.Persistence.Common;
 using ResourceTracker.Persistence.Data;
 using ResourceTracker.Persistence.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using ResourceTracker.Application.Models.Identity;
-using ResourceTracker.Application.Common.User;
-using ResourceTracker.Persistence.Common;
 
 
 namespace ResourceTracker.Persistence

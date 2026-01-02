@@ -1,5 +1,5 @@
 -----------------------------------Migrations---------------------------------
-dotnet ef migrations add PlayerFacilityChanges --project ResourceTracker.Persistence --startup-project ResourceTracker.Api
+dotnet ef migrations add FixRoleSeeding --project ResourceTracker.Persistence --startup-project ResourceTracker.Api
 dotnet ef database update --project ResourceTracker.Persistence --startup-project ResourceTracker.Api
 dotnet ef migrations remove
 
