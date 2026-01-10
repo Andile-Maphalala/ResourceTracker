@@ -46,9 +46,8 @@ namespace ResourceTracker.IntegrationTests
                     ["ConnectionString"] = _dbContainer.GetConnectionString()
                 }).Build();
 
-            // Register your services exactly like in Program.cs
             services.ConfigureApplicationServices();
-            services.ConfigureImageStorageServices();
+            services.ConfigureImageStorageServices(Path.GetTempPath());
             services.AddEntitySecurity();
             services.AddScoped<IInfoSetter, InfoSetter>();
 
@@ -57,14 +56,13 @@ namespace ResourceTracker.IntegrationTests
                 options.UseNpgsql(_dbContainer.GetConnectionString());
             }, configuration);
 
+
             var serviceProvider = services.BuildServiceProvider();
 
-            // Create service scope
             _serviceScope = serviceProvider.CreateScope();
             _dbContext = _serviceScope.ServiceProvider.GetRequiredService<ResourceTrackerDbContext>();
             _serviceProvider = _serviceScope.ServiceProvider;
 
-            // Ensure database is created and migrations applied
             await _dbContext.Database.MigrateAsync();
         }
         public async Task DisposeAsync()

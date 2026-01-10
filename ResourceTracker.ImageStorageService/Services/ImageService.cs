@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using ResourceTracker.Application.Common.Exceptions;
-using ResourceTracker.Application.Features.Commands.ImportCommands.Dtos;
 using ResourceTracker.Application.Repositories;
 using ResourceTracker.Domain.Entities;
-using System.Security.Policy;
-
+using ResourceTracker.ImageStorageService.Models;
 
 namespace ResourceTracker.ImageStorageService.Services
 {
@@ -14,16 +11,14 @@ namespace ResourceTracker.ImageStorageService.Services
     {
         private readonly IResourceTrackerRepository _repo;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IHostingEnvironment _env;
         private readonly string _baseStoragePath;
         private readonly HttpClient _httpClient;
 
-        public ImageService(IResourceTrackerRepository repo, IUnitOfWork unitOfWork, IHostingEnvironment env, HttpClient httpClient)
+        public ImageService(IResourceTrackerRepository repo, IUnitOfWork unitOfWork, IOptions<ImageStorageOptions> baseStoragePath, HttpClient httpClient)
         {
             _repo = repo;
             _unitOfWork = unitOfWork;
-            _env = env;
-            _baseStoragePath = Path.Combine(_env.WebRootPath, "images");
+            _baseStoragePath = Path.Combine(baseStoragePath.Value.BasePath, "Images");
             _httpClient = httpClient;
         }
         public async Task<Picture> UploadImage(byte[] imageStream, string folder, string fileName, string contentType, int? uploadedBy, string AltText, CancellationToken cancellationToken)
