@@ -1,27 +1,37 @@
-﻿using FluentAssertions;
-using Microsoft.AspNetCore.Http;
+﻿
+
+using FluentAssertions;
 using ResourceTracker.Application.Common.Exceptions;
-using ResourceTracker.Application.Features.Commands.GameCommands.CreateGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.DeleteGame;
-using ResourceTracker.Application.Features.Commands.GameCommands.UpdateGame;
+using ResourceTracker.Application.Features.Commands.GameSaveCommands.CreateGameSave;
+using ResourceTracker.Application.Features.Commands.GameSaveCommands.DeleteGameSave;
+using ResourceTracker.Application.Features.Commands.GameSaveCommands.UpdateGameSave;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.IntegrationTests.Setup;
-using System.Text;
 
-namespace ResourceTracker.IntegrationTests.Tests.GameTests
+namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
 {
-
-    public class GameCommandTests : IntegrationTestBase
+    public class GameSaveTests : IntegrationTestBase
     {
+        private int gameId;
+        private int userId = 2;
+        public override async Task InitializeAsync()
+        {
+            await base.InitializeAsync();
+
+            gameId = await AddGameRecord();
+        }
 
         [Fact]
-        public async Task CreateGame_NameExceedMaximumLength_ThrowError()
+        public async Task CreateGameSave_NameExceedMaximumLength_ThrowError()
         {
             // Arrange
-            var command = new CreateGameCommand
+            SetupNonAdminUser();
+            var command = new CreateGameSaveCommand
             {
                 Name = new string('A', 101),
                 Description = "Desc",
+                GameId = gameId
             };
 
             // Act
@@ -32,13 +42,15 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         }
 
         [Fact]
-        public async Task CreateGame_NameEmpty_ThrowError()
+        public async Task CreateGameSave_NameEmpty_ThrowError()
         {
             // Arrange
-            var command = new CreateGameCommand
+            SetupNonAdminUser();
+            var command = new CreateGameSaveCommand
             {
                 Name = "",
                 Description = "Desc",
+                GameId = gameId
             };
             // Act
             // Assert
@@ -48,13 +60,15 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         }
 
         [Fact]
-        public async Task CreateGame_DescriptionExceedMaximumLength_ThrowError()
+        public async Task CreateGameSave_DescriptionExceedMaximumLength_ThrowError()
         {
             // Arrange
-            var command = new CreateGameCommand
+            SetupNonAdminUser();
+            var command = new CreateGameSaveCommand
             {
                 Name = "Name",
                 Description = new string('A', 226),
+                GameId = gameId
             };
 
             // Act
@@ -65,69 +79,59 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         }
 
         [Fact]
-        public async Task CreateGameCommand_NonAdmin_ThrowError()
+        public async Task CreateGameSave_GameIdEmpty_ThrowError()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(false);
-
-            var command = new CreateGameCommand
+            SetupNonAdminUser();
+            var command = new CreateGameSaveCommand
             {
-                Name = "Test",
-                Description = "Desc"
+                Name = "Name",
+                Description = "Des",
+                GameId = 0
             };
 
             // Act
             // Assert
-            await Assert.ThrowsAsync<BadRequestException>(() =>
+            var result = await Assert.ThrowsAsync<BadRequestException>(() =>
                 Sender.Send(command, CancellationToken.None));
+            result.Message.Should().Be("Invalid game selected");
         }
 
         [Fact]
-        public async Task CreateGameCommand_AdminNoImage_CreateRecord()
+        public async Task CreateGameSave_InvalidUser_ThrowError()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
-
-            var command = new CreateGameCommand
-            {
-                Name = "Test Game",
-                Description = "This is a test game"
-            };
-
-            // Act
-            var result = await Sender.Send(command, CancellationToken.None);
-
-            // Assert
-            result.Should().NotBeNull();
-            result.Id.Should().BeGreaterThan(0);
-            var game = await _dbContext.Games.FindAsync(result.Id);
-            game.Should().NotBeNull();
-            game.PictureId.Should().BeNull();
-            game.Name.Should().Be(command.Name);
-            game.Description.Should().Be(command.Description);
-        }
-
-        [Fact]
-        public async Task CreateGameCommand_AdminWithImage_CreateRecord()
-        {
-            // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
             UserInfoMock
             .Setup(x => x.GetUserId())
-            .Returns(1);
+            .Returns(0);
 
-            var command = new CreateGameCommand
+            var command = new CreateGameSaveCommand
             {
-                Name = "Test Game with Image",
-                Description = "This is a test game with image",
-                Image = CreateTestImage(),
-                AltText = "Test Image Alt Text"
+                Name = "Test Save",
+                Description = "Desc",
+                GameId = gameId
+            };
+
+            // Act
+            // Assert
+            var result = await Assert.ThrowsAsync<BadRequestException>(() =>
+                Sender.Send(command, CancellationToken.None));
+            result.Message.Should().Be("Invalid User");
+
+        }
+
+
+        [Fact]
+        public async Task CreateGameSave_ValidRequest_CreateRecord()
+        {
+            // Arrange
+            SetupNonAdminUser();
+
+            var command = new CreateGameSaveCommand
+            {
+                Name = "Test Save",
+                Description = "Desc",
+                GameId = gameId
             };
 
             // Act
@@ -136,29 +140,26 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             // Assert
             result.Should().NotBeNull();
             result.Id.Should().BeGreaterThan(0);
-            var game = await _dbContext.Games.FindAsync(result.Id);
-            game.Should().NotBeNull();
-            game.PictureId.Should().NotBeNull();
-            game.Name.Should().Be(command.Name);
-            game.Description.Should().Be(command.Description);
 
-            var picture = await _dbContext.Pictures.FindAsync(game.PictureId);
-            picture.Should().NotBeNull();
-            picture.AltText.Should().Be(command.AltText);
-            picture.UploadedBy.Should().Be(1);
-
+            var entity = await _dbContext.GameSaves.FindAsync(result.Id);
+            entity.Should().NotBeNull();
+            entity!.Name.Should().Be(command.Name);
+            entity.Description.Should().Be(command.Description);
+            entity.GameId.Should().Be(command.GameId);
+            entity.UserId.Should().Be(userId);
         }
 
         /// <summary>
         /// ///////////////////////////////////////////////////// Update /////////////////////////////////
         /// </summary>
         [Fact]
-        public async Task UpdateGame_NameExceedMaximumLength_ThrowError()
+        public async Task UpdateGameSave_NameExceedMaximumLength_ThrowError()
         {
             // Arrange
+            SetupNonAdminUser();
             var id = await AddRecord();
 
-            var command = new UpdateGameCommand
+            var command = new UpdateGameSaveCommand
             {
                 Name = new string('A', 101),
                 Description = "Desc",
@@ -173,12 +174,13 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         }
 
         [Fact]
-        public async Task UpdateGame_NameEmpty_ThrowError()
+        public async Task UpdateGameSave_NameEmpty_ThrowError()
         {
             // Arrange
+            SetupNonAdminUser();
             var id = await AddRecord();
 
-            var command = new UpdateGameCommand
+            var command = new UpdateGameSaveCommand
             {
                 Name = "",
                 Description = "Desc",
@@ -193,12 +195,13 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         }
 
         [Fact]
-        public async Task UpdateGame_DescriptionExceedMaximumLength_ThrowError()
+        public async Task UpdateGameSave_DescriptionExceedMaximumLength_ThrowError()
         {
             // Arrange
+            SetupNonAdminUser();
             var id = await AddRecord();
 
-            var command = new UpdateGameCommand
+            var command = new UpdateGameSaveCommand
             {
                 Name = "Name",
                 Description = new string('A', 226),
@@ -213,10 +216,12 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         }
 
         [Fact]
-        public async Task UpdateGame_GameIdEmpty_ThrowError()
+        public async Task UpdateGameSave_GameSaveIdEmpty_ThrowError()
         {
             // Arrange
-            var command = new UpdateGameCommand
+            SetupNonAdminUser();
+
+            var command = new UpdateGameSaveCommand
             {
                 Name = "Name",
                 Description = "Des",
@@ -230,15 +235,36 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             result.Message.Should().Be("Id is required");
         }
 
-
         [Fact]
-        public async Task UpdateGame_InvalidId_ThrowError()
+        public async Task UpdateGameSave_InvalidUser_ThrowError()
         {
             // Arrange
+            var id = await AddRecord();
             UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
-            var command = new UpdateGameCommand
+            .Setup(x => x.GetUserId())
+            .Returns(0);
+
+            var command = new UpdateGameSaveCommand
+            {
+                Name = "Test Save",
+                Description = "Desc",
+                Id = id
+            };
+
+            // Act
+            // Assert
+            var result = await Assert.ThrowsAsync<BadRequestException>(() =>
+                Sender.Send(command, CancellationToken.None));
+            result.Message.Should().Be("You do not have access to this content");
+        }
+
+        [Fact]
+        public async Task UpdateGameSave_InvalidId_ThrowError()
+        {
+            // Arrange
+            SetupNonAdminUser();
+
+            var command = new UpdateGameSaveCommand
             {
                 Name = "Test Save",
                 Description = "Desc",
@@ -249,80 +275,61 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             // Assert
             var result = await Assert.ThrowsAsync<NotFoundException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be("Invalid Game");
+            result.Message.Should().Be("Invalid GameSave");
         }
 
-        [Fact]
-        public async Task UpdateGameCommand_NonAdmin_ThrowError()
-        {
-            // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(false);
-
-            var command = new UpdateGameCommand
-            {
-                Name = "Test",
-                Description = "Desc"
-            };
-
-            // Act
-            // Assert
-            await Assert.ThrowsAsync<BadRequestException>(() =>
-                Sender.Send(command, CancellationToken.None));
-        }
 
         [Fact]
-        public async Task UpdateGameCommand_Admin_CreateRecord()
+        public async Task UpdateGameSave_ValidRequest_UpdateRecord()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
+            var id = await AddRecord();
+            SetupNonAdminUser();
 
-            var gameId = await AddRecord();
-            var command = new UpdateGameCommand
+            var command = new UpdateGameSaveCommand
             {
-                Id = gameId,
-                Name = "Update Game",
-                Description = "This is a test game"
+                Name = "Test Save",
+                Description = "Desc",
+                Id = id
             };
 
             // Act
             var result = await Sender.Send(command, CancellationToken.None);
 
             // Assert
-            var game = await _dbContext.Games.FindAsync(gameId);
-            game.Should().NotBeNull();
-            game.PictureId.Should().BeNull();
-            game.Name.Should().Be(command.Name);
-            game.Description.Should().Be(command.Description);
+
+            var entity = await _dbContext.GameSaves.FindAsync(command.Id);
+            entity.Should().NotBeNull();
+            entity!.Name.Should().Be(command.Name);
+            entity.Description.Should().Be(command.Description);
+            entity.UserId.Should().Be(userId);
         }
 
         /// <summary>
         /// ///////////////////////////////////////////////////// Delete /////////////////////////////////
         /// </summary>
         [Fact]
-        public async Task DeleteGame_NotFoundId_ThrowError()
+        public async Task DeleteGameSave_NotFoundId_ThrowError()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
-            var command = new DeleteGameCommand(Id: 999999999);
+            SetupNonAdminUser();
+
+            var command = new DeleteGameSaveCommand(Id: 999999999);
 
             // Act
             // Assert
             var result = await Assert.ThrowsAsync<NotFoundException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be("Invalid Game");
+            result.Message.Should().Be("Invalid GameSave");
         }
 
         [Fact]
-        public async Task DeleteGame_IdEmpty_ThrowError()
+        public async Task DeleteGameSave_IdEmpty_ThrowError()
         {
             // Arrange
-            var command = new DeleteGameCommand(Id: 0);
+            SetupNonAdminUser();
+
+            var command = new DeleteGameSaveCommand(Id: 0);
 
             // Act
             // Assert
@@ -332,54 +339,51 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         }
 
         [Fact]
-        public async Task DeleteGameCommand_NonAdmin_ThrowError()
+        public async Task DeleteGameSaveCommand_ValidData_DeleteRecord()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(false);
-
-            var command = new DeleteGameCommand(Id: 1);
-
-            // Act
-            // Assert
-            await Assert.ThrowsAsync<BadRequestException>(() =>
-                Sender.Send(command, CancellationToken.None));
-        }
-
-        [Fact]
-        public async Task DeleteGameCommand_AdminNoImage_DeleteRecord()
-        {
-            // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
+            SetupNonAdminUser();
 
             var gameId = await AddRecord();
 
-            var command = new DeleteGameCommand(Id: gameId);
+            var command = new DeleteGameSaveCommand(Id : gameId);
 
             // Act
             var result = await Sender.Send(command, CancellationToken.None);
 
             // Assert
-            var game = await _dbContext.Games.FindAsync(gameId);
-            game.Should().BeNull();
+            var entity = await _dbContext.GameSaves.FindAsync(gameId);
+            entity.Should().BeNull();
         }
 
-        private IFormFile CreateTestImage(string content = "test image")
-        {
-            var bytes = Encoding.UTF8.GetBytes(content);
-            var stream = new MemoryStream(bytes);
 
-            return new FormFile(stream, 0, bytes.Length, "file", "test.png")
-            {
-                Headers = new HeaderDictionary(),
-                ContentType = "image/png"
-            };
+        private void SetupNonAdminUser()
+        {
+            UserInfoMock
+            .Setup(x => x.IsAdmin())
+            .Returns(false);
+
+            UserInfoMock
+            .Setup(x => x.GetUserId())
+            .Returns(userId);
         }
 
         private async Task<int> AddRecord()
+        {
+            var game = new GameSave
+            {
+                Name = "Existing Game Save",
+                Description = "Existing Description",
+                GameId = gameId,
+                Created = DateTime.UtcNow,
+                UserId = userId
+                
+            };
+            _dbContext.GameSaves.Add(game);
+            await _dbContext.SaveChangesAsync();
+            return game.Id;
+        }
+        private async Task<int> AddGameRecord()
         {
             var game = new Game
             {

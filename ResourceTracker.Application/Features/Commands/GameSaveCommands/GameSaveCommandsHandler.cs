@@ -54,7 +54,13 @@ namespace ResourceTracker.Application.Features.Commands.GameSaveCommands
             var item = await _repo.GameSaves.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
             {
-                throw new BadRequestException("Invalid GameSave");
+                throw new NotFoundException("Invalid GameSave");
+            }
+
+            var userId = _userInfo.GetUserId();
+            if(item.UserId != userId)
+            { 
+               throw new BadRequestException("You do not have access to this content");
             }
 
             item.Name = command.Name;
@@ -71,7 +77,7 @@ namespace ResourceTracker.Application.Features.Commands.GameSaveCommands
             var item = await _repo.GameSaves.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
             {
-                throw new BadRequestException("Invalid GameSave");
+                throw new NotFoundException("Invalid GameSave");
             }
 
             await _repo.DeleteAsync(item, cancellationToken);

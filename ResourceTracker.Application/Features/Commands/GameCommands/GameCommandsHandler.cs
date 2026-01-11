@@ -83,7 +83,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
 
             var item = await _repo.Games.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
-                throw new NotFoundException("Game not found");
+                throw new NotFoundException("Invalid Game");
 
             item.Name = command.Name;
             item.Description = command.Description;
@@ -101,7 +101,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
 
             var item = await _repo.Games.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
-                throw new NotFoundException("Game not found");
+                throw new NotFoundException("Invalid Game");
 
             await _repo.DeleteAsync(item, cancellationToken);
             await _unitOfWork.Save(cancellationToken);

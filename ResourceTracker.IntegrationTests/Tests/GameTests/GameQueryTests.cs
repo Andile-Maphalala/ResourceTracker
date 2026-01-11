@@ -1,27 +1,17 @@
-﻿
-
-using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
+﻿using FluentAssertions;
 using ResourceTracker.Application.Common.Exceptions;
-using ResourceTracker.Application.Features.Queries.GameQueries;
 using ResourceTracker.Application.Features.Queries.GameQueries.GetGame;
 using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
-using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.IntegrationTests.Setup;
-using System.Reflection.Metadata;
 
 namespace ResourceTracker.IntegrationTests.Tests.GameTests
 {
     public class GameQueryTests : IntegrationTestBase
     {
-        private GameQueriesHandler _handler;
-
         public override async Task InitializeAsync()
         {
             await base.InitializeAsync();
-
-            _handler = new GameQueriesHandler(_serviceScope.ServiceProvider.GetRequiredService<IResourceTrackerRepository>());
 
             await SeedGames();
         }
@@ -48,7 +38,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             var query = new GetGameQuery { Id = existing.Id };
 
             // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
+            var result = await Sender.Send(query, CancellationToken.None);
 
             // Assert
             result.Id.Should().Be(existing.Id);
@@ -59,7 +49,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task GetGame_ThrowsError_WhenNotFound()
         {
             await Assert.ThrowsAsync<NotFoundException>(() =>
-                _handler.Handle(new GetGameQuery { Id = 9999 }, CancellationToken.None));
+                Sender.Send(new GetGameQuery { Id = 9999 }, CancellationToken.None));
         }
 
 
@@ -74,7 +64,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             };
 
             // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
+            var result = await Sender.Send(query, CancellationToken.None);
 
             // Assert
             result.Data.Should().HaveCount(6);
@@ -98,7 +88,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             };
 
             // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
+            var result = await Sender.Send(query, CancellationToken.None);
 
             // Assert
             result.Data.Should().ContainSingle();
@@ -123,7 +113,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             };
 
             // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
+            var result = await Sender.Send(query, CancellationToken.None);
 
             // Assert
             result.Data.Should().ContainSingle();
@@ -142,7 +132,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             };
 
             // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
+            var result = await Sender.Send(query, CancellationToken.None);
 
             // Assert
             result.Data.Should().HaveCount(2);
@@ -168,7 +158,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             };
 
             // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
+            var result = await Sender.Send(query, CancellationToken.None);
 
             // Assert
             result.Data.Should().ContainSingle();
@@ -191,7 +181,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             };
 
             // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
+            var result = await Sender.Send(query, CancellationToken.None);
 
             // Assert
             result.Data.Should().HaveCount(excpectedResult.Count());
@@ -208,7 +198,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
                 PageSize = 10
             };
 
-            var result = await _handler.Handle(query, CancellationToken.None);
+            var result = await Sender.Send(query, CancellationToken.None);
 
             result.Data.Should().ContainSingle();
             result.Data.First().Name.Should().Be("Minecraft");

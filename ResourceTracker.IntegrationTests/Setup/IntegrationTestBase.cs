@@ -2,6 +2,8 @@
 using EntitySecurity.Contract.Security;
 using EntitySecurity.Logic;
 using EntitySecurity.Logic.Security;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +12,7 @@ using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Moq;
 using ResourceTracker.Application;
 using ResourceTracker.Application.Common.User;
+using ResourceTracker.Application.Features.Auth.Register;
 using ResourceTracker.ImageStorageService;
 using ResourceTracker.Persistence;
 using ResourceTracker.Persistence.Data;
@@ -25,6 +28,8 @@ namespace ResourceTracker.IntegrationTests.Setup
         protected WebApplicationFactory<Program> _factory;
         protected HttpClient HttpClient { get; private set; }
         public Mock<IUserInfo> UserInfoMock { get; } = new();
+        public ISender Sender;
+
         public IntegrationTestBase()
         {
             _dbContainer = new PostgreSqlBuilder()
@@ -47,6 +52,9 @@ namespace ResourceTracker.IntegrationTests.Setup
             _dbContext = _serviceScope.ServiceProvider.GetRequiredService<ResourceTrackerDbContext>();
 
             await _dbContext.Database.MigrateAsync();
+            await SetupApplication();
+
+            await SeedUsersAsync();
         }
 
         protected virtual void ConfigureServices(IServiceCollection services)
@@ -77,6 +85,48 @@ namespace ResourceTracker.IntegrationTests.Setup
             _serviceScope?.Dispose();
             await _dbContainer.DisposeAsync();
         }
+        private async Task SetupApplication()
+        {
+            Sender = _serviceScope.ServiceProvider.GetRequiredService<ISender>();
+        }
+
+        private async Task SeedUsersAsync()
+        {
+            var adminEmail = "admin@test.com";
+            var adminUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == adminEmail);
+
+            if (adminUser == null)
+            {
+                var command = new RegisterRequest
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    FirstName = "Admin",
+                    LastName = "User",
+                    Password = "Admin@123"
+                };
+
+                await Sender.Send(command);
+            }
+
+            var userEmail = "user@test.com";
+            var normalUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == userEmail);
+
+            if (normalUser == null)
+            {
+                var command = new RegisterRequest
+                {
+                    UserName = userEmail,
+                    Email = userEmail,
+                    FirstName = "Normal",
+                    LastName = "User",
+                    Password = "User@123"
+                };
+
+                await Sender.Send(command);
+            }
+        }
+
     }
 
 }
