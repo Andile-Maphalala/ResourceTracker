@@ -5,16 +5,8 @@ using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Queries.ComponentQueries.GetComponent;
 using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
-using ResourceTracker.Application.Features.Queries.ComponentQueries.GetComponent;
-using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
-using ResourceTracker.Application.QueryBuilders;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ResourceTracker.Application.Common.Helper;
 using ResourceTracker.Domain.Enums;
 
@@ -55,18 +47,20 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries
             if (string.IsNullOrEmpty(request.OrderBy))
                 request.OrderBy = nameof(Component.Id);
 
-            var quests = await _repo.Components
-                   .ApplyFilters(request)
-                 .Select(x => new SearchComponentsResponse
-                 {
-                     Id = x.Id,
-                     Name = x.Name,
-                     Description = x.Description,
-                     Type = x.Type,
-                     TypeName =  x.Type.ToString()
-                 }).ToPageableListAsync(request,cancellationToken);
+            //var quests = await _repo.Components
+            //       .ApplyFilters(request)
+            //     .Select(x => new SearchComponentsResponse
+            //     {
+            //         Id = x.Id,
+            //         Name = x.Name,
+            //         Description = x.Description,
+            //         Type = x.Type,
+            //         TypeName =  x.Type.ToString()
+            //     }).ToPageableListAsync(request,cancellationToken);
 
-            return quests;
+            //return quests;
+
+            return new PageableResponse<SearchComponentsResponse>();
         }
     }
 }

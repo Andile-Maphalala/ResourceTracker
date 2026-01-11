@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ResourceTracker.Application.Common.Exceptions;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.ImageStorageService.Models;
 

@@ -1,11 +1,15 @@
 ﻿using ResourceTracker.Application.Models.Enums;
 
-namespace ResourceTracker.Application.Common.Search
+namespace ResourceTracker.Persistence.Common
 {
     public static class PatternBuilder
     {
-        public static string BuildLikePattern(string term, SearchMatchType matchType)
+        public static string BuildLikePattern(string term, SearchMatchType matchType, bool ignoreCase = true)
         {
+            if(ignoreCase)
+            {
+                term = term.ToLowerInvariant();
+            }
             switch(matchType)
             {
                 case SearchMatchType.StartsWith:

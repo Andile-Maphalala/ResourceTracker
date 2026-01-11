@@ -5,7 +5,7 @@ using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Commands.QuestCommands.CreateQuest;
 using ResourceTracker.Application.Features.Commands.QuestCommands.UpdateQuest;
 using ResourceTracker.Application.Features.Commands.QuestCommands.DeleteQuest;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Application.Common.User;
 using ResourceTracker.Domain.Entities;
 

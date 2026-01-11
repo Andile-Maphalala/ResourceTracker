@@ -5,8 +5,7 @@ using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Queries.GameQueries.GetGame;
 using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
-using ResourceTracker.Application.QueryBuilders;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Domain.Entities;
 
 namespace ResourceTracker.Application.Features.Queries.GameQueries
@@ -43,8 +42,7 @@ namespace ResourceTracker.Application.Features.Queries.GameQueries
             if (string.IsNullOrEmpty(request.OrderBy))
                 request.OrderBy = nameof(SearchGamesResponse.Id);
 
-            var result = await _repo.Games
-                .ApplyFilters(request)
+            var result = await _repo.Search(request)
                 .Select(x => new SearchGamesResponse
                 {
                     Id = x.Id,

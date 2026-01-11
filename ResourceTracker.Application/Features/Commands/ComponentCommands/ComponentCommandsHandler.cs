@@ -6,7 +6,7 @@ using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.CreateComponent;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.DeleteComponent;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.UpdateComponent;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using Component = ResourceTracker.Domain.Entities.Component;
 
 namespace ResourceTracker.Application.Features.Commands.ComponentCommands

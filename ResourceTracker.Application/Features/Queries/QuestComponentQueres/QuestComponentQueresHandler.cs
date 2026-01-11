@@ -1,15 +1,14 @@
 ﻿using MediatR;
-using ResourceTracker.Application.Features.Queries.QuestComponentQueres.GetQuestComponent;
+using Microsoft.EntityFrameworkCore;
+using Pagination;
 using Pagination.Models;
-using ResourceTracker.Application.Repositories;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Common.Helper;
-using ResourceTracker.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
-using ResourceTracker.Domain.Entities;
-using ResourceTracker.Application.QueryBuilders;
+using ResourceTracker.Application.Features.Queries.QuestComponentQueres.GetQuestComponent;
 using ResourceTracker.Application.Features.Queries.QuestComponentQueres.SearchQuestComponent;
-using Pagination;
+using ResourceTracker.Application.Interfaces;
+using ResourceTracker.Domain.Entities;
+using ResourceTracker.Domain.Enums;
 
 
 
@@ -53,20 +52,22 @@ namespace ResourceTracker.Application.Features.Queries.QuestComponentQueres
             if (string.IsNullOrEmpty(request.OrderBy))
                 request.OrderBy = nameof(QuestComponents.Id);
 
-            var response = await _repo.QuestComponents.ApplyFilters(request)
-                   .Select(x => new SearchQuestComponentsResponse
-                   {
-                       Id = x.Id,
-                       AmountAquired = x.AmountAquired,
-                       ComponentName = x.Component.Name,
-                       ComponentType = x.Component.Type,
-                       ComponentTypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Component.Type),
-                       QuestId = x.QuestId,
-                       QuestName = x.Quest.Name
+            //var response = await _repo.QuestComponents.ApplyFilters(request)
+            //       .Select(x => new SearchQuestComponentsResponse
+            //       {
+            //           Id = x.Id,
+            //           AmountAquired = x.AmountAquired,
+            //           ComponentName = x.Component.Name,
+            //           ComponentType = x.Component.Type,
+            //           ComponentTypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Component.Type),
+            //           QuestId = x.QuestId,
+            //           QuestName = x.Quest.Name
 
-                   }).ToPageableListAsync(request, cancellationToken);
+            //       }).ToPageableListAsync(request, cancellationToken);
 
-            return response;
+            //return response;
+
+            return new PageableResponse<SearchQuestComponentsResponse>();
         }
     }
 }

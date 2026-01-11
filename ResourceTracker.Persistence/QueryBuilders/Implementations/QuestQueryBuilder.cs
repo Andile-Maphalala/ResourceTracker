@@ -4,8 +4,9 @@ using System.Linq.Expressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Models.Enums;
-using ResourceTracker.Application.Common.Search;
-namespace ResourceTracker.Application.QueryBuilders
+using ResourceTracker.Persistence.Common;
+
+namespace ResourceTracker.Persistence.QueryBuilders.Implementations
 {
     internal static class QuestQueryBuilder
     {
@@ -27,19 +28,19 @@ namespace ResourceTracker.Application.QueryBuilders
                 predicate = predicate.And(o => o.Id == request.QuestId);
 
             if (!string.IsNullOrEmpty(request.Name))
-                predicate = predicate.And(x => x.Name.StartsWith(request.Name));
+                predicate = predicate.And(x => EF.Functions.Like(x.Name, PatternBuilder.BuildLikePattern(request.Name, SearchMatchType.StartsWith)));
 
             if (!string.IsNullOrEmpty(request.Description))
-                predicate = predicate.And(x => x.Description.StartsWith(request.Description));
+                predicate = predicate.And(x => EF.Functions.Like(x.Description, PatternBuilder.BuildLikePattern(request.Description, SearchMatchType.StartsWith)));
 
             if (!string.IsNullOrEmpty(request.Location))
-                predicate = predicate.And(x => x.Description.StartsWith(request.Location));
+                predicate = predicate.And(x => EF.Functions.Like(x.Location, PatternBuilder.BuildLikePattern(request.Location, SearchMatchType.StartsWith)));
 
             if (request.GameId.HasValue)
                 predicate = predicate.And(x => x.GameSave.GameId == request.GameId);
 
             if(!string.IsNullOrEmpty(request.GameName))
-                predicate = predicate.And(x => x.GameSave.Game.Name.StartsWith(request.GameName));
+                predicate = predicate.And(x => EF.Functions.Like(x.GameSave.Game.Name, PatternBuilder.BuildLikePattern(request.GameName, SearchMatchType.StartsWith)));
 
 
             return predicate;

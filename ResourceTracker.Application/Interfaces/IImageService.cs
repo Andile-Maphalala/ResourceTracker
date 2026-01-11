@@ -1,6 +1,6 @@
 ﻿using ResourceTracker.Domain.Entities;
 
-namespace ResourceTracker.Application.Repositories
+namespace ResourceTracker.Application.Interfaces
 {
     public interface IImageService
     {

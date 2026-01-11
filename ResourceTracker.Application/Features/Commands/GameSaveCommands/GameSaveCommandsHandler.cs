@@ -7,7 +7,7 @@ using ResourceTracker.Application.Common.User;
 using ResourceTracker.Application.Features.Commands.GameSaveCommands.CreateGameSave;
 using ResourceTracker.Application.Features.Commands.GameSaveCommands.DeleteGameSave;
 using ResourceTracker.Application.Features.Commands.GameSaveCommands.UpdateGameSave;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Domain.Entities;
 
 namespace ResourceTracker.Application.Features.Commands.GameSaveCommands

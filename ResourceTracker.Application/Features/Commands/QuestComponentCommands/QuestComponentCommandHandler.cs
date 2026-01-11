@@ -6,7 +6,7 @@ using ResourceTracker.Application.Features.Commands.QuestComponentCommands.Delet
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.CreateQuestComponents;
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.UpdateQuestComponents;
 using ResourceTracker.Application.Common.User;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Domain.Entities;
 using Microsoft.EntityFrameworkCore;

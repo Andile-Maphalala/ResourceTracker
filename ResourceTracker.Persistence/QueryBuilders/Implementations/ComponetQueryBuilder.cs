@@ -4,8 +4,9 @@ using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchCompon
 using Component = ResourceTracker.Domain.Entities.Component;
 using System.Linq.Expressions;
 using ResourceTracker.Application.Models.Enums;
-using ResourceTracker.Application.Common.Search;
-namespace ResourceTracker.Application.QueryBuilders
+using ResourceTracker.Persistence.Common;
+
+namespace ResourceTracker.Persistence.QueryBuilders.Implementations
 {
     internal static class ComponetQueryBuilder
     {
@@ -30,10 +31,10 @@ namespace ResourceTracker.Application.QueryBuilders
                 predicate = predicate.And(x => x.Type == request.Type);
 
             if (!string.IsNullOrEmpty(request.Name))
-                predicate = predicate.And(x => x.Name.StartsWith(request.Name));
+                predicate = predicate.And(x => EF.Functions.Like(x.Name, PatternBuilder.BuildLikePattern(request.Name, SearchMatchType.StartsWith)));
 
             if (!string.IsNullOrEmpty(request.Description))
-                predicate = predicate.And(x => x.Description.StartsWith(request.Description));
+                predicate = predicate.And(x => EF.Functions.Like(x.Description, PatternBuilder.BuildLikePattern(request.Description, SearchMatchType.StartsWith)));
 
 
             return predicate;

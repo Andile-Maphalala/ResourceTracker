@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ResourceTracker.Application.Common.Behavior;
+using ResourceTracker.Application.Common.User;
+using ResourceTracker.Application.Features.Auth;
 using System.Reflection;
-using FluentValidation;
 
 
 namespace ResourceTracker.Application
@@ -16,6 +18,7 @@ namespace ResourceTracker.Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviorWithIRequest<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviorWithIRequestAndIResponse<,>));
+            services.AddScoped<IUserInfo, UserInfo>();
 
             return services;
         }

@@ -1,15 +1,18 @@
-﻿using ResourceTracker.Application.Repositories;
+﻿using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.Persistence.Data;
+using ResourceTracker.Persistence.QueryBuilders.Interfaces;
 
 namespace ResourceTracker.Persistence.Repositories
 {
     public class ResourceTrackerRepository : GenericRepository, IResourceTrackerRepository
     {
+        private readonly IGameQueryBuilder _gameQueryBuilder;
 
-        public ResourceTrackerRepository(ResourceTrackerDbContext context) : base(context)
+        public ResourceTrackerRepository(ResourceTrackerDbContext context, IGameQueryBuilder gameQueryBuilder) : base(context)
         {
-
+            _gameQueryBuilder = gameQueryBuilder;
         }
 
         public IQueryable<User> Users  => Set<User>();
@@ -24,5 +27,10 @@ namespace ResourceTracker.Persistence.Repositories
         public IQueryable<Picture> Pictures => Set<Picture>();
         public IQueryable<GameSave> GameSaves => Set<GameSave>();
         public IQueryable<BuildPlanQuest> BuildPlanQuests => Set<BuildPlanQuest>();
+
+        public IQueryable<Game> Search(SearchGamesQuery request)
+        {
+            return _gameQueryBuilder.ApplyFilters(Games, request);
+        }
     }
 }

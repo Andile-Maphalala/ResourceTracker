@@ -1,13 +1,13 @@
 ﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using ResourceTracker.Application.Common.Search;
 using ResourceTracker.Application.Features.Queries.QuestComponentQueres.SearchQuestComponent;
 using ResourceTracker.Application.Models.Enums;
 using ResourceTracker.Domain.Entities;
 using System.Linq.Expressions;
+using ResourceTracker.Persistence.Common;
 
 
-namespace ResourceTracker.Application.QueryBuilders
+namespace ResourceTracker.Persistence.QueryBuilders.Implementations
 {
     internal static class QuestComponetsQueryBuilder
     {
@@ -35,19 +35,19 @@ namespace ResourceTracker.Application.QueryBuilders
                 predicate = predicate.And(x => x.Component.Type == request.Type);
 
             if (!string.IsNullOrEmpty(request.ComponentName))
-                predicate = predicate.And(x => x.Component.Name.StartsWith(request.ComponentName));
+                predicate = predicate.And(x => EF.Functions.Like(x.Component.Name, PatternBuilder.BuildLikePattern(request.ComponentName, SearchMatchType.StartsWith)));
 
             if (!string.IsNullOrEmpty(request.ComponentDescription))
-                predicate = predicate.And(x => x.Component.Description.StartsWith(request.ComponentDescription));
+                predicate = predicate.And(x => EF.Functions.Like(x.Component.Description, PatternBuilder.BuildLikePattern(request.ComponentDescription, SearchMatchType.StartsWith)));
 
             if (request.QuestId.HasValue)
                 predicate = predicate.And(x => x.QuestId == request.QuestId);
 
             if (!string.IsNullOrEmpty(request.QuestName))
-                predicate = predicate.And(x => x.Quest.Name.StartsWith(request.QuestName));
+                predicate = predicate.And(x => EF.Functions.Like(x.Quest.Name, PatternBuilder.BuildLikePattern(request.QuestName, SearchMatchType.StartsWith)));
 
             if (!string.IsNullOrEmpty(request.QuestDescription))
-                predicate = predicate.And(x => x.Quest.Description.StartsWith(request.QuestDescription));
+                predicate = predicate.And(x => EF.Functions.Like(x.Quest.Description, PatternBuilder.BuildLikePattern(request.QuestDescription, SearchMatchType.StartsWith)));
 
             return predicate;
         }

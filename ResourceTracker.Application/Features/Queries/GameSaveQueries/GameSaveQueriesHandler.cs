@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Queries.GameSaveQueries.GetGameSave;
 using ResourceTracker.Application.Features.Queries.GameSaveQueries.GetGameSaveList;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 
 namespace ResourceTracker.Application.Features.Queries.GameSaveQueries
 {
