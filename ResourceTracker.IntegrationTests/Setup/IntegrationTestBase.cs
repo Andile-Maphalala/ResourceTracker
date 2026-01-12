@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using ResourceTracker.Application.Common.User;
-using ResourceTracker.Domain.Entities;
 using ResourceTracker.Persistence.Data;
 
 
@@ -20,6 +19,7 @@ namespace ResourceTracker.IntegrationTests.Setup
         protected Mock<IUserInfo> UserInfoMock;
         public readonly int AdminUserId = 1;
         public readonly int NonAdminUserId = 2;
+        public readonly int IncorrectValue = 2147483647;
         public IntegrationTestBase(IntegrationTestFixture fixture)
         {
             Fixture = fixture;
@@ -56,24 +56,22 @@ namespace ResourceTracker.IntegrationTests.Setup
 
         public void SetupNonAdminUser()
         {
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(false);
-
-            UserInfoMock
-            .Setup(x => x.GetUserId())
-            .Returns(NonAdminUserId);
+            SetUser(NonAdminUserId,false);
         }
 
         public void SetupAdminUser()
         {
+            SetUser(AdminUserId, true);
+        }
+
+        public void SetUser(int userId, bool isAdmin = false)
+        {
             UserInfoMock
             .Setup(x => x.IsAdmin())
-            .Returns(true);
-
+            .Returns(isAdmin);
             UserInfoMock
             .Setup(x => x.GetUserId())
-            .Returns(AdminUserId);
+            .Returns(userId);
         }
     }
 

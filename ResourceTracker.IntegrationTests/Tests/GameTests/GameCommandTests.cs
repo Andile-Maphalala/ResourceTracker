@@ -295,7 +295,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         {
             // Arrange
             SetupAdminUser();
-            var command = new DeleteGameCommand(Id: 999999999);
+            var command = new DeleteGameCommand(Id: IncorrectValue);
 
             // Act
             // Assert

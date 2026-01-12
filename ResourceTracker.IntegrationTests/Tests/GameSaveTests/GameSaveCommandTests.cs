@@ -316,7 +316,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
             // Arrange
             SetupNonAdminUser();
 
-            var command = new DeleteGameSaveCommand(Id: 999999999);
+            var command = new DeleteGameSaveCommand(Id: IncorrectValue);
 
             // Act
             // Assert

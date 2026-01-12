@@ -33,7 +33,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         }
 
         [Fact]
-        public async Task GetGame_ReturnsGame_WhenFound()
+        public async Task GetGame_WhenFound_ReturnsGame()
         {
             // Arrange
             var existing = DbContext.Games.First();
@@ -48,7 +48,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         }
 
         [Fact]
-        public async Task GetGame_ThrowsError_WhenNotFound()
+        public async Task GetGame_WhenNotFound_ThrowsError()
         {
             await Assert.ThrowsAsync<NotFoundException>(() =>
                 Sender.Send(new GetGameQuery { Id = 9999 }, CancellationToken.None));
@@ -79,7 +79,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         [InlineData("Do", "Doom")]
         [InlineData("Sub", "Subnautica")]
         [InlineData("Mine", "Minecraft")]
-        public async Task Search_Name_StartsWith_ReturnRecord(string queryText, string excpectedResult)
+        public async Task Search_NameStartsWith_ReturnRecord(string queryText, string excpectedResult)
         {
             // Arrange
             var query = new SearchGamesQuery
@@ -104,7 +104,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         [InlineData("fast a", "Doom")]
         [InlineData("underwater", "Subnautica")]
         [InlineData("sand", "Minecraft")]
-        public async Task Search_Description_StartsWith_ReturnRecord(string queryText, string excpectedResult)
+        public async Task Search_DescriptionStartsWith_ReturnRecord(string queryText, string excpectedResult)
         {
             // Arrange
             var query = new SearchGamesQuery
@@ -123,7 +123,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         }
 
         [Fact]
-        public async Task Search_Description_StartsWith_ReturnMultipleRecords()
+        public async Task Search_DescriptionStartsWith_ReturnMultipleRecords()
         {
             // Arrange
             var query = new SearchGamesQuery
@@ -149,7 +149,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         [InlineData("action", "Doom")]
         [InlineData("explor", "Subnautica")]
         [InlineData("craft", "Minecraft")]
-        public async Task Search_SearchTerm_Contains_ReturnsSingle(string queryText, string excpectedResult)
+        public async Task Search_SearchTermContains_ReturnsSingle(string queryText, string excpectedResult)
         {
             // Arrange
             var query = new SearchGamesQuery
@@ -172,7 +172,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         [InlineData("racing", new[] { "Need for Speed", "Gran Turismo" })]
         [InlineData("fast", new[] { "Speed Runner", "Doom" })]
         [InlineData("ion", new[] { "Gran Turismo","Doom", "Subnautica" })]
-        public async Task Search_SearchTerm_Contains_ReturnsMultiple(string queryText,string[] excpectedResult)
+        public async Task Search_SearchTermContains_ReturnsMultiple(string queryText,string[] excpectedResult)
         {
             // Arrange
             var query = new SearchGamesQuery
