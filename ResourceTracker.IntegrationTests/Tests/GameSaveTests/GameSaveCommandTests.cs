@@ -2,7 +2,6 @@
 
 using FluentAssertions;
 using ResourceTracker.Application.Common.Exceptions;
-using ResourceTracker.Application.Features.Commands.GameCommands.DeleteGame;
 using ResourceTracker.Application.Features.Commands.GameSaveCommands.CreateGameSave;
 using ResourceTracker.Application.Features.Commands.GameSaveCommands.DeleteGameSave;
 using ResourceTracker.Application.Features.Commands.GameSaveCommands.UpdateGameSave;
@@ -11,7 +10,7 @@ using ResourceTracker.IntegrationTests.Setup;
 
 namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
 {
-    public class GameSaveTests : IntegrationTestBase
+    public class GameSaveCommandTests : IntegrationTestBase
     {
         private int gameId;
         private int userId = 2;
