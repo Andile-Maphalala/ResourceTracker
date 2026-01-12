@@ -9,16 +9,18 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
 {
     public class GameQueryTests : IntegrationTestBase
     {
-        public override async Task InitializeAsync()
+        public GameQueryTests(IntegrationTestFixture fixture) : base(fixture)
         {
-            await base.InitializeAsync();
+        }
 
+        protected override async Task ClassSetup()
+        {
             await SeedGames();
         }
 
         private async Task SeedGames()
         {
-            _dbContext.Games.AddRange(
+            DbContext.Games.AddRange(
                 new Game { Name = "Need for Speed", Description = "Arcade racing game" },
                 new Game { Name = "Gran Turismo", Description = "Simulation racing" },
                 new Game { Name = "Speed Runner", Description = "Fast paced platformer" },
@@ -27,14 +29,14 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
                 new Game { Name = "Minecraft", Description = "Sandbox survival crafting" }
             );
 
-            await _dbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
         }
 
         [Fact]
         public async Task GetGame_ReturnsGame_WhenFound()
         {
             // Arrange
-            var existing = _dbContext.Games.First();
+            var existing = DbContext.Games.First();
             var query = new GetGameQuery { Id = existing.Id };
 
             // Act

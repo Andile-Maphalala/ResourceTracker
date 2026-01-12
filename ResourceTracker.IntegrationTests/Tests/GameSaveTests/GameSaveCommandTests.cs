@@ -14,10 +14,13 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
     {
         private int gameId;
         private int userId = 2;
-        public override async Task InitializeAsync()
-        {
-            await base.InitializeAsync();
 
+        public GameSaveCommandTests(IntegrationTestFixture fixture) : base(fixture)
+        {
+        }
+
+        protected override async Task ClassSetup()
+        {
             gameId = await AddGameRecord();
         }
 
@@ -140,7 +143,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
             result.Should().NotBeNull();
             result.Id.Should().BeGreaterThan(0);
 
-            var entity = await _dbContext.GameSaves.FindAsync(result.Id);
+            var entity = await DbContext.GameSaves.FindAsync(result.Id);
             entity.Should().NotBeNull();
             entity!.Name.Should().Be(command.Name);
             entity.Description.Should().Be(command.Description);
@@ -297,7 +300,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
 
             // Assert
 
-            var entity = await _dbContext.GameSaves.FindAsync(command.Id);
+            var entity = await DbContext.GameSaves.FindAsync(command.Id);
             entity.Should().NotBeNull();
             entity!.Name.Should().Be(command.Name);
             entity.Description.Should().Be(command.Description);
@@ -351,21 +354,10 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
             var result = await Sender.Send(command, CancellationToken.None);
 
             // Assert
-            var entity = await _dbContext.GameSaves.FindAsync(gameId);
+            var entity = await DbContext.GameSaves.FindAsync(gameId);
             entity.Should().BeNull();
         }
 
-
-        private void SetupNonAdminUser()
-        {
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(false);
-
-            UserInfoMock
-            .Setup(x => x.GetUserId())
-            .Returns(userId);
-        }
 
         private async Task<int> AddRecord()
         {
@@ -378,8 +370,8 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
                 UserId = userId
                 
             };
-            _dbContext.GameSaves.Add(game);
-            await _dbContext.SaveChangesAsync();
+            DbContext.GameSaves.Add(game);
+            await DbContext.SaveChangesAsync();
             return game.Id;
         }
         private async Task<int> AddGameRecord()
@@ -389,8 +381,8 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
                 Name = "Existing Game",
                 Description = "Existing Description",
             };
-            _dbContext.Games.Add(game);
-            await _dbContext.SaveChangesAsync();
+            DbContext.Games.Add(game);
+            await DbContext.SaveChangesAsync();
             return game.Id;
         }
 

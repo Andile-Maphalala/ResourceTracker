@@ -1,132 +1,80 @@
-﻿
-using EntitySecurity.Contract.Security;
-using EntitySecurity.Logic;
-using EntitySecurity.Logic.Security;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Moq;
-using ResourceTracker.Application;
 using ResourceTracker.Application.Common.User;
-using ResourceTracker.Application.Features.Auth.Register;
-using ResourceTracker.ImageStorageService;
-using ResourceTracker.Persistence;
+using ResourceTracker.Domain.Entities;
 using ResourceTracker.Persistence.Data;
-using Testcontainers.PostgreSql;
+
 
 namespace ResourceTracker.IntegrationTests.Setup
 {
-    public class IntegrationTestBase : IAsyncLifetime
+    [Collection("Integration")]
+    public abstract class IntegrationTestBase
     {
-        private readonly PostgreSqlContainer _dbContainer;
-        protected IServiceScope _serviceScope { get; private set; }
-        protected ResourceTrackerDbContext _dbContext { get; private set; }
-        protected WebApplicationFactory<Program> _factory;
-        protected HttpClient HttpClient { get; private set; }
-        public Mock<IUserInfo> UserInfoMock { get; } = new();
-        public ISender Sender;
-
-        public IntegrationTestBase()
+        protected readonly IntegrationTestFixture Fixture;
+        protected readonly IServiceScope Scope;
+        protected readonly ISender Sender;
+        protected readonly ResourceTrackerDbContext DbContext;
+        protected Mock<IUserInfo> UserInfoMock;
+        public readonly int AdminUserId = 1;
+        public readonly int NonAdminUserId = 2;
+        public IntegrationTestBase(IntegrationTestFixture fixture)
         {
-            _dbContainer = new PostgreSqlBuilder()
-                 .WithImage("postgres:latest")
-                 .WithDatabase("testdb")
-                 .WithUsername("postgres")
-                 .WithPassword("postgres")
-                 .WithCleanUp(true)
-                 .Build();
-        }
-        public virtual async Task InitializeAsync()
-        {
-            await _dbContainer.StartAsync();
+            Fixture = fixture;
+            Scope = fixture.ScopeFactory.CreateScope();
 
-            var services = new ServiceCollection();
-            ConfigureServices(services);
-            var serviceProvider = services.BuildServiceProvider();
+            Sender = Scope.ServiceProvider.GetRequiredService<ISender>();
+            DbContext = Scope.ServiceProvider.GetRequiredService<ResourceTrackerDbContext>();
+            UserInfoMock = Scope.ServiceProvider.GetRequiredService<Mock<IUserInfo>>();
 
-            _serviceScope = serviceProvider.CreateScope();
-            _dbContext = _serviceScope.ServiceProvider.GetRequiredService<ResourceTrackerDbContext>();
-
-            await _dbContext.Database.MigrateAsync();
-            await SetupApplication();
-
-            await SeedUsersAsync();
+            ResetAsync(DbContext).GetAwaiter().GetResult();
+            ClassSetup().GetAwaiter().GetResult();
         }
 
-        protected virtual void ConfigureServices(IServiceCollection services)
+        protected virtual Task ClassSetup() => Task.CompletedTask;
+
+        private static async Task ResetAsync(ResourceTrackerDbContext db)
         {
-            var configuration = new ConfigurationBuilder()
-               .AddInMemoryCollection(new Dictionary<string, string>
-               {
-                   ["ConnectionString"] = _dbContainer.GetConnectionString()
-               }).Build();
+            await db.Database.ExecuteSqlRawAsync("""
+            TRUNCATE TABLE
+                "BuildPlanQuest",
+                "BuildPlanComponent",
+                "BuildPlan",
+                "QuestComponents",
+                "Recipe",
+                "Component",
+                "Quest",
+                "GameSave",
+                "Game",
+                "Picture"
 
-            services.ConfigureApplicationServices();
-            services.ConfigureImageStorageServices(Path.GetTempPath());
-            services.AddEntitySecurity();
-            services.AddScoped<IInfoSetter, InfoSetter>();
-
-            services.ConfigurePersistenceServices((options) =>
-            {
-                options.UseNpgsql(_dbContainer.GetConnectionString());
-            }, configuration);
-
-            UserInfoMock.Setup(x => x.IsAdmin()).Returns(false);
-            services.AddSingleton(UserInfoMock.Object);
-
-        }
-        public async Task DisposeAsync()
-        {
-            await _dbContext.Database.EnsureDeletedAsync();
-            _serviceScope?.Dispose();
-            await _dbContainer.DisposeAsync();
-        }
-        private async Task SetupApplication()
-        {
-            Sender = _serviceScope.ServiceProvider.GetRequiredService<ISender>();
+            RESTART IDENTITY CASCADE;
+        """);
         }
 
-        private async Task SeedUsersAsync()
+        public void SetupNonAdminUser()
         {
-            var adminEmail = "admin@test.com";
-            var adminUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == adminEmail);
+            UserInfoMock
+            .Setup(x => x.IsAdmin())
+            .Returns(false);
 
-            if (adminUser == null)
-            {
-                var command = new RegisterRequest
-                {
-                    UserName = adminEmail,
-                    Email = adminEmail,
-                    FirstName = "Admin",
-                    LastName = "User",
-                    Password = "Admin@123"
-                };
-
-                await Sender.Send(command);
-            }
-
-            var userEmail = "user@test.com";
-            var normalUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == userEmail);
-
-            if (normalUser == null)
-            {
-                var command = new RegisterRequest
-                {
-                    UserName = userEmail,
-                    Email = userEmail,
-                    FirstName = "Normal",
-                    LastName = "User",
-                    Password = "User@123"
-                };
-
-                await Sender.Send(command);
-            }
+            UserInfoMock
+            .Setup(x => x.GetUserId())
+            .Returns(NonAdminUserId);
         }
 
+        public void SetupAdminUser()
+        {
+            UserInfoMock
+            .Setup(x => x.IsAdmin())
+            .Returns(true);
+
+            UserInfoMock
+            .Setup(x => x.GetUserId())
+            .Returns(AdminUserId);
+        }
     }
 
 }

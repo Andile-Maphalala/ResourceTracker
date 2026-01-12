@@ -13,6 +13,9 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
 
     public class GameCommandTests : IntegrationTestBase
     {
+        public GameCommandTests(IntegrationTestFixture fixture) : base(fixture)
+        {
+        }
 
         [Fact]
         public async Task CreateGame_NameExceedMaximumLength_ThrowError()
@@ -68,9 +71,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task CreateGameCommand_NonAdmin_ThrowError()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(false);
+            SetupNonAdminUser();
 
             var command = new CreateGameCommand
             {
@@ -88,9 +89,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task CreateGameCommand_AdminNoImage_CreateRecord()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
+            SetupAdminUser();
 
             var command = new CreateGameCommand
             {
@@ -104,7 +103,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             // Assert
             result.Should().NotBeNull();
             result.Id.Should().BeGreaterThan(0);
-            var game = await _dbContext.Games.FindAsync(result.Id);
+            var game = await DbContext.Games.FindAsync(result.Id);
             game.Should().NotBeNull();
             game.PictureId.Should().BeNull();
             game.Name.Should().Be(command.Name);
@@ -115,12 +114,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task CreateGameCommand_AdminWithImage_CreateRecord()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
-            UserInfoMock
-            .Setup(x => x.GetUserId())
-            .Returns(1);
+            SetupAdminUser();
 
             var command = new CreateGameCommand
             {
@@ -136,13 +130,13 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             // Assert
             result.Should().NotBeNull();
             result.Id.Should().BeGreaterThan(0);
-            var game = await _dbContext.Games.FindAsync(result.Id);
+            var game = await DbContext.Games.FindAsync(result.Id);
             game.Should().NotBeNull();
             game.PictureId.Should().NotBeNull();
             game.Name.Should().Be(command.Name);
             game.Description.Should().Be(command.Description);
 
-            var picture = await _dbContext.Pictures.FindAsync(game.PictureId);
+            var picture = await DbContext.Pictures.FindAsync(game.PictureId);
             picture.Should().NotBeNull();
             picture.AltText.Should().Be(command.AltText);
             picture.UploadedBy.Should().Be(1);
@@ -235,9 +229,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task UpdateGame_InvalidId_ThrowError()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
+            SetupAdminUser();
             var command = new UpdateGameCommand
             {
                 Name = "Test Save",
@@ -256,9 +248,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task UpdateGameCommand_NonAdmin_ThrowError()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(false);
+            SetupNonAdminUser();
 
             var command = new UpdateGameCommand
             {
@@ -276,9 +266,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task UpdateGameCommand_Admin_CreateRecord()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
+            SetupAdminUser();
 
             var gameId = await AddRecord();
             var command = new UpdateGameCommand
@@ -292,7 +280,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             var result = await Sender.Send(command, CancellationToken.None);
 
             // Assert
-            var game = await _dbContext.Games.FindAsync(gameId);
+            var game = await DbContext.Games.FindAsync(gameId);
             game.Should().NotBeNull();
             game.PictureId.Should().BeNull();
             game.Name.Should().Be(command.Name);
@@ -306,9 +294,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task DeleteGame_NotFoundId_ThrowError()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
+            SetupAdminUser();
             var command = new DeleteGameCommand(Id: 999999999);
 
             // Act
@@ -335,9 +321,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task DeleteGameCommand_NonAdmin_ThrowError()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(false);
+            SetupNonAdminUser();
 
             var command = new DeleteGameCommand(Id: 1);
 
@@ -351,9 +335,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task DeleteGameCommand_AdminNoImage_DeleteRecord()
         {
             // Arrange
-            UserInfoMock
-            .Setup(x => x.IsAdmin())
-            .Returns(true);
+            SetupAdminUser();
 
             var gameId = await AddRecord();
 
@@ -363,7 +345,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             var result = await Sender.Send(command, CancellationToken.None);
 
             // Assert
-            var game = await _dbContext.Games.FindAsync(gameId);
+            var game = await DbContext.Games.FindAsync(gameId);
             game.Should().BeNull();
         }
 
@@ -386,8 +368,8 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
                 Name = "Existing Game",
                 Description = "Existing Description",
             };
-            _dbContext.Games.Add(game);
-            await _dbContext.SaveChangesAsync();
+            DbContext.Games.Add(game);
+            await DbContext.SaveChangesAsync();
             return game.Id;
         }
 
