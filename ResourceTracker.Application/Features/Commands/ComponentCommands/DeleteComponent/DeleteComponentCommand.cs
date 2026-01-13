@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿
+using ResourceTracker.Application.Common.CQRS;
 
 namespace ResourceTracker.Application.Features.Commands.ComponentCommands.DeleteComponent
 {
-    public record DeleteComponentCommand(int Id) : IRequest;
+    public record DeleteComponentCommand(int Id) : ICommand;
 }

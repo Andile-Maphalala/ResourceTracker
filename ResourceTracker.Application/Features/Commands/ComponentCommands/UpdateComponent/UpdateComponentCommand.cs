@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using ResourceTracker.Application.Common.CQRS;
 
 namespace ResourceTracker.Application.Features.Commands.ComponentCommands.UpdateComponent
 {
-    public class UpdateComponentCommand : IRequest
+    public class UpdateComponentCommand : ICommand
     {
         public int Id { get; set; }
         public string Name { get; set; }

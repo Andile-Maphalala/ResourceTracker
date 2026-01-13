@@ -13,8 +13,8 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands
 {
     public class ComponentCommandsHandler:
         ICommandHandler<CreateComponentCommand, CreateComponentResponse>,
-        IRequestHandler<UpdateComponentCommand>,
-        IRequestHandler<DeleteComponentCommand>
+        ICommandHandler<UpdateComponentCommand>,
+        ICommandHandler<DeleteComponentCommand>
     {
         private readonly IResourceTrackerRepository _repo;
         private readonly IUnitOfWork _unitOfWork;
@@ -48,7 +48,7 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands
             return new CreateComponentResponse(item.Id);
         }
 
-        public async Task Handle(UpdateComponentCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateComponentCommand command, CancellationToken cancellationToken)
         {
             var isAdmin = _userInfo.IsAdmin();
             if (!isAdmin)
@@ -65,10 +65,11 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands
             item.Type = command.Type;
 
             await _unitOfWork.Save(cancellationToken);
+            return Unit.Value;
         }
 
 
-        public async Task Handle(DeleteComponentCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteComponentCommand command, CancellationToken cancellationToken)
         {
             var isAdmin = _userInfo.IsAdmin();
             if (!isAdmin)
@@ -83,6 +84,7 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands
             await _repo.DeleteAsync(item, cancellationToken);
 
             await _unitOfWork.Save(cancellationToken);
+            return Unit.Value;
         }
     }
 }
