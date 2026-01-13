@@ -11,6 +11,7 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests
         public string? Location { get; set; }
         public int? GameId { get; set; }
         public string? GameName { get; set; }
+        public int? GameSaveId { get; set; }
         public string? SearchTerms { get; set; }
     }
 }

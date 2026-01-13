@@ -40,14 +40,17 @@ namespace ResourceTracker.Persistence.QueryBuilders.Implementations
             if (request.GameId.HasValue)
                 predicate = predicate.And(x => x.GameSave.GameId == request.GameId);
 
-            if(!string.IsNullOrEmpty(request.GameName))
+            if (request.GameSaveId.HasValue)
+                predicate = predicate.And(x => x.GameSaveId == request.GameSaveId);
+
+            if (!string.IsNullOrEmpty(request.GameName))
                 predicate = predicate.And(QueryableILikeExtension.ILike<Quest>(x => x.GameSave.Game.Name, request.GameName, SearchMatchType.StartsWith));
 
 
             return predicate;
         }
 
-        private Expression<Func<Quest, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.StartsWith)
+        private Expression<Func<Quest, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.Contains)
         {
             if (terms == null || !terms.Any())
                 return PredicateBuilder.New<Quest>(true);

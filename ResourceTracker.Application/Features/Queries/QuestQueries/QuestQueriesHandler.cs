@@ -47,23 +47,20 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries
             if (string.IsNullOrEmpty(request.OrderBy))
                 request.OrderBy = nameof(Quest.Id);
 
-            //var quests = await _repo.Quests
-            //       .ApplyFilters(request)
-            //     .Select(x => new SearchQuestsResponse
-            //     {
-            //         Id = x.Id,
-            //         Name = x.Name,
-            //         Description = x.Description,
-            //         Location = x.Location,
-            //         GameId = x.GameSaveId,
-            //         GameName = x.GameSave.Game.Name,
-            //         GameSaveId = x.GameSave.Id,
-            //         GameSaveName = x.GameSave.Name
-            //     }).ToPageableListAsync(request,cancellationToken);
+            var quests = await _repo.Search(request)
+                 .Select(x => new SearchQuestsResponse
+                 {
+                     Id = x.Id,
+                     Name = x.Name,
+                     Description = x.Description,
+                     Location = x.Location,
+                     GameId = x.GameSave.GameId,
+                     GameName = x.GameSave.Game.Name,
+                     GameSaveId = x.GameSave.Id,
+                     GameSaveName = x.GameSave.Name
+                 }).ToPageableListAsync(request, cancellationToken);
 
-            //return quests;
-
-            return new PageableResponse<SearchQuestsResponse>();
+            return quests;
         }
     }
 }

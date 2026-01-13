@@ -43,7 +43,7 @@ namespace ResourceTracker.Persistence.QueryBuilders.Implementations
 
             return predicate;
         }
-        private Expression<Func<Component, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.StartsWith)
+        private Expression<Func<Component, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.Contains)
         {
             if (terms == null || !terms.Any())
                 return PredicateBuilder.New<Component>(true);
