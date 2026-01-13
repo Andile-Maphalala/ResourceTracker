@@ -31,6 +31,9 @@ namespace ResourceTracker.Persistence.QueryBuilders.Implementations
             if (request.Type.HasValue)
                 predicate = predicate.And(x => x.Type == request.Type);
 
+            if (request.GameId.HasValue)
+                predicate = predicate.And(x => x.GameId == request.GameId);
+
             if (!string.IsNullOrEmpty(request.Name))
                 predicate = predicate.And(QueryableILikeExtension.ILike<Component>(x => x.Name, request.Name, SearchMatchType.StartsWith));
 

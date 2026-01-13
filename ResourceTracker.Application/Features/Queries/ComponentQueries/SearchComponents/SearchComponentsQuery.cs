@@ -9,6 +9,7 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries.SearchCo
         public string? Name { get; set; }
         public string? Description { get; set; }
         public int? Type { get; set; }
+        public int? GameId { get; set; }
         public string? SearchTerms { get; set; }
     }
 }
