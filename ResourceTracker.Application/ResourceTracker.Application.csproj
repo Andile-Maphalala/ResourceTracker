@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="MatinDeWet.EntitySecurity.Contract" Version="1.1.0" />
     <PackageReference Include="MatinDeWet.Pagination" Version="3.0.2" />

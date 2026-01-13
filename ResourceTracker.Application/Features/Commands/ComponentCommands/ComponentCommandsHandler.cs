@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Common.CQRS;
 using ResourceTracker.Application.Common.Exceptions;
+using ResourceTracker.Application.Common.User;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.CreateComponent;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.DeleteComponent;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.UpdateComponent;
@@ -17,24 +17,28 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands
         IRequestHandler<DeleteComponentCommand>
     {
         private readonly IResourceTrackerRepository _repo;
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserInfo _userInfo;
 
-        public ComponentCommandsHandler(IResourceTrackerRepository repo, IMapper mapper, IUnitOfWork unitOfWork)
+        public ComponentCommandsHandler(IResourceTrackerRepository repo, IUnitOfWork unitOfWork, IUserInfo userInfo = null)
         {
             _repo = repo;
-            _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _userInfo = userInfo;
         }
 
         public async Task<CreateComponentResponse> Handle(CreateComponentCommand command, CancellationToken cancellationToken)
         {
-            //var item = _mapper.Map<Component>(command);
+            var isAdmin = _userInfo.IsAdmin();
+            if (!isAdmin)
+                throw new BadRequestException("Unauthorised action");
+
             Component item = new Component
             {
                 Name = command.Name,
                 Description = command.Description,
-                Type = command.Type
+                Type = command.Type,
+                GameId = command.GameId
             };
 
             await _repo.InsertAsync(item, cancellationToken);
@@ -46,13 +50,16 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands
 
         public async Task Handle(UpdateComponentCommand command, CancellationToken cancellationToken)
         {
+            var isAdmin = _userInfo.IsAdmin();
+            if (!isAdmin)
+                throw new BadRequestException("Unauthorised action");
+
             var item = await _repo.Components.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
             {
-                throw new BadRequestException("Invalid component");
+                throw new NotFoundException(nameof(Component),command.Id);
             }
 
-            //item = _mapper.Map(command, item);
             item.Name = command.Name;
             item.Description = command.Description;
             item.Type = command.Type;
@@ -63,10 +70,14 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands
 
         public async Task Handle(DeleteComponentCommand command, CancellationToken cancellationToken)
         {
+            var isAdmin = _userInfo.IsAdmin();
+            if (!isAdmin)
+                throw new BadRequestException("Unauthorised action");
+
             var item = await _repo.Components.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
             {
-                throw new BadRequestException("Invalid component");
+                throw new NotFoundException(nameof(Component), command.Id);
             }
 
             await _repo.DeleteAsync(item, cancellationToken);
