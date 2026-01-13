@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Pagination;
 using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Queries.ComponentQueries.GetComponent;
@@ -9,6 +8,7 @@ using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.Application.Common.Helper;
 using ResourceTracker.Domain.Enums;
+using Pagination;
 
 namespace ResourceTracker.Application.Features.Queries.ComponentQueries
 {
@@ -47,20 +47,17 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries
             if (string.IsNullOrEmpty(request.OrderBy))
                 request.OrderBy = nameof(Component.Id);
 
-            //var quests = await _repo.Components
-            //       .ApplyFilters(request)
-            //     .Select(x => new SearchComponentsResponse
-            //     {
-            //         Id = x.Id,
-            //         Name = x.Name,
-            //         Description = x.Description,
-            //         Type = x.Type,
-            //         TypeName =  x.Type.ToString()
-            //     }).ToPageableListAsync(request,cancellationToken);
+            var quests = await _repo.Search(request)
+                 .Select(x => new SearchComponentsResponse
+                 {
+                     Id = x.Id,
+                     Name = x.Name,
+                     Description = x.Description,
+                     Type = x.Type,
+                     TypeName = x.Type.ToString()
+                 }).ToPageableListAsync(request, cancellationToken);
 
-            //return quests;
-
-            return new PageableResponse<SearchComponentsResponse>();
+            return quests;
         }
     }
 }

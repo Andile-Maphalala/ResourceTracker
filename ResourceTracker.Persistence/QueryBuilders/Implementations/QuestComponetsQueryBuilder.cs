@@ -3,15 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Features.Queries.QuestComponentQueres.SearchQuestComponent;
 using ResourceTracker.Application.Models.Enums;
 using ResourceTracker.Domain.Entities;
-using System.Linq.Expressions;
 using ResourceTracker.Persistence.Common;
+using ResourceTracker.Persistence.QueryBuilders.Interfaces;
+using System.Linq.Expressions;
 
 
 namespace ResourceTracker.Persistence.QueryBuilders.Implementations
 {
-    internal static class QuestComponetsQueryBuilder
+    public class QuestComponetsQueryBuilder : IQuestComponetsQueryBuilder
     {
-        internal static IQueryable<QuestComponents> ApplyFilters(this IQueryable<QuestComponents> query, SearchQuestComponentsQuery request)
+        public IQueryable<QuestComponents> ApplyFilters(IQueryable<QuestComponents> query, SearchQuestComponentsQuery request)
         {
             var filterPredicate = BuildFilterExpression(request);
             var searchPredicate = BuildSearchExpression(request.SearchTerms.GetSearchTerms());
@@ -21,7 +22,7 @@ namespace ResourceTracker.Persistence.QueryBuilders.Implementations
                 .Where(filterPredicate);
         }
 
-        internal static Expression<Func<QuestComponents, bool>> BuildFilterExpression(SearchQuestComponentsQuery request)
+        private Expression<Func<QuestComponents, bool>> BuildFilterExpression(SearchQuestComponentsQuery request)
         {
             var predicate = PredicateBuilder.New<QuestComponents>(true);
 
@@ -35,23 +36,23 @@ namespace ResourceTracker.Persistence.QueryBuilders.Implementations
                 predicate = predicate.And(x => x.Component.Type == request.Type);
 
             if (!string.IsNullOrEmpty(request.ComponentName))
-                predicate = predicate.And(x => EF.Functions.Like(x.Component.Name, PatternBuilder.BuildLikePattern(request.ComponentName, SearchMatchType.StartsWith)));
+                predicate = predicate.And(QueryableILikeExtension.ILike<QuestComponents>(x => x.Component.Name, request.ComponentName, SearchMatchType.StartsWith));
 
             if (!string.IsNullOrEmpty(request.ComponentDescription))
-                predicate = predicate.And(x => EF.Functions.Like(x.Component.Description, PatternBuilder.BuildLikePattern(request.ComponentDescription, SearchMatchType.StartsWith)));
+                predicate = predicate.And(QueryableILikeExtension.ILike<QuestComponents>(x => x.Component.Description, request.ComponentDescription, SearchMatchType.StartsWith));
 
             if (request.QuestId.HasValue)
                 predicate = predicate.And(x => x.QuestId == request.QuestId);
 
             if (!string.IsNullOrEmpty(request.QuestName))
-                predicate = predicate.And(x => EF.Functions.Like(x.Quest.Name, PatternBuilder.BuildLikePattern(request.QuestName, SearchMatchType.StartsWith)));
+                predicate = predicate.And(QueryableILikeExtension.ILike<QuestComponents>(x => x.Quest.Name, request.QuestName, SearchMatchType.StartsWith));
 
             if (!string.IsNullOrEmpty(request.QuestDescription))
-                predicate = predicate.And(x => EF.Functions.Like(x.Quest.Description, PatternBuilder.BuildLikePattern(request.QuestDescription, SearchMatchType.StartsWith)));
+                predicate = predicate.And(QueryableILikeExtension.ILike<QuestComponents>(x => x.Quest.Description, request.QuestDescription, SearchMatchType.StartsWith));
 
             return predicate;
         }
-        internal static Expression<Func<QuestComponents, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.StartsWith)
+        private Expression<Func<QuestComponents, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.StartsWith)
         {
             if (terms == null || !terms.Any())
                 return PredicateBuilder.New<QuestComponents>(true);
@@ -62,7 +63,7 @@ namespace ResourceTracker.Persistence.QueryBuilders.Implementations
             foreach (var term in terms)
             {
                 var pattern = PatternBuilder.BuildLikePattern(term, matchType);
-                predicate = predicate.Or(x => EF.Functions.Like(x.Quest.Name.ToLower(), pattern.ToLower()) || EF.Functions.Like(x.Component.Name.ToLower(), pattern.ToLower()));
+                predicate = predicate.Or(o => EF.Functions.Like(o.Quest.Name.ToLower(), pattern.ToLower()) || EF.Functions.Like(o.Component.Name.ToLower(), pattern.ToLower()));
             }
 
             return predicate;

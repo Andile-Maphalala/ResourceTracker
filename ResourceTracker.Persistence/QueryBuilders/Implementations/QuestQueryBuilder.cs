@@ -1,16 +1,17 @@
-﻿using ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests;
-using ResourceTracker.Domain.Entities;
-using System.Linq.Expressions;
-using LinqKit;
+﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests;
 using ResourceTracker.Application.Models.Enums;
+using ResourceTracker.Domain.Entities;
 using ResourceTracker.Persistence.Common;
+using ResourceTracker.Persistence.QueryBuilders.Interfaces;
+using System.Linq.Expressions;
 
 namespace ResourceTracker.Persistence.QueryBuilders.Implementations
 {
-    internal static class QuestQueryBuilder
+    public class QuestQueryBuilder : IQuestQueryBuilder
     {
-        internal static IQueryable<Quest> ApplyFilters( this IQueryable<Quest> query, SearchQuestsQuery request)
+        public IQueryable<Quest> ApplyFilters(IQueryable<Quest> query, SearchQuestsQuery request)
         {
             var filterPredicate = BuildFilterExpression(request);
             var searchPredicate = BuildSearchExpression(request.SearchTerms.GetSearchTerms());
@@ -20,7 +21,7 @@ namespace ResourceTracker.Persistence.QueryBuilders.Implementations
                 .Where(searchPredicate);
         }
 
-        internal static Expression<Func<Quest, bool>> BuildFilterExpression(SearchQuestsQuery request)
+        private Expression<Func<Quest, bool>> BuildFilterExpression(SearchQuestsQuery request)
         {
             var predicate = PredicateBuilder.New<Quest>(true);
 
@@ -28,25 +29,25 @@ namespace ResourceTracker.Persistence.QueryBuilders.Implementations
                 predicate = predicate.And(o => o.Id == request.QuestId);
 
             if (!string.IsNullOrEmpty(request.Name))
-                predicate = predicate.And(x => EF.Functions.Like(x.Name, PatternBuilder.BuildLikePattern(request.Name, SearchMatchType.StartsWith)));
+                predicate = predicate.And(QueryableILikeExtension.ILike<Quest>(x => x.Name, request.Name, SearchMatchType.StartsWith));
 
             if (!string.IsNullOrEmpty(request.Description))
-                predicate = predicate.And(x => EF.Functions.Like(x.Description, PatternBuilder.BuildLikePattern(request.Description, SearchMatchType.StartsWith)));
+                predicate = predicate.And(QueryableILikeExtension.ILike<Quest>(x => x.Description, request.Description, SearchMatchType.StartsWith));
 
             if (!string.IsNullOrEmpty(request.Location))
-                predicate = predicate.And(x => EF.Functions.Like(x.Location, PatternBuilder.BuildLikePattern(request.Location, SearchMatchType.StartsWith)));
+                predicate = predicate.And(QueryableILikeExtension.ILike<Quest>(x => x.Location, request.Location, SearchMatchType.StartsWith));
 
             if (request.GameId.HasValue)
                 predicate = predicate.And(x => x.GameSave.GameId == request.GameId);
 
             if(!string.IsNullOrEmpty(request.GameName))
-                predicate = predicate.And(x => EF.Functions.Like(x.GameSave.Game.Name, PatternBuilder.BuildLikePattern(request.GameName, SearchMatchType.StartsWith)));
+                predicate = predicate.And(QueryableILikeExtension.ILike<Quest>(x => x.GameSave.Game.Name, request.GameName, SearchMatchType.StartsWith));
 
 
             return predicate;
         }
 
-        internal static Expression<Func<Quest, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.StartsWith)
+        private Expression<Func<Quest, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.StartsWith)
         {
             if (terms == null || !terms.Any())
                 return PredicateBuilder.New<Quest>(true);
