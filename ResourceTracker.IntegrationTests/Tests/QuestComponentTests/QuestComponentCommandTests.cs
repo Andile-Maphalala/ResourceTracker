@@ -38,7 +38,7 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
 
             var command = new CreateQuestComponentCommand
             {
-                AmountAquired = 0,
+                AmountAquired = -1,
                 ComponentId = _componentId,
                 QuestId = _questId
             };
@@ -46,7 +46,7 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
             // Act / Assert
             var result = await Assert.ThrowsAsync<BadRequestException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be("Amount aquired cannot be less than 1");
+            result.Message.Should().Be("Amount aquired cannot be less than 0");
         }
 
         [Fact]
@@ -245,9 +245,7 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
             // Arrange
             var existingId = await AddQuestComponentRecord(_questId, _componentId);
 
-            UserInfoMock
-                .Setup(x => x.GetUserId())
-                .Returns(0);
+            SetUser(0);
 
             var command = new UpdateQuestComponentCommand
             {
