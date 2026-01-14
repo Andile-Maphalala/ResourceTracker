@@ -1,10 +1,7 @@
 ﻿using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
-using ResourceTracker.Application.Common.Exceptions;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Persistence.Data;
-using System.Linq.Expressions;
-using System.Security.Principal;
 
 namespace ResourceTracker.Persistence.Repositories
 {

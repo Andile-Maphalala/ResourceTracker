@@ -1,15 +1,9 @@
-﻿using EntitySecurity.Contract.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using ResourceTracker.Application.Common.User;
-using Microsoft.AspNetCore.Http;
 using ResourceTracker.Application.Constants;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace ResourceTracker.Persistence.Common
+namespace ResourceTracker.Application.Features.Auth
 {
     public class UserInfo : IUserInfo
     {

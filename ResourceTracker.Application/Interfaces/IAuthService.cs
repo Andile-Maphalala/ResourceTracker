@@ -1,11 +1,6 @@
 ﻿using ResourceTracker.Application.Models.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ResourceTracker.Application.Repositories
+namespace ResourceTracker.Application.Interfaces
 {
     public interface IAuthService
     {

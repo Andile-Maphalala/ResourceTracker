@@ -6,7 +6,7 @@ using ResourceTracker.Application.Features.Commands.QuestComponentCommands.Delet
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.CreateQuestComponents;
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.UpdateQuestComponents;
 using ResourceTracker.Application.Common.User;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -61,7 +61,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
             if (userId == 0)
                 throw new BadRequestException("Invalid User");
 
-            List<int> insertedIds = new List<int>();
+            List<QuestComponents> items = new List<QuestComponents>();
 
             foreach (CreateQuestComponentClass questComponent in command.Commands)
             {
@@ -72,13 +72,12 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
                     QuestId = command.QuestId,
                 };
 
-                await _repo.InsertAsync(item, cancellationToken);
-                insertedIds.Add(item.Id);
+                items.Add(item);
             }
-
+            await _repo.BulkInsertAsync(items, cancellationToken);
             await _unitOfWork.Save(cancellationToken);
 
-            return new CreateQuestComponentsResponse(insertedIds);
+            return new CreateQuestComponentsResponse(items.Count());
 
         }
 
@@ -91,7 +90,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
             var item = await _repo.QuestComponents.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
             {
-                throw new BadRequestException("Invalid Quest Component");
+                throw new NotFoundException(nameof(QuestComponents),command.Id);
             }
 
             item.AmountAquired = command.AmountAquired;
@@ -114,7 +113,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
                 var item = await _repo.QuestComponents.FirstOrDefaultAsync(x => x.Id == questComponent.Id, cancellationToken);
                 if (item == null)
                 {
-                    throw new BadRequestException("Invalid Quest Component");
+                    throw new NotFoundException(nameof(QuestComponents), questComponent.Id);
                 }
 
                 bool isUpdated = false;
@@ -147,7 +146,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
             var item = await _repo.QuestComponents.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
             {
-                throw new BadRequestException("Invalid Quest Compoent");
+                throw new NotFoundException(nameof(QuestComponents), command.Id); ;
             }
 
             await _repo.DeleteAsync(item, cancellationToken);

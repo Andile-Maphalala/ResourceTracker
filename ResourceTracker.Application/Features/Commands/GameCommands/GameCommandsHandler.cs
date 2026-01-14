@@ -7,7 +7,7 @@ using ResourceTracker.Application.Common.User;
 using ResourceTracker.Application.Features.Commands.GameCommands.CreateGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.DeleteGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.UpdateGame;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Domain.Entities;
 
 namespace ResourceTracker.Application.Features.Commands.GameCommands
@@ -40,7 +40,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
             if (command.Image != null)
             {
                 var stream = await ConvertIFormFileToByteArray(command.Image);
-                picture = await _imageStorageService.UploadImage(stream, nameof(Game), command.Image.FileName, command.Image.ContentType, 2, command.AltText, cancellationToken);
+                picture = await _imageStorageService.UploadImage(stream, nameof(Game), command.Image.FileName, command.Image.ContentType, _userInfo.GetUserId(), command.AltText, cancellationToken);
                 
             }
             Game item = new Game
@@ -83,7 +83,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
 
             var item = await _repo.Games.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
-                throw new NotFoundException("Game not found");
+                throw new NotFoundException("Invalid Game");
 
             item.Name = command.Name;
             item.Description = command.Description;
@@ -101,7 +101,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
 
             var item = await _repo.Games.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
-                throw new NotFoundException("Game not found");
+                throw new NotFoundException("Invalid Game");
 
             await _repo.DeleteAsync(item, cancellationToken);
             await _unitOfWork.Save(cancellationToken);

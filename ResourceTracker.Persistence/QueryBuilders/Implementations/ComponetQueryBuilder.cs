@@ -1,15 +1,17 @@
 ﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
-using Component = ResourceTracker.Domain.Entities.Component;
-using System.Linq.Expressions;
 using ResourceTracker.Application.Models.Enums;
-using ResourceTracker.Application.Common.Search;
-namespace ResourceTracker.Application.QueryBuilders
+using ResourceTracker.Persistence.Common;
+using ResourceTracker.Persistence.QueryBuilders.Interfaces;
+using System.Linq.Expressions;
+using Component = ResourceTracker.Domain.Entities.Component;
+
+namespace ResourceTracker.Persistence.QueryBuilders.Implementations
 {
-    internal static class ComponetQueryBuilder
+    public class ComponetQueryBuilder : IComponetQueryBuilder
     {
-        internal static IQueryable<Component> ApplyFilters(this IQueryable<Component> query, SearchComponentsQuery request)
+        public IQueryable<Component> ApplyFilters(IQueryable<Component> query, SearchComponentsQuery request)
         {
             var filterPredicate = BuildFilterExpression(request);
             var searchPredicate = BuildSearchExpression(request.SearchTerms.GetSearchTerms());
@@ -19,7 +21,7 @@ namespace ResourceTracker.Application.QueryBuilders
                 .Where(filterPredicate);
         }
 
-        internal static Expression<Func<Component, bool>> BuildFilterExpression(SearchComponentsQuery request)
+        private Expression<Func<Component, bool>> BuildFilterExpression(SearchComponentsQuery request)
         {
             var predicate = PredicateBuilder.New<Component>(true);
 
@@ -29,16 +31,19 @@ namespace ResourceTracker.Application.QueryBuilders
             if (request.Type.HasValue)
                 predicate = predicate.And(x => x.Type == request.Type);
 
+            if (request.GameId.HasValue)
+                predicate = predicate.And(x => x.GameId == request.GameId);
+
             if (!string.IsNullOrEmpty(request.Name))
-                predicate = predicate.And(x => x.Name.StartsWith(request.Name));
+                predicate = predicate.And(QueryableILikeExtension.ILike<Component>(x => x.Name, request.Name, SearchMatchType.StartsWith));
 
             if (!string.IsNullOrEmpty(request.Description))
-                predicate = predicate.And(x => x.Description.StartsWith(request.Description));
+                predicate = predicate.And(QueryableILikeExtension.ILike<Component>(x => x.Description, request.Description, SearchMatchType.StartsWith));
 
 
             return predicate;
         }
-        internal static Expression<Func<Component, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.StartsWith)
+        private Expression<Func<Component, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.Contains)
         {
             if (terms == null || !terms.Any())
                 return PredicateBuilder.New<Component>(true);
@@ -49,7 +54,7 @@ namespace ResourceTracker.Application.QueryBuilders
             foreach (var term in terms)
             {
                 var pattern = PatternBuilder.BuildLikePattern(term, matchType);
-                predicate = predicate.Or(x => EF.Functions.Like(x.Name.ToLower(), pattern.ToLower()) || EF.Functions.Like(x.Description.ToLower(), pattern.ToLower()));
+                predicate = predicate.Or(o => EF.Functions.Like(o.Name.ToLower(), pattern.ToLower()) || EF.Functions.Like(o.Description.ToLower(), pattern.ToLower()));
             }
 
             return predicate;

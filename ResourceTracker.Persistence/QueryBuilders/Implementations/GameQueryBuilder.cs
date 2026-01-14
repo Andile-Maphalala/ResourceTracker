@@ -1,16 +1,17 @@
 ﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using ResourceTracker.Application.Common.Search;
 using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
 using ResourceTracker.Application.Models.Enums;
 using ResourceTracker.Domain.Entities;
+using ResourceTracker.Persistence.Common;
+using ResourceTracker.Persistence.QueryBuilders.Interfaces;
 using System.Linq.Expressions;
 
-namespace ResourceTracker.Application.QueryBuilders
+namespace ResourceTracker.Persistence.QueryBuilders.Implementations
 {
-    internal static class GameQueryBuilder
+    public class GameQueryBuilder : IGameQueryBuilder
     {
-        internal static IQueryable<Game> ApplyFilters(this IQueryable<Game> query, SearchGamesQuery request)
+        public IQueryable<Game> ApplyFilters(IQueryable<Game> query, SearchGamesQuery request) 
         {
             var filterPredicate = BuildFilterExpression(request);
             var searchPredicate = BuildSearchExpression(request.SearchTerms.GetSearchTerms());
@@ -20,7 +21,7 @@ namespace ResourceTracker.Application.QueryBuilders
                 .Where(searchPredicate);
         }
 
-        internal static Expression<Func<Game, bool>> BuildFilterExpression(SearchGamesQuery request)
+        private Expression<Func<Game, bool>> BuildFilterExpression(SearchGamesQuery request)
         {
             var predicate = PredicateBuilder.New<Game>(true);
 
@@ -28,15 +29,20 @@ namespace ResourceTracker.Application.QueryBuilders
                 predicate = predicate.And(o => o.Id == request.GameId);
 
             if (!string.IsNullOrEmpty(request.Name))
-                predicate = predicate.And(x => x.Name.StartsWith(request.Name));
+            {
+                predicate = predicate.And(QueryableILikeExtension.ILike<Game>(x => x.Name, request.Name, SearchMatchType.StartsWith));
+
+            }
 
             if (!string.IsNullOrEmpty(request.Description))
-                predicate = predicate.And(x => x.Description.StartsWith(request.Description));
+            {
+                predicate = predicate.And(QueryableILikeExtension.ILike<Game>(x => x.Description, request.Description, SearchMatchType.StartsWith));
+            }
 
             return predicate;
         }
 
-        internal static Expression<Func<Game, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.Contains)
+        private Expression<Func<Game, bool>> BuildSearchExpression(IEnumerable<string> terms, SearchMatchType matchType = SearchMatchType.Contains)
         {
             if (terms == null || !terms.Any())
                 return PredicateBuilder.New<Game>(true);

@@ -1,6 +1,10 @@
-﻿using ResourceTracker.Domain.Entities;
+﻿using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
+using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
+using ResourceTracker.Application.Features.Queries.QuestComponentQueres.SearchQuestComponent;
+using ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests;
+using ResourceTracker.Domain.Entities;
 
-namespace ResourceTracker.Application.Repositories
+namespace ResourceTracker.Application.Interfaces
 {
     public interface IResourceTrackerRepository : IGenericRepository
     {
@@ -16,5 +20,10 @@ namespace ResourceTracker.Application.Repositories
         IQueryable<Picture> Pictures { get; }
         IQueryable<GameSave> GameSaves { get; }
         IQueryable<BuildPlanQuest> BuildPlanQuests { get; }
+
+        IQueryable<Game> Search(SearchGamesQuery request);
+        IQueryable<Component> Search(SearchComponentsQuery request);
+        IQueryable<QuestComponents> Search(SearchQuestComponentsQuery request);
+        IQueryable<Quest> Search(SearchQuestsQuery request);
     }
 }

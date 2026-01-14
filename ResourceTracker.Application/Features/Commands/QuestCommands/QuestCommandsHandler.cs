@@ -5,7 +5,7 @@ using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Commands.QuestCommands.CreateQuest;
 using ResourceTracker.Application.Features.Commands.QuestCommands.UpdateQuest;
 using ResourceTracker.Application.Features.Commands.QuestCommands.DeleteQuest;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Application.Common.User;
 using ResourceTracker.Domain.Entities;
 
@@ -30,6 +30,10 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
 
         public async Task<CreateQuestResponse> Handle(CreateQuestCommand command, CancellationToken cancellationToken)
         {
+            var userId = _userInfo.GetUserId();
+            if (userId == 0)
+                throw new BadRequestException("Invalid User");
+
             Quest item = new Quest
             {
                 Name = command.Name,
@@ -47,10 +51,14 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
 
         public async Task<Unit> Handle(UpdateQuestCommand command, CancellationToken cancellationToken)
         {
+            var userId = _userInfo.GetUserId();
+            if (userId == 0)
+                throw new BadRequestException("Invalid User");
+
             var item = await _repo.Quests.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
             {
-                throw new BadRequestException("Invalid Quest");
+                throw new NotFoundException(nameof(Quest), command.Id);
             }
 
             item.Name = command.Name;
@@ -66,10 +74,14 @@ namespace ResourceTracker.Application.Features.Commands.QuestCommands
 
         public async Task<Unit> Handle(DeleteQuestCommand command, CancellationToken cancellationToken)
         {
+            var userId = _userInfo.GetUserId();
+            if (userId == 0)
+                throw new BadRequestException("Invalid User");
+
             var item = await _repo.Quests.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
             if (item == null)
             {
-                throw new BadRequestException("Invalid quest");
+                throw new NotFoundException(nameof(Quest),command.Id);
             }
 
             await _repo.DeleteAsync(item, cancellationToken);

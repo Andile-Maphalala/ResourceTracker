@@ -1,5 +1,4 @@
-﻿
-namespace ResourceTracker.Application.Common.Search
+﻿namespace ResourceTracker.Persistence.Common
 {
     internal static class SearchExtensions
     {

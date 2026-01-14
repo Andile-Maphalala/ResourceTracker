@@ -7,7 +7,7 @@ namespace ResourceTracker.Application.Features.Commands.GameSaveCommands.UpdateG
         public UpdateGameSaveValidator()
         {
             RuleFor(x => x.Id)
-                .GreaterThan(0).WithMessage("Invalid game save selected");
+                .GreaterThan(0).WithMessage("Id is required");
             RuleFor(x => x.Name)
                 .MaximumLength(100).WithMessage("Name cannot exceed 100 characters")
                 .NotEmpty().WithMessage("Name is required");

@@ -2,8 +2,5 @@
 
 namespace ResourceTracker.Application.Features.Commands.QuestCommands.DeleteQuest
 {
-    public class DeleteQuestCommand : ICommand
-    {
-        public int Id { get; set; }
-    }
+    public record DeleteQuestCommand(int Id) : ICommand;
 }

@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Common.Exceptions;
+using ResourceTracker.Application.Common.User;
 using ResourceTracker.Application.Features.Queries.GameSaveQueries.GetGameSave;
 using ResourceTracker.Application.Features.Queries.GameSaveQueries.GetGameSaveList;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 
 namespace ResourceTracker.Application.Features.Queries.GameSaveQueries
 {
@@ -12,16 +13,17 @@ namespace ResourceTracker.Application.Features.Queries.GameSaveQueries
         IRequestHandler<GetGameSaveListQuery, List<GetGameSaveListResponse>>
     {
         private readonly IResourceTrackerRepository _repo;
-
-        public GameSaveQueriesHandler(IResourceTrackerRepository repo)
+        private readonly IUserInfo _userInfo;
+        public GameSaveQueriesHandler(IResourceTrackerRepository repo, IUserInfo userInfo)
         {
             _repo = repo;
+            _userInfo = userInfo;
         }
 
         public async Task<GetGameSaveResponse> Handle(GetGameSaveQuery request, CancellationToken cancellationToken)
         {
             var response = await _repo.GameSaves
-                .Where(x => x.Id == request.Id)
+                .Where(x => x.Id == request.Id && x.UserId == _userInfo.GetUserId())
                 .Select(x => new GetGameSaveResponse
                 {
                     Id = x.Id,
@@ -41,7 +43,7 @@ namespace ResourceTracker.Application.Features.Queries.GameSaveQueries
         public async Task<List<GetGameSaveListResponse>> Handle(GetGameSaveListQuery request, CancellationToken cancellationToken)
         {
             var response = await _repo.GameSaves
-                .Where(x => x.GameId == request.GameId)
+                .Where(x => x.GameId == request.GameId && x.UserId == _userInfo.GetUserId())
                 .Select(x => new GetGameSaveListResponse
                 {
                     Id = x.Id,

@@ -2,8 +2,5 @@
 
 namespace ResourceTracker.Application.Features.Commands.GameCommands.DeleteGame
 {
-    public class DeleteGameCommand : ICommand
-    {
-        public int Id { get; set; }
-    }
+    public record DeleteGameCommand(int Id) : ICommand;
 }

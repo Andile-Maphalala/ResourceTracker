@@ -35,8 +35,17 @@ namespace ResourceTracker.Application.Common.Behavior
                 .ToDictionary(x => x.Key, x => x.Values);
 
             if (errors.Any())
-                throw new BadRequestException(errors);
-
+            {
+                if(errors.Count > 1)
+                {
+                    throw new BadRequestException(errors);
+                }
+                else
+                {
+                    throw new BadRequestException(errors.First().Value[0]);
+                }
+            }
+                
             return await next();
         }
     }

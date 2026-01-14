@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using ResourceTracker.Application.Common.User;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Application.Models.Identity;
-using ResourceTracker.Application.Repositories;
 using ResourceTracker.Domain.Entities;
-using ResourceTracker.Persistence.Common;
 using ResourceTracker.Persistence.Data;
+using ResourceTracker.Persistence.QueryBuilders.Implementations;
+using ResourceTracker.Persistence.QueryBuilders.Interfaces;
 using ResourceTracker.Persistence.Repositories;
 using System.Text;
 
@@ -26,7 +26,10 @@ namespace ResourceTracker.Persistence
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ResourceTrackerDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddScoped<IUserInfo, UserInfo>();
+            services.AddScoped<IGameQueryBuilder, GameQueryBuilder>();
+            services.AddScoped<IComponetQueryBuilder, ComponetQueryBuilder>();
+            services.AddScoped<IQuestQueryBuilder, QuestQueryBuilder>();
+            services.AddScoped<IQuestComponetsQueryBuilder, QuestComponetsQueryBuilder>();
 
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             services.AddAuthentication(options =>

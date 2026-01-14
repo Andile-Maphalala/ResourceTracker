@@ -5,8 +5,7 @@ using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Queries.QuestQueries.GetQuest;
 using ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests;
-using ResourceTracker.Application.QueryBuilders;
-using ResourceTracker.Application.Repositories;
+using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Domain.Entities;
 
 
@@ -48,19 +47,18 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries
             if (string.IsNullOrEmpty(request.OrderBy))
                 request.OrderBy = nameof(Quest.Id);
 
-            var quests = await _repo.Quests
-                   .ApplyFilters(request)
+            var quests = await _repo.Search(request)
                  .Select(x => new SearchQuestsResponse
                  {
                      Id = x.Id,
                      Name = x.Name,
                      Description = x.Description,
                      Location = x.Location,
-                     GameId = x.GameSaveId,
+                     GameId = x.GameSave.GameId,
                      GameName = x.GameSave.Game.Name,
                      GameSaveId = x.GameSave.Id,
                      GameSaveName = x.GameSave.Name
-                 }).ToPageableListAsync(request,cancellationToken);
+                 }).ToPageableListAsync(request, cancellationToken);
 
             return quests;
         }
