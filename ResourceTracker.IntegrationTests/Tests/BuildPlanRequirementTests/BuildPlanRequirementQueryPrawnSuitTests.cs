@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueries.GetBuildPlanRequirement;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.IntegrationTests.Setup;
@@ -127,6 +126,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
 
                 requirement.Should().NotBeNull();
 
+                requirement.ComponentId.Should().Be(expected.ComponentId);
                 requirement.RequiredAmount.Should().Be(expected.RequiredAmount);
                 requirement.AvailableAmount.Should().Be(expected.AvailableAmount);
                 requirement.MissingAmount.Should().Be(expected.MissingAmount);
@@ -134,7 +134,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         }
 
         [Fact]
-        public async Task GetBuildPlanRequirement_WithResourcesAndCompositeInInventory_ShouldReturnCorrectRequirements()
+        public async Task GetBuildPlanRequirement_WithResourcesInInventory_ShouldReturnCorrectRequirements()
         {
             // Arrange
             var query = new GetBuildPlanRequirementQuery
@@ -143,16 +143,14 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
                 IgnoreFacilityRequirements = true,
                 IgnoreInventory = false
             };
-            //so should return 1 diamond, no gel sacks and 7 titanium, rest the same
+            //so should return 1 diamond nedded, 0 gel sacks needed, and 7 titanium needed, rest the same
+            await ClearInventorySeed();
             await SeedInventoryAsync(
             (30, 1),// Diamond 2-1
             (24,2),  // Gell Sack 2-2
             (14,13) // Titanium 20-13
             );
 
-            //so should not return quarts and stalker tooth, rest the same
-            await SeedInventoryAsync(
-            (26, 2));// Enameled Glass 2-1
 
             // Act
             var result = await Sender.Send(query);
@@ -173,6 +171,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
 
                 requirement.Should().NotBeNull();
 
+                requirement.ComponentId.Should().Be(expected.ComponentId);
                 requirement.RequiredAmount.Should().Be(expected.RequiredAmount);
                 requirement.AvailableAmount.Should().Be(expected.AvailableAmount);
                 requirement.MissingAmount.Should().Be(expected.MissingAmount);
@@ -180,7 +179,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         }
 
         [Fact]
-        public async Task GetBuildPlanRequirement_WithResourcesInInventory_ShouldReturnCorrectRequirements()
+        public async Task GetBuildPlanRequirement_WithResourcesAndCompositeInInventoryEnameldGlass_ShouldReturnCorrectRequirements()
         {
             // Arrange
             var query = new GetBuildPlanRequirementQuery
@@ -189,23 +188,30 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
                 IgnoreFacilityRequirements = true,
                 IgnoreInventory = false
             };
-            //so should return 1 diamond, no gel sacks and 7 titanium, rest the same
+            //so should return 1 diamond nedded, 0 gel sacks needed, and 7 titanium needed, rest the same
+            await ClearInventorySeed();
             await SeedInventoryAsync(
             (30, 1),// Diamond 2-1
             (24,2),  // Gell Sack 2-2
             (14,13) // Titanium 20-13
             );
 
+            //Should return 1 enameled glass needed
+            //Not return : Quartz,Stalker tooth
+            //rest same
+            await SeedInventoryAsync(
+            (26, 2));// Enameled Glass 2-1
+
             // Act
             var result = await Sender.Send(query);
 
             // Assert
-            var expectedRequirements = PrawnSuitOutput.ExpectedResponseDataNoFacilityWithInvestoryCompositeAndResources();
+            var expectedRequirements = PrawnSuitOutput.ExpectedResponseDataNoFacilityWithInvestoryCompositeAndResources_EnameldGlass();
 
             result.Should().NotBeNull();
             result.BuildPlanId.Should().Be(_buildPlanId);
             result.BuildPlanName.Should().Be("Prawn Suit Only");
-            result.Requirements.Should().HaveCount(8);
+            result.Requirements.Should().HaveCount(7);
             result.TotalAvailable.Should().Be(expectedRequirements.Sum(r => r.AvailableAmount));
             result.TotalMissing.Should().Be(expectedRequirements.Sum(r => r.MissingAmount));
             result.TotalRequired.Should().Be(expectedRequirements.Sum(r => r.RequiredAmount));
@@ -221,6 +227,91 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             }
         }
 
+        [Fact]
+        public async Task GetBuildPlanRequirement_WithResourcesAndCompositeInInventoryGlass_ShouldReturnCorrectRequirements()
+        {
+            // Arrange
+            var query = new GetBuildPlanRequirementQuery
+            {
+                BuildPlanId = _buildPlanId,
+                IgnoreFacilityRequirements = true,
+                IgnoreInventory = false
+            };
+            //so should return 1 diamond nedded, 0 gel sacks needed, and 7 titanium needed, rest the same
+            await ClearInventorySeed();
+            await SeedInventoryAsync(
+            (30, 1),// Diamond 2-1
+            (24, 2),  // Gell Sack 2-2
+            (14, 13) // Titanium 20-13
+            );
+
+            //Should return 1 enameled glass needed
+            //Not return : Quartz,Stalker tooth
+            //rest same
+            await SeedInventoryAsync(
+            (28, 3));//Glass
+
+            // Act
+            var result = await Sender.Send(query);
+
+            // Assert
+            var expectedRequirements = PrawnSuitOutput.ExpectedResponseDataNoFacilityWithInvestoryCompositeAndResources_Glass();
+
+            result.Should().NotBeNull();
+            result.BuildPlanId.Should().Be(_buildPlanId);
+            result.BuildPlanName.Should().Be("Prawn Suit Only");
+            result.Requirements.Should().HaveCount(8);
+            result.TotalAvailable.Should().Be(expectedRequirements.Sum(r => r.AvailableAmount));
+            result.TotalMissing.Should().Be(expectedRequirements.Sum(r => r.MissingAmount));
+            result.TotalRequired.Should().Be(expectedRequirements.Sum(r => r.RequiredAmount));
+            foreach (var expected in expectedRequirements)
+            {
+                var requirement = result.Requirements.FirstOrDefault(r => r.ComponentName == expected.ComponentName);
+
+                requirement.Should().NotBeNull();
+
+                requirement.ComponentId.Should().Be(expected.ComponentId);
+                requirement.RequiredAmount.Should().Be(expected.RequiredAmount);
+                requirement.AvailableAmount.Should().Be(expected.AvailableAmount);
+                requirement.MissingAmount.Should().Be(expected.MissingAmount);
+            }
+        }
+
+        [Fact]
+        public async Task GetBuildPlanRequirement_Should_DepreciateInventoryAcrossMultipleRecipeLevels()
+        {
+            // Arrange
+            var query = new GetBuildPlanRequirementQuery
+            {
+                BuildPlanId = _buildPlanId,
+                IgnoreFacilityRequirements = true,
+                IgnoreInventory = false
+            };
+
+            await ClearInventorySeed();
+
+            // Seed partial composites + base resource
+            await SeedInventoryAsync(
+                (/* Titanium */ 14, 10),
+                (/* Titanium Ingot */ 16, 1)
+            );
+
+            // Act
+            var result = await Sender.Send(query);
+
+            // Assert
+            var titanium = result.Requirements.First(r => r.ComponentName == "Titanium");
+            var titaniumIngot = result.Requirements.First(r => r.ComponentName == "Titanium Ingot");
+
+            titanium.RequiredAmount.Should().Be(10);
+            titanium.AvailableAmount.Should().Be(10);
+            titanium.MissingAmount.Should().Be(0);
+
+            titaniumIngot.RequiredAmount.Should().Be(2);
+            titaniumIngot.AvailableAmount.Should().Be(1);
+            titaniumIngot.MissingAmount.Should().Be(1);
+        }
+
         protected async Task SeedInventoryAsync(params (int componentId, int quantity)[] items)
         {
             foreach (var (componentId, quantity) in items)
@@ -233,6 +324,13 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
                 });
             }
 
+            await DbContext.SaveChangesAsync();
+        }
+
+        private async Task ClearInventorySeed()
+        {
+            var questComponents = DbContext.QuestComponents.Where(qc => qc.Quest.GameSaveId == _GameSaveId);
+            DbContext.QuestComponents.RemoveRange(questComponents);
             await DbContext.SaveChangesAsync();
         }
 

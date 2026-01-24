@@ -21,8 +21,8 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
         public async Task<GetBuildPlanRequirementsResponse> Handle(GetBuildPlanRequirementQuery request, CancellationToken cancellationToken)
         {
             List<BuildPlanComponentRequirementDto> requirements = new List<BuildPlanComponentRequirementDto>();
-            List<BuildPlanComponentRequirementDto> compositeRequirments = new List<BuildPlanComponentRequirementDto>();
-            List<BuildPlanComponentRequirementDto> facilityRequirments = new List<BuildPlanComponentRequirementDto>();
+            List<BuildPlanFacilityRequirementDto> facilityRequirements = new List<BuildPlanFacilityRequirementDto>();
+
             var buildPlan = await _repo.BuildPlans.Where(x => x.Id == request.BuildPlanId)
                 .Include(z => z.BuildPlanQuests)
                 .ThenInclude(y => y.Quest)
@@ -38,38 +38,19 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
             var buildPlanComponetsRequired = buildPlan.BuildPlanComponents.ToList();
             if (buildPlanComponetsRequired.Any())
             {
-                foreach (var buildPlanComponent in buildPlanComponetsRequired)
+                foreach (var buildPlanComponent in buildPlan.BuildPlanComponents)
                 {
-
-                    if (buildPlanComponent.Component.Type == (int)ComponentTypeEnum.Resource)
-                    {
-                        requirements.Add(new BuildPlanComponentRequirementDto
-                        {
-                            ComponentId = buildPlanComponent.Component.Id,
-                            ComponentName = buildPlanComponent.Component.Name,
-                            RequiredAmount = buildPlanComponent.QuantityNeeded,
-                            AvailableAmount = 0,
-                            MissingAmount = buildPlanComponent.QuantityNeeded,
-                            Type = buildPlanComponent.Component.Type
-                        });
-                    }
-                    else if (buildPlanComponent.Component.Type == (int)ComponentTypeEnum.Composite)
-                    {
-                        await CalculateComponentRequirements(buildPlanComponent.Component, buildPlanComponent.QuantityNeeded, requirements, request.IgnoreInventory, allInventory, cancellationToken);
-
-                    }
-                    else if (buildPlanComponent.Component.Type == (int)ComponentTypeEnum.Facility)
-                    {
-                        
-                    }
+                    await CalculateRequirementsRecursive(
+                        buildPlanComponent.Component,
+                        buildPlanComponent.QuantityNeeded,
+                        requirements,
+                        facilityRequirements,
+                        allInventory,
+                        request.IgnoreInventory,
+                        request.IgnoreFacilityRequirements,
+                        new HashSet<int>(),
+                        cancellationToken);
                 }
-            }
-
-            if (request.IgnoreFacilityRequirements)
-            {
-            }
-            if (request.IgnoreInventory)
-            {
             }
 
             var response = new GetBuildPlanRequirementsResponse
@@ -85,74 +66,131 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
             return response;
         }
 
-        private async Task CalculateComponentRequirements(Component component, int quantityNeeded, List<BuildPlanComponentRequirementDto> requirements, bool ignoreInventory, List<QuestComponents> Inventory, CancellationToken cancellationToken)
+        private async Task CalculateRequirementsRecursive(
+    Component component,
+    int quantityNeeded,
+    List<BuildPlanComponentRequirementDto> requirements,
+    List<BuildPlanFacilityRequirementDto> facilityRequirements,
+    List<QuestComponents> inventory,
+    bool ignoreInventory,
+    bool ignoreFacilityRequirements,
+    HashSet<int> visitedComponents,
+    CancellationToken cancellationToken)
         {
-            var recipes = component.Recipes;
-            if (recipes.Any())
+            // Prevent infinite recursion
+            if (!visitedComponents.Add(component.Id))
+                return;
+
+            int availableFromInventory = 0;
+            if (!ignoreInventory)
             {
-                var recipe = recipes.First();
-                foreach (var recipeComponent in recipe.RecipeComponents)
+                var inventoryItem = inventory.FirstOrDefault(x => x.ComponentId == component.Id);
+                availableFromInventory = inventoryItem?.AmountAquired ?? 0;
+            }
+
+            int stillNeeded = Math.Max(0, quantityNeeded - availableFromInventory);
+            if (stillNeeded == 0)
+            {
+                AddOrUpdateRequirement(requirements, component, quantityNeeded, availableFromInventory);
+                DeductFromInventory(inventory, component.Id, quantityNeeded);
+                return;
+            }
+            else if (availableFromInventory > 0 && component.Type == (int)ComponentTypeEnum.Composite)
+            {
+                // Partially satisfied from inventory
+                AddOrUpdateRequirement(requirements, component, quantityNeeded, availableFromInventory);
+                DeductFromInventory(inventory, component.Id, availableFromInventory);
+            }
+
+
+            if (component.Type == (int)ComponentTypeEnum.Resource)
+            {
+                // Raw material, just add to requirements
+                AddOrUpdateRequirement(requirements, component, quantityNeeded, availableFromInventory);
+                DeductFromInventory(inventory, component.Id, quantityNeeded);
+                return;
+            }
+
+            var recipes = component.Recipes.ToList();
+            if (!recipes.Any())
+            {
+                // No recipe exists (shouldn't happen for composites/facilities)
+                return;
+            }
+
+            var recipe = recipes.First();
+
+            // Check facility requirement if not ignoring
+            //if (!ignoreFacilityRequirements && recipe.RequiredFacility != null)
+            //{
+            //    var facilityReq = new BuildPlanFacilityRequirementDto
+            //    {
+            //        FacilityId = recipe.RequiredFacility.Id,
+            //        FacilityName = recipe.RequiredFacility.Name,
+            //        IsAvailable = await CheckFacilityAvailable(recipe.RequiredFacility.Id, inventory),
+            //        RequiredFor = component.Name
+            //    };
+
+            //    if (!facilityRequirements.Any(f => f.FacilityId == facilityReq.FacilityId))
+            //    {
+            //        facilityRequirements.Add(facilityReq);
+            //    }
+            //}
+
+            /// Calculate how many we need to CRAFT (not how many total we need)
+            int toCraft = Math.Max(0, stillNeeded);
+            int batchesToCraft = (int)Math.Ceiling((double)toCraft / recipe.AmountMade);
+
+            // Process each ingredient
+            foreach (var recipeComponent in recipe.RecipeComponents)
+            {
+                int ingredientNeeded = recipeComponent.AmountRequired * batchesToCraft;
+
+                await CalculateRequirementsRecursive(
+                    recipeComponent.Component,
+                    ingredientNeeded,
+                    requirements,
+                    facilityRequirements,
+                    inventory,
+                    ignoreInventory,
+                    ignoreFacilityRequirements,
+                    visitedComponents,
+                    cancellationToken);
+            }
+
+        }
+
+
+        private void AddOrUpdateRequirement(List<BuildPlanComponentRequirementDto> requirements, Component component, int required, int available)
+        {
+            var existing = requirements.FirstOrDefault(x => x.ComponentId == component.Id);
+
+            if (existing != null)
+            {
+                existing.RequiredAmount += required;
+                existing.AvailableAmount = Math.Max(existing.AvailableAmount, available);
+                existing.MissingAmount = Math.Max(0, existing.RequiredAmount - existing.AvailableAmount);
+            }
+            else
+            {
+                requirements.Add(new BuildPlanComponentRequirementDto
                 {
-                    int totalNeeded = recipeComponent.AmountRequired * quantityNeeded;
-                    if (recipeComponent.Component.Type == (int)ComponentTypeEnum.Resource)
-                    {
-                        var existingRequirement = requirements.FirstOrDefault(x => x.ComponentId == recipeComponent.Component.Id);
-                        if (existingRequirement != null)
-                        {
-                            existingRequirement.RequiredAmount += totalNeeded;
-                            existingRequirement.MissingAmount += totalNeeded;
-                        }
-                        else
-                        {
-                            if(ignoreInventory)
-                            {
-                                requirements.Add(new BuildPlanComponentRequirementDto
-                                {
-                                    ComponentId = recipeComponent.Component.Id,
-                                    ComponentName = recipeComponent.Component.Name,
-                                    RequiredAmount = totalNeeded,
-                                    AvailableAmount = 0,
-                                    MissingAmount = totalNeeded,
-                                    Type = recipeComponent.Component.Type
-                                });
-                            }
-                            else
-                            {
-                                var existingComponetInInventory = Inventory.Where(z => z.ComponentId == recipeComponent.Component.Id).FirstOrDefault();
-                                if (existingComponetInInventory == null)
-                                {
-                                    requirements.Add(new BuildPlanComponentRequirementDto
-                                    {
-                                        ComponentId = recipeComponent.Component.Id,
-                                        ComponentName = recipeComponent.Component.Name,
-                                        RequiredAmount = totalNeeded,
-                                        AvailableAmount = 0,
-                                        MissingAmount = totalNeeded,
-                                        Type = recipeComponent.Component.Type
-                                    });
-                                }
-                                else
-                                {
-                                    requirements.Add(new BuildPlanComponentRequirementDto
-                                    {
-                                        ComponentId = recipeComponent.Component.Id,
-                                        ComponentName = recipeComponent.Component.Name,
-                                        RequiredAmount = totalNeeded,
-                                        AvailableAmount = existingComponetInInventory.AmountAquired,
-                                        MissingAmount = totalNeeded - existingComponetInInventory.AmountAquired,
-                                        Type = recipeComponent.Component.Type
-                                    });
-                                }
-                            }
-                            
-                        } 
-                    }
-                    else
-                    {
-                        await CalculateComponentRequirements(recipeComponent.Component, totalNeeded, requirements, ignoreInventory, Inventory, cancellationToken);
-                    }
-                    
-                }
+                    ComponentId = component.Id,
+                    ComponentName = component.Name,
+                    RequiredAmount = required,
+                    AvailableAmount = available,
+                    MissingAmount = Math.Max(0, required - available),
+                    Type = component.Type
+                });
+            }
+        }
+
+        private void DeductFromInventory(List<QuestComponents> inventory, int componentId, int amountToDeduct)
+        {
+            var inventoryItem = inventory.FirstOrDefault(x => x.ComponentId == componentId);
+            if (inventoryItem != null)
+            {
+                inventoryItem.AmountAquired = Math.Max(0, inventoryItem.AmountAquired - amountToDeduct);
             }
         }
     }
