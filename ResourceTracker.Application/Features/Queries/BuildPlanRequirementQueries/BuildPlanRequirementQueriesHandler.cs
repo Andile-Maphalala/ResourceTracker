@@ -6,6 +6,7 @@ using ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueries.G
 using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.Domain.Enums;
+using Component = ResourceTracker.Domain.Entities.Component;
 
 namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueries
 {
@@ -21,8 +22,11 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
         public async Task<GetBuildPlanRequirementsResponse> Handle(GetBuildPlanRequirementQuery request, CancellationToken cancellationToken)
         {
             List<BuildPlanComponentRequirementDto> requirements = new List<BuildPlanComponentRequirementDto>();
-            List<BuildPlanFacilityRequirementDto> facilityRequirements = new List<BuildPlanFacilityRequirementDto>();
 
+            // Use a dictionary for facility requirements for O(1) lookups
+            var facilityRequirementsMap = new Dictionary<int, BuildPlanFacilityRequirementDto>();
+
+            //get all componets to build and their recipes in a single query to avoid N+1 issues during recursion
             var buildPlan = await _repo.BuildPlans.Where(x => x.Id == request.BuildPlanId)
                 .Include(z => z.BuildPlanQuests)
                 .ThenInclude(y => y.Quest)
@@ -34,25 +38,88 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                 .ThenInclude(x => x.Recipes)
                 .FirstOrDefaultAsync(cancellationToken);
 
+            if(buildPlan == null)
+            {
+                throw new Exception($"BuildPlan with ID {request.BuildPlanId} not found.");
+            }
+
             var allInventory = buildPlan.BuildPlanQuests.SelectMany(x => x.Quest.QuestComponents).ToList();
-            var buildPlanComponetsRequired = buildPlan.BuildPlanComponents.ToList();
+
+            // Immutable snapshot to check facility availability (facilities are not consumed)
+            var inventorySnapshot = allInventory.ToDictionary(i => i.ComponentId, i => i.AmountAquired);
+
+            // Working copy we can mutate while deducting consumed components
+            var workingInventory = allInventory
+                .Select(i => new QuestComponents
+                {
+                    ComponentId = i.ComponentId,
+                    AmountAquired = i.AmountAquired
+                })
+                .ToList();
+
+            var buildPlanComponetsRequired = buildPlan.BuildPlanComponents.OrderBy(x => x.Order).ToList();
             if (buildPlanComponetsRequired.Any())
             {
-                foreach (var buildPlanComponent in buildPlan.BuildPlanComponents)
+                foreach (var buildPlanComponent in buildPlanComponetsRequired)
                 {
                     await CalculateRequirementsRecursive(
                         buildPlanComponent.Component,
                         buildPlanComponent.QuantityNeeded,
                         requirements,
-                        facilityRequirements,
-                        allInventory,
-                        request.IgnoreInventory,
-                        request.IgnoreFacilityRequirements,
-                        new HashSet<int>(),
+                        facilityRequirementsMap,
+                        workingInventory,
+                        inventorySnapshot,
+                        request.IncludeInventory,
+                        request.IncludeFacilityRequirements,
                         cancellationToken);
                 }
-            }
+                if (request.IncludeFacilityRequirements && facilityRequirementsMap.Any())
+                {
+                    // Iteratively process facilities until no new facility requirements are discovered.
+                    // This handles facilities that themselves require other facilities.
+                    var processedFacilityIds = new HashSet<int>();
+                    while (true)
+                    {
+                        // determine which facility ids still need to be fetched/processed
+                        var toProcessIds = facilityRequirementsMap.Keys.Except(processedFacilityIds).ToList();
+                        if (!toProcessIds.Any())
+                            break;
 
+                        // batch query the components for these facilities;
+                        // include Recipes, Recipe.RecipeComponents and Recipe.RequiredFacility so recursion can inspect them
+                        var facilityComponents = _repo.Components
+                            .Where(c => toProcessIds.Contains(c.Id))
+                            .Include(c => c.Recipes)
+                                .ThenInclude(r => r.RecipeComponents)
+                                    .ThenInclude(rc => rc.Component)
+                            .Include(c => c.Recipes)
+                                .ThenInclude(r => r.RequiredFacility)
+                            .ToList();
+
+                        foreach (var facilityComponent in facilityComponents)
+                        {
+                            // mark as processed to avoid refetching endlessly
+                            processedFacilityIds.Add(facilityComponent.Id);
+
+                            // process the facility component as a top-level craft (quantity = 1).
+                            // If this processing discovers new facility dependencies they will get added to facilityRequirementsMap,
+                            // causing the while loop to iterate again and fetch/process them.
+                            await CalculateRequirementsRecursive(
+                                facilityComponent,
+                                1,
+                                requirements,
+                                facilityRequirementsMap,
+                                workingInventory,
+                                inventorySnapshot,
+                                request.IncludeInventory,
+                                request.IncludeFacilityRequirements,
+                                cancellationToken);
+                        }
+                    }
+                }
+
+                
+            }
             var response = new GetBuildPlanRequirementsResponse
             {
                 BuildPlanId = buildPlan.Id,
@@ -60,31 +127,28 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                 Requirements = requirements,
                 TotalAvailable = requirements.Sum(x => x.AvailableAmount),
                 TotalMissing = requirements.Sum(x => x.MissingAmount),
-                TotalRequired = requirements.Sum(x => x.RequiredAmount)
+                TotalRequired = requirements.Sum(x => x.RequiredAmount),
+                FacilityRequirements = facilityRequirementsMap.Values.ToList()
             };
-
             return response;
+
         }
 
         private async Task CalculateRequirementsRecursive(
-    Component component,
-    int quantityNeeded,
-    List<BuildPlanComponentRequirementDto> requirements,
-    List<BuildPlanFacilityRequirementDto> facilityRequirements,
-    List<QuestComponents> inventory,
-    bool ignoreInventory,
-    bool ignoreFacilityRequirements,
-    HashSet<int> visitedComponents,
-    CancellationToken cancellationToken)
+            Component component,
+            int quantityNeeded,
+            List<BuildPlanComponentRequirementDto> requirements,
+            Dictionary<int, BuildPlanFacilityRequirementDto> facilityRequirementsMap,
+            List<QuestComponents> workingInventory,
+            IReadOnlyDictionary<int, int> inventorySnapshot,
+            bool includeInventory,
+            bool includeFacilityRequirements,
+            CancellationToken cancellationToken)
         {
-            // Prevent infinite recursion
-            if (!visitedComponents.Add(component.Id))
-                return;
-
             int availableFromInventory = 0;
-            if (!ignoreInventory)
+            if (includeInventory)
             {
-                var inventoryItem = inventory.FirstOrDefault(x => x.ComponentId == component.Id);
+                var inventoryItem = workingInventory.FirstOrDefault(x => x.ComponentId == component.Id);
                 availableFromInventory = inventoryItem?.AmountAquired ?? 0;
             }
 
@@ -92,22 +156,21 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
             if (stillNeeded == 0)
             {
                 AddOrUpdateRequirement(requirements, component, quantityNeeded, availableFromInventory);
-                DeductFromInventory(inventory, component.Id, quantityNeeded);
+                DeductFromInventory(workingInventory, component.Id, quantityNeeded);
                 return;
             }
             else if (availableFromInventory > 0 && component.Type == (int)ComponentTypeEnum.Composite)
             {
                 // Partially satisfied from inventory
                 AddOrUpdateRequirement(requirements, component, quantityNeeded, availableFromInventory);
-                DeductFromInventory(inventory, component.Id, availableFromInventory);
+                DeductFromInventory(workingInventory, component.Id, availableFromInventory);
             }
-
 
             if (component.Type == (int)ComponentTypeEnum.Resource)
             {
-                // Raw material, just add to requirements
+                // Raw material, just add to requirements (resources are leaf nodes)
                 AddOrUpdateRequirement(requirements, component, quantityNeeded, availableFromInventory);
-                DeductFromInventory(inventory, component.Id, quantityNeeded);
+                DeductFromInventory(workingInventory, component.Id, quantityNeeded);
                 return;
             }
 
@@ -120,24 +183,32 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
 
             var recipe = recipes.First();
 
-            // Check facility requirement if not ignoring
-            //if (!ignoreFacilityRequirements && recipe.RequiredFacility != null)
-            //{
-            //    var facilityReq = new BuildPlanFacilityRequirementDto
-            //    {
-            //        FacilityId = recipe.RequiredFacility.Id,
-            //        FacilityName = recipe.RequiredFacility.Name,
-            //        IsAvailable = await CheckFacilityAvailable(recipe.RequiredFacility.Id, inventory),
-            //        RequiredFor = component.Name
-            //    };
+            // Track facility requirement but determine availability from the ORIGINAL snapshot (not the mutated working inventory)
+            if (includeFacilityRequirements && recipe.RequiredFacility != null)
+            {
+                var facilityId = recipe.RequiredFacility.Id;
+                if (!facilityRequirementsMap.TryGetValue(facilityId, out var facilityReq))
+                {
+                    bool isAvailable = inventorySnapshot.TryGetValue(facilityId, out var amt) && amt > 0;
 
-            //    if (!facilityRequirements.Any(f => f.FacilityId == facilityReq.FacilityId))
-            //    {
-            //        facilityRequirements.Add(facilityReq);
-            //    }
-            //}
+                    facilityReq = new BuildPlanFacilityRequirementDto
+                    {
+                        FacilityId = facilityId,
+                        Name = recipe.RequiredFacility.Name,
+                        IsAvailable = isAvailable,
+                        RequiredFor = new List<int> { component.Id }
+                    };
 
-            /// Calculate how many we need to CRAFT (not how many total we need)
+                    facilityRequirementsMap[facilityId] = facilityReq;
+                }
+                else
+                {
+                    if (!facilityReq.RequiredFor.Contains(component.Id))
+                        facilityReq.RequiredFor.Add(component.Id);
+                }
+            }
+
+            // Calculate how many to craft (batches)
             int toCraft = Math.Max(0, stillNeeded);
             int batchesToCraft = (int)Math.Ceiling((double)toCraft / recipe.AmountMade);
 
@@ -150,14 +221,13 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                     recipeComponent.Component,
                     ingredientNeeded,
                     requirements,
-                    facilityRequirements,
-                    inventory,
-                    ignoreInventory,
-                    ignoreFacilityRequirements,
-                    visitedComponents,
+                    facilityRequirementsMap,
+                    workingInventory,
+                    inventorySnapshot,
+                    includeInventory,
+                    includeFacilityRequirements,
                     cancellationToken);
             }
-
         }
 
 
@@ -193,5 +263,6 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                 inventoryItem.AmountAquired = Math.Max(0, inventoryItem.AmountAquired - amountToDeduct);
             }
         }
+
     }
 }

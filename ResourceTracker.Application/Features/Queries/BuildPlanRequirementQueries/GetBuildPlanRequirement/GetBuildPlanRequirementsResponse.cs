@@ -12,6 +12,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
         public int TotalAvailable { get; set; }
         public int TotalMissing { get; set; }
         public List<BuildPlanComponentRequirementDto> Requirements { get; set; }
+        public List<BuildPlanFacilityRequirementDto> FacilityRequirements { get; set; }
 
     }
 }

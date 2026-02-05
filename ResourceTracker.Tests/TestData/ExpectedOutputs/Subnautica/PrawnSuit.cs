@@ -137,7 +137,7 @@ namespace ResourceTracker.Tests.TestData.ExpectedOutputs.Subnautica
                    Id = 18,
                    Name = "Creepvine Seed Cluster",
                    Description = "Indigenous seeds with high silicone and oil content.",
-                   Type = (int)ComponentTypeEnum.Composite,
+                   Type = (int)ComponentTypeEnum.Resource,
                 },
                 new Component
                 {
@@ -270,9 +270,9 @@ namespace ResourceTracker.Tests.TestData.ExpectedOutputs.Subnautica
                     RequiredFacilityId = 4, // Habitat Builder
                     RecipeComponents = new Collection<RecipeComponent>()
                     {
-                        new RecipeComponent { ComponentId = 5, AmountRequired = 1 }, // Wiring Kit
-                        new RecipeComponent { ComponentId = 7, AmountRequired = 1 }, // Computer Chip
-                        new RecipeComponent { ComponentId = 12, AmountRequired = 1 }, // Battery
+                        new RecipeComponent { ComponentId = 8, AmountRequired = 1 }, // Table Coral Sample
+                        new RecipeComponent { ComponentId = 9, AmountRequired = 1 }, // Gold
+                        new RecipeComponent { ComponentId = 14, AmountRequired = 1 }, // Titanium
                     }
                 },
                 new Recipe
@@ -332,8 +332,8 @@ namespace ResourceTracker.Tests.TestData.ExpectedOutputs.Subnautica
                     RequiredFacilityId = 3, // Fabricator
                     RecipeComponents = new Collection<RecipeComponent>()
                     {
+                        new RecipeComponent { ComponentId = 11, AmountRequired = 1 }, // Copper Ore
                         new RecipeComponent { ComponentId = 13, AmountRequired = 2 }, // Acid Mushroom
-                        new RecipeComponent { ComponentId = 14, AmountRequired = 1 }, // Titanium
                     }
                 },
                 new Recipe {

@@ -4,8 +4,8 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
     public class BuildPlanFacilityRequirementDto
     {
         public int FacilityId { get; set; }
-        public string FacilityName { get; set; }
+        public string Name { get; set; }
         public bool IsAvailable { get; set; }
-        public string RequiredFor { get; set; }
+        public List<int> RequiredFor { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
     public class GetBuildPlanRequirementQuery : IRequest<GetBuildPlanRequirementsResponse>
     {
         public int BuildPlanId { get; set; }
-        public bool IgnoreFacilityRequirements { get; set; }
-        public bool IgnoreInventory{ get; set; }
+        public bool IncludeFacilityRequirements { get; set; }
+        public bool IncludeInventory{ get; set; }
     }
 }
