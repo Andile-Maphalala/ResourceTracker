@@ -6,10 +6,10 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands.C
     public class CreateQuestComponentsCommand : ICommand<CreateQuestComponentsResponse>
     {
         public int QuestId { get; set; }
-        public List<CreateQuestComponentClass> Commands { get; set; }
+        public List<CreateQuestComponentDto> Commands { get; set; }
     }
 
-    public class CreateQuestComponentClass
+    public class CreateQuestComponentDto
     {
         public int AmountAquired { get; set; }
 

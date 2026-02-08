@@ -65,7 +65,7 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
 
             List<QuestComponents> items = new List<QuestComponents>();
 
-            foreach (CreateQuestComponentClass questComponent in command.Commands)
+            foreach (CreateQuestComponentDto questComponent in command.Commands)
             {
                 QuestComponents item = new QuestComponents
                 {

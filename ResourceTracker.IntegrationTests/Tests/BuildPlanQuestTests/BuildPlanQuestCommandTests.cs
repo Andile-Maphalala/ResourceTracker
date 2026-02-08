@@ -1,66 +1,66 @@
 ﻿using FluentAssertions;
 using ResourceTracker.Application.Common.Exceptions;
-using ResourceTracker.Application.Features.Commands.QuestComponentCommands.CreateQuestComponent;
-using ResourceTracker.Application.Features.Commands.QuestComponentCommands.CreateQuestComponents;
-using ResourceTracker.Application.Features.Commands.QuestComponentCommands.DeleteQuestComponent;
-using ResourceTracker.Application.Features.Commands.QuestComponentCommands.DeleteQuestComponents;
-using ResourceTracker.Application.Features.Commands.QuestComponentCommands.UpdateQuestComponent;
-using ResourceTracker.Application.Features.Commands.QuestComponentCommands.UpdateQuestComponents;
+using ResourceTracker.Application.Features.Commands.BuildPlanComponentCommands.CreateBuildPlanComponent;
+using ResourceTracker.Application.Features.Commands.BuildPlanComponentCommands.CreateBuildPlanComponents;
+using ResourceTracker.Application.Features.Commands.BuildPlanComponentCommands.DeleteBuildPlanComponent;
+using ResourceTracker.Application.Features.Commands.BuildPlanComponentCommands.DeleteBuildPlanComponents;
+using ResourceTracker.Application.Features.Commands.BuildPlanComponentCommands.UpdateBuildPlanComponent;
+using ResourceTracker.Application.Features.Commands.BuildPlanComponentCommands.UpdateBuildPlanComponents;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.IntegrationTests.Setup;
 
-namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
+namespace ResourceTracker.IntegrationTests.Tests.BuildPlanBuildPlanTests
 {
-    public class QuestComponentCommandTests : IntegrationTestBase
+    public class BuildPlanBuildPlanCommandTests : IntegrationTestBase
     {
-        public QuestComponentCommandTests(IntegrationTestFixture fixture) : base(fixture)
+        public BuildPlanBuildPlanCommandTests(IntegrationTestFixture fixture) : base(fixture)
         {
+
         }
 
         private int _gameId;
         private int _gameSaveId;
-        private int _questId;
+        private int _buildPlanId;
         private int _componentId;
 
         protected override async Task ClassSetup()
         {
             _gameId = await AddGameRecord();
             _gameSaveId = await AddGameSaveRecord(_gameId);
-            _questId = await AddQuestRecord(_gameSaveId);
+            _buildPlanId = await AddBuildPlanRecord(_gameSaveId);
             _componentId = await AddComponentRecord(_gameId);
         }
-
         /// Validators - Create single
         [Fact]
-        public async Task CreateQuestComponent_AmountAquiredInvalid_ThrowError()
+        public async Task CreateBuildPlanComponent_QuantityNeededInvalid_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new CreateQuestComponentCommand
+            var command = new CreateBuildPlanComponentCommand
             {
-                AmountAquired = -1,
+                QuantityNeeded = -1,
                 ComponentId = _componentId,
-                QuestId = _questId
+                BuildPlanId = _buildPlanId
             };
 
             // Act / Assert
             var result = await Assert.ThrowsAsync<BadRequestException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be("Amount aquired cannot be less than 0");
+            result.Message.Should().Be("Quantity must be greater than 0");
         }
 
         [Fact]
-        public async Task CreateQuestComponent_ComponentIdEmpty_ThrowError()
+        public async Task CreateBuildPlanComponent_ComponentIdEmpty_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new CreateQuestComponentCommand
+            var command = new CreateBuildPlanComponentCommand
             {
-                AmountAquired = 1,
+                QuantityNeeded = 1,
                 ComponentId = 0,
-                QuestId = _questId
+                BuildPlanId = _buildPlanId
             };
 
             // Act / Assert
@@ -70,37 +70,37 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         }
 
         [Fact]
-        public async Task CreateQuestComponent_QuestIdEmpty_ThrowError()
+        public async Task CreateBuildPlanComponent_BuildPlanIdEmpty_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new CreateQuestComponentCommand
+            var command = new CreateBuildPlanComponentCommand
             {
-                AmountAquired = 1,
+                QuantityNeeded = 1,
                 ComponentId = _componentId,
-                QuestId = 0
+                BuildPlanId = 0
             };
 
             // Act / Assert
             var result = await Assert.ThrowsAsync<BadRequestException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be("Quest is required");
+            result.Message.Should().Be("BuildPlan is required");
         }
 
         [Fact]
-        public async Task CreateQuestComponent_InvalidUser_ThrowError()
+        public async Task CreateBuildPlanComponent_InvalidUser_ThrowError()
         {
             // Arrange
             UserInfoMock
                 .Setup(x => x.GetUserId())
                 .Returns(0);
 
-            var command = new CreateQuestComponentCommand
+            var command = new CreateBuildPlanComponentCommand
             {
-                AmountAquired = 1,
+                QuantityNeeded = 1,
                 ComponentId = _componentId,
-                QuestId = _questId
+                BuildPlanId = _buildPlanId
             };
 
             // Act / Assert
@@ -110,16 +110,16 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         }
 
         [Fact]
-        public async Task CreateQuestComponent_ValidRequest_CreateRecord()
+        public async Task CreateBuildPlanComponent_ValidRequest_CreateRecord()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new CreateQuestComponentCommand
+            var command = new CreateBuildPlanComponentCommand
             {
-                AmountAquired = 5,
+                QuantityNeeded = 5,
                 ComponentId = _componentId,
-                QuestId = _questId
+                BuildPlanId = _buildPlanId
             };
 
             // Act
@@ -129,69 +129,69 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
             result.Should().NotBeNull();
             result.Id.Should().BeGreaterThan(0);
 
-            var entity = await DbContext.QuestComponents.FindAsync(result.Id);
+            var entity = await DbContext.BuildPlanComponents.FindAsync(result.Id);
             entity.Should().NotBeNull();
-            entity!.AmountAquired.Should().Be(command.AmountAquired);
+            entity!.QuantityNeeded.Should().Be(command.QuantityNeeded);
             entity.ComponentId.Should().Be(command.ComponentId);
-            entity.QuestId.Should().Be(command.QuestId);
+            entity.BuildPlanId.Should().Be(command.BuildPlanId);
         }
 
         /// Create multiple
         [Fact]
-        public async Task CreateQuestComponents_QuestIdEmpty_ThrowError()
+        public async Task CreateBuildPlanComponents_BuildPlanIdEmpty_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new CreateQuestComponentsCommand
+            var command = new CreateBuildPlanComponentsCommand
             {
-                QuestId = 0,
-                Commands = new List<CreateQuestComponentDto>()
+                BuildPlanId = 0,
+                Commands = new List<CreateBuildPlanComponentDto>()
                 {
-                    new CreateQuestComponentDto { AmountAquired = 1, ComponentId = _componentId }
+                    new CreateBuildPlanComponentDto { QuantityNeeded = 1, ComponentId = _componentId }
                 }
             };
 
             // Act / Assert
             var result = await Assert.ThrowsAsync<BadRequestException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be("Quest is required");
+            result.Message.Should().Be("BuildPlan is required");
         }
 
         [Fact]
-        public async Task CreateQuestComponents_CommandItemInvalid_ThrowError()
+        public async Task CreateBuildPlanComponents_CommandItemInvalid_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new CreateQuestComponentsCommand
+            var command = new CreateBuildPlanComponentsCommand
             {
-                QuestId = _questId,
-                Commands = new List<CreateQuestComponentDto>()
+                BuildPlanId = _buildPlanId,
+                Commands = new List<CreateBuildPlanComponentDto>()
                 {
-                    new CreateQuestComponentDto { AmountAquired = -1, ComponentId = _componentId }
+                    new CreateBuildPlanComponentDto { QuantityNeeded = -1, ComponentId = _componentId }
                 }
             };
 
             // Act / Assert
             var result = await Assert.ThrowsAsync<BadRequestException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be("Amount aquired cannot be less than 1");
+            result.Message.Should().Be("Quantity must be greater than 0");
         }
 
         [Fact]
-        public async Task CreateQuestComponents_ValidRequest_CreateRecords()
+        public async Task CreateBuildPlanComponents_ValidRequest_CreateRecords()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new CreateQuestComponentsCommand
+            var command = new CreateBuildPlanComponentsCommand
             {
-                QuestId = _questId,
-                Commands = new List<CreateQuestComponentDto>()
+                BuildPlanId = _buildPlanId,
+                Commands = new List<CreateBuildPlanComponentDto>()
                 {
-                    new CreateQuestComponentDto { AmountAquired = 2, ComponentId = _componentId },
-                    new CreateQuestComponentDto { AmountAquired = 3, ComponentId = _componentId }
+                    new CreateBuildPlanComponentDto { QuantityNeeded = 2, ComponentId = _componentId },
+                    new CreateBuildPlanComponentDto { QuantityNeeded = 3, ComponentId = _componentId }
                 }
             };
 
@@ -205,15 +205,15 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
 
         /// Update single
         [Fact]
-        public async Task UpdateQuestComponent_IdEmpty_ThrowError()
+        public async Task UpdateBuildPlanComponent_IdEmpty_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new UpdateQuestComponentCommand
+            var command = new UpdateBuildPlanComponentCommand
             {
                 Id = 0,
-                AmountAquired = 1
+                QuantityNeeded = 1
             };
 
             // Act / Assert
@@ -223,35 +223,35 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         }
 
         [Fact]
-        public async Task UpdateQuestComponent_AmountInvalid_ThrowError()
+        public async Task UpdateBuildPlanComponent_AmountInvalid_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new UpdateQuestComponentCommand
+            var command = new UpdateBuildPlanComponentCommand
             {
                 Id = 1,
-                AmountAquired = -1
+                QuantityNeeded = -1
             };
 
             // Act / Assert
             var result = await Assert.ThrowsAsync<BadRequestException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be("Amount aquired cannot be less than 1");
+            result.Message.Should().Be("Quantity must be greater than 0");
         }
 
         [Fact]
-        public async Task UpdateQuestComponent_InvalidUser_ThrowError()
+        public async Task UpdateBuildPlanComponent_InvalidUser_ThrowError()
         {
             // Arrange
-            var existingId = await AddQuestComponentRecord(_questId, _componentId);
+            var existingId = await AddBuildPlanComponentRecord(_buildPlanId, _componentId);
 
             SetUser(0);
 
-            var command = new UpdateQuestComponentCommand
+            var command = new UpdateBuildPlanComponentCommand
             {
                 Id = existingId,
-                AmountAquired = 10
+                QuantityNeeded = 10
             };
 
             // Act / Assert
@@ -261,55 +261,55 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         }
 
         [Fact]
-        public async Task UpdateQuestComponent_InvalidId_ThrowNotFound()
+        public async Task UpdateBuildPlanComponent_InvalidId_ThrowNotFound()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new UpdateQuestComponentCommand
+            var command = new UpdateBuildPlanComponentCommand
             {
                 Id = IncorrectValue,
-                AmountAquired = 10
+                QuantityNeeded = 10
             };
 
             // Act / Assert
             var result = await Assert.ThrowsAsync<NotFoundException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be($"Entity (QuestComponents) with Key ({command.Id}) was not found.");
+            result.Message.Should().Be($"Entity (BuildPlanComponent) with Key ({command.Id}) was not found.");
         }
 
         [Fact]
-        public async Task UpdateQuestComponent_ValidRequest_UpdateRecord()
+        public async Task UpdateBuildPlanComponent_ValidRequest_UpdateRecord()
         {
             // Arrange
-            var id = await AddQuestComponentRecord(_questId, _componentId);
+            var id = await AddBuildPlanComponentRecord(_buildPlanId, _componentId);
             SetupNonAdminUser();
 
-            var command = new UpdateQuestComponentCommand
+            var command = new UpdateBuildPlanComponentCommand
             {
                 Id = id,
-                AmountAquired = 7
+                QuantityNeeded = 7
             };
 
             // Act
             await Sender.Send(command, CancellationToken.None);
 
             // Assert
-            var entity = await DbContext.QuestComponents.FindAsync(id);
+            var entity = await DbContext.BuildPlanComponents.FindAsync(id);
             entity.Should().NotBeNull();
-            entity!.AmountAquired.Should().Be(command.AmountAquired);
+            entity!.QuantityNeeded.Should().Be(command.QuantityNeeded);
         }
 
         /// Update multiple
         [Fact]
-        public async Task UpdateQuestComponents_EmptyCommands_ThrowError()
+        public async Task UpdateBuildPlanComponents_EmptyCommands_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new UpdateQuestComponentsCommand
+            var command = new UpdateBuildPlanComponentsCommand
             {
-                Commands = new List<UpdateQuestComponentCommand>()
+                Commands = new List<UpdateBuildPlanComponentCommand>()
             };
 
             // Act / Assert
@@ -319,40 +319,40 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         }
 
         [Fact]
-        public async Task UpdateQuestComponents_CommandItemNotFound_ThrowNotFound()
+        public async Task UpdateBuildPlanComponents_CommandItemNotFound_ThrowNotFound()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new UpdateQuestComponentsCommand
+            var command = new UpdateBuildPlanComponentsCommand
             {
-                Commands = new List<UpdateQuestComponentCommand>()
+                Commands = new List<UpdateBuildPlanComponentCommand>()
                 {
-                    new UpdateQuestComponentCommand { Id = IncorrectValue, AmountAquired = 5 }
+                    new UpdateBuildPlanComponentCommand { Id = IncorrectValue, QuantityNeeded = 5 }
                 }
             };
 
             // Act / Assert
             var result = await Assert.ThrowsAsync<NotFoundException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be($"Entity (QuestComponents) with Key ({command.Commands.First().Id}) was not found.");
+            result.Message.Should().Be($"Entity (BuildPlanComponent) with Key ({command.Commands.First().Id}) was not found.");
         }
 
         [Fact]
-        public async Task UpdateQuestComponents_ValidRequest_BulkUpdate()
+        public async Task UpdateBuildPlanComponents_ValidRequest_BulkUpdate()
         {
             // Arrange
-            var id1 = await AddQuestComponentRecord(_questId, _componentId);
-            var id2 = await AddQuestComponentRecord(_questId, _componentId);
+            var id1 = await AddBuildPlanComponentRecord(_buildPlanId, _componentId);
+            var id2 = await AddBuildPlanComponentRecord(_buildPlanId, _componentId);
 
             SetupNonAdminUser();
 
-            var command = new UpdateQuestComponentsCommand
+            var command = new UpdateBuildPlanComponentsCommand
             {
-                Commands = new List<UpdateQuestComponentCommand>()
+                Commands = new List<UpdateBuildPlanComponentCommand>()
                 {
-                    new UpdateQuestComponentCommand { Id = id1, AmountAquired = 11 },
-                    new UpdateQuestComponentCommand { Id = id2, AmountAquired = 0 }   
+                    new UpdateBuildPlanComponentCommand { Id = id1, QuantityNeeded = 11 },
+                    new UpdateBuildPlanComponentCommand { Id = id2, QuantityNeeded = 1 }
                 }
             };
 
@@ -360,22 +360,22 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
             await Sender.Send(command, CancellationToken.None);
 
             // Assert
-            var e1 = await DbContext.QuestComponents.FindAsync(id1);
-            var e2 = await DbContext.QuestComponents.FindAsync(id2);
+            var e1 = await DbContext.BuildPlanComponents.FindAsync(id1);
+            var e2 = await DbContext.BuildPlanComponents.FindAsync(id2);
             e1.Should().NotBeNull();
             e2.Should().NotBeNull();
-            e1!.AmountAquired.Should().Be(11);
-            e2!.AmountAquired.Should().Be(0);
+            e1!.QuantityNeeded.Should().Be(11);
+            e2!.QuantityNeeded.Should().Be(1);
         }
 
         /// Delete
         [Fact]
-        public async Task DeleteQuestComponent_IdEmpty_ThrowError()
+        public async Task DeleteBuildPlanComponent_IdEmpty_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new DeleteQuestComponentCommand(Id: 0);
+            var command = new DeleteBuildPlanComponentCommand(Id: 0);
 
             // Act / Assert
             var result = await Assert.ThrowsAsync<BadRequestException>(() =>
@@ -384,44 +384,44 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         }
 
         [Fact]
-        public async Task DeleteQuestComponent_NotFound_ThrowNotFound()
+        public async Task DeleteBuildPlanComponent_NotFound_ThrowNotFound()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new DeleteQuestComponentCommand(Id: IncorrectValue);
+            var command = new DeleteBuildPlanComponentCommand(Id: IncorrectValue);
 
             // Act / Assert
             var result = await Assert.ThrowsAsync<NotFoundException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be($"Entity (QuestComponents) with Key ({command.Id}) was not found.");
+            result.Message.Should().Be($"Entity (BuildPlanComponent) with Key ({command.Id}) was not found.");
         }
 
         [Fact]
-        public async Task DeleteQuestComponent_ValidData_DeleteRecord()
+        public async Task DeleteBuildPlanComponent_ValidData_DeleteRecord()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var id = await AddQuestComponentRecord(_questId, _componentId);
+            var id = await AddBuildPlanComponentRecord(_buildPlanId, _componentId);
 
-            var command = new DeleteQuestComponentCommand(Id: id);
+            var command = new DeleteBuildPlanComponentCommand(Id: id);
 
             // Act
             await Sender.Send(command, CancellationToken.None);
 
             // Assert
-            var entity = await DbContext.QuestComponents.FindAsync(id);
+            var entity = await DbContext.BuildPlanComponents.FindAsync(id);
             entity.Should().BeNull();
         }
 
         [Fact]
-        public async Task DeleteQuestComponents_EmptyIds_ThrowError()
+        public async Task DeleteBuildPlanComponents_EmptyIds_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new DeleteQuestComponentsCommand
+            var command = new DeleteBuildPlanComponentsCommand
             {
                 Ids = new List<int>()
             };
@@ -433,12 +433,12 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         }
 
         [Fact]
-        public async Task DeleteQuestComponents_IdItemInvalid_ThrowError()
+        public async Task DeleteBuildPlanComponents_IdItemInvalid_ThrowError()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new DeleteQuestComponentsCommand
+            var command = new DeleteBuildPlanComponentsCommand
             {
                 Ids = new List<int> { 0 }
             };
@@ -450,12 +450,12 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         }
 
         [Fact]
-        public async Task DeleteQuestComponents_CommandItemNotFound_ThrowNotFound()
+        public async Task DeleteBuildPlanComponents_CommandItemNotFound_ThrowNotFound()
         {
             // Arrange
             SetupNonAdminUser();
 
-            var command = new DeleteQuestComponentsCommand
+            var command = new DeleteBuildPlanComponentsCommand
             {
                 Ids = new List<int> { IncorrectValue }
             };
@@ -463,19 +463,19 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
             // Act / Assert
             var result = await Assert.ThrowsAsync<NotFoundException>(() =>
                 Sender.Send(command, CancellationToken.None));
-            result.Message.Should().Be($"Entity (QuestComponents) with Key ({command.Ids.First()}) was not found.");
+            result.Message.Should().Be($"Entity (BuildPlanComponent) with Key ({command.Ids.First()}) was not found.");
         }
 
         [Fact]
-        public async Task DeleteQuestComponents_ValidRequest_BulkDelete()
+        public async Task DeleteBuildPlanComponents_ValidRequest_BulkDelete()
         {
             // Arrange
-            var id1 = await AddQuestComponentRecord(_questId, _componentId);
-            var id2 = await AddQuestComponentRecord(_questId, _componentId);
+            var id1 = await AddBuildPlanComponentRecord(_buildPlanId, _componentId);
+            var id2 = await AddBuildPlanComponentRecord(_buildPlanId, _componentId);
 
             SetupNonAdminUser();
 
-            var command = new DeleteQuestComponentsCommand
+            var command = new DeleteBuildPlanComponentsCommand
             {
                 Ids = new List<int> { id1, id2 }
             };
@@ -484,8 +484,8 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
             await Sender.Send(command, CancellationToken.None);
 
             // Assert
-            var e1 = await DbContext.QuestComponents.FindAsync(id1);
-            var e2 = await DbContext.QuestComponents.FindAsync(id2);
+            var e1 = await DbContext.BuildPlanComponents.FindAsync(id1);
+            var e2 = await DbContext.BuildPlanComponents.FindAsync(id2);
             e1.Should().BeNull();
             e2.Should().BeNull();
         }
@@ -519,16 +519,15 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
             return gs.Id;
         }
 
-        private async Task<int> AddQuestRecord(int _gameSaveId)
+        private async Task<int> AddBuildPlanRecord(int _gameSaveId)
         {
-            var quest = new Quest
+            var quest = new BuildPlan
             {
-                Name = "Existing Quest",
+                Name = "Existing BuildPlan",
                 Description = "Existing Description",
-                Location = "Existing Location",
                 GameSaveId = _gameSaveId
             };
-            DbContext.Quests.Add(quest);
+            DbContext.BuildPlans.Add(quest);
             await DbContext.SaveChangesAsync();
             return quest.Id;
         }
@@ -547,15 +546,15 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
             return component.Id;
         }
 
-        private async Task<int> AddQuestComponentRecord(int _questId, int _componentId, int amount = 1)
+        private async Task<int> AddBuildPlanComponentRecord(int _buildPlanId, int _componentId, int amount = 1)
         {
-            var qc = new QuestComponents
+            var qc = new BuildPlanComponent
             {
-                AmountAquired = amount,
-                QuestId = _questId,
+                QuantityNeeded = amount,
+                BuildPlanId = _buildPlanId,
                 ComponentId = _componentId
             };
-            DbContext.QuestComponents.Add(qc);
+            DbContext.BuildPlanComponents.Add(qc);
             await DbContext.SaveChangesAsync();
             return qc.Id;
         }
