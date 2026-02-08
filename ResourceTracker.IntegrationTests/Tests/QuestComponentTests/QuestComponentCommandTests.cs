@@ -3,6 +3,7 @@ using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.CreateQuestComponent;
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.CreateQuestComponents;
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.DeleteQuestComponent;
+using ResourceTracker.Application.Features.Commands.QuestComponentCommands.DeleteQuestComponents;
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.UpdateQuestComponent;
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.UpdateQuestComponents;
 using ResourceTracker.Domain.Entities;
@@ -413,6 +414,82 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
             var entity = await DbContext.QuestComponents.FindAsync(id);
             entity.Should().BeNull();
         }
+
+        [Fact]
+        public async Task DeleteQuestComponents_EmptyIds_ThrowError()
+        {
+            // Arrange
+            SetupNonAdminUser();
+
+            var command = new DeleteQuestComponentsCommand
+            {
+                Ids = new List<int>()
+            };
+
+            // Act / Assert
+            var result = await Assert.ThrowsAsync<BadRequestException>(() =>
+                Sender.Send(command, CancellationToken.None));
+            result.Message.Should().Be("Atleast 1 id is required");
+        }
+
+        [Fact]
+        public async Task DeleteQuestComponents_IdItemInvalid_ThrowError()
+        {
+            // Arrange
+            SetupNonAdminUser();
+
+            var command = new DeleteQuestComponentsCommand
+            {
+                Ids = new List<int> { 0 }
+            };
+
+            // Act / Assert
+            var result = await Assert.ThrowsAsync<BadRequestException>(() =>
+                Sender.Send(command, CancellationToken.None));
+            result.Message.Should().Be("Id is required");
+        }
+
+        [Fact]
+        public async Task DeleteQuestComponents_CommandItemNotFound_ThrowNotFound()
+        {
+            // Arrange
+            SetupNonAdminUser();
+
+            var command = new DeleteQuestComponentsCommand
+            {
+                Ids = new List<int> { IncorrectValue }
+            };
+
+            // Act / Assert
+            var result = await Assert.ThrowsAsync<NotFoundException>(() =>
+                Sender.Send(command, CancellationToken.None));
+            result.Message.Should().Be($"Entity (QuestComponents) with Key ({command.Ids.First()}) was not found.");
+        }
+
+        [Fact]
+        public async Task DeleteQuestComponents_ValidRequest_BulkDelete()
+        {
+            // Arrange
+            var id1 = await AddQuestComponentRecord(_questId, _componentId);
+            var id2 = await AddQuestComponentRecord(_questId, _componentId);
+
+            SetupNonAdminUser();
+
+            var command = new DeleteQuestComponentsCommand
+            {
+                Ids = new List<int> { id1, id2 }
+            };
+
+            // Act
+            await Sender.Send(command, CancellationToken.None);
+
+            // Assert
+            var e1 = await DbContext.QuestComponents.FindAsync(id1);
+            var e2 = await DbContext.QuestComponents.FindAsync(id2);
+            e1.Should().BeNull();
+            e2.Should().BeNull();
+        }
+
 
         #region Helpers
         private async Task<int> AddGameRecord()

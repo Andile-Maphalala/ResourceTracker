@@ -10,6 +10,7 @@ using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using ResourceTracker.Application.Features.Commands.QuestComponentCommands.DeleteQuestComponents;
 
 namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
 {
@@ -18,7 +19,8 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
         ICommandHandler<UpdateQuestComponentCommand>,
         ICommandHandler<DeleteQuestComponentCommand>,
         ICommandHandler<CreateQuestComponentsCommand, CreateQuestComponentsResponse>,
-        ICommandHandler<UpdateQuestComponentsCommand>
+        ICommandHandler<UpdateQuestComponentsCommand>,
+        ICommandHandler<DeleteQuestComponentsCommand>
 
     {
 
@@ -157,5 +159,19 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands
 
         }
 
+        public async Task<Unit> Handle(DeleteQuestComponentsCommand request, CancellationToken cancellationToken)
+        {
+            foreach (int id in request.Ids)
+            {
+                var item = await _repo.QuestComponents.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+                if (item == null)
+                {
+                    throw new NotFoundException(nameof(QuestComponents), id); ;
+                }
+                await _repo.DeleteAsync(item, cancellationToken);
+            }
+            await _unitOfWork.Save(cancellationToken);
+            return Unit.Value;
+        }
     }
 }
