@@ -1,6 +1,7 @@
 ﻿
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueries.GetBuildPlanRequirement;
 using ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueries.GetBuildPlanRequirement.Dto;
 using ResourceTracker.Application.Interfaces;
@@ -40,7 +41,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
 
             if(buildPlan == null)
             {
-                throw new Exception($"BuildPlan with ID {request.BuildPlanId} not found.");
+                throw new NotFoundException(nameof(buildPlan), request.BuildPlanId);
             }
 
             var allInventory = buildPlan.BuildPlanQuests.SelectMany(x => x.Quest.QuestComponents).ToList();
@@ -238,7 +239,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
             if (existing != null)
             {
                 existing.RequiredAmount += required;
-                existing.AvailableAmount = Math.Max(existing.AvailableAmount, available);
+                existing.AvailableAmount += available;
                 existing.MissingAmount = Math.Max(0, existing.RequiredAmount - existing.AvailableAmount);
             }
             else
