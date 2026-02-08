@@ -3,7 +3,7 @@ using ResourceTracker.Domain.Enums;
 using System.Collections.ObjectModel;
 
 
-namespace ResourceTracker.Tests.TestData.ExpectedOutputs.Subnautica
+namespace ResourceTracker.IntegrationTests.TestData.InputData.Subnautica
 {
     public static class PrawnSuit
     {
@@ -186,7 +186,7 @@ namespace ResourceTracker.Tests.TestData.ExpectedOutputs.Subnautica
                    Id = 25,
                    Name = "Ruby",
                    Type = (int)ComponentTypeEnum.Resource,
-
+                   Description = "Ruby.",
                 },
                 new Component
                 {
@@ -200,18 +200,21 @@ namespace ResourceTracker.Tests.TestData.ExpectedOutputs.Subnautica
                    Id = 27,
                    Name = "Stalker Tooth",
                    Type = (int)ComponentTypeEnum.Resource,
+                   Description = "Stalker Tooth."
                 },
                 new Component
                 {
                    Id = 28,
                    Name = "Glass",
                    Type = (int)ComponentTypeEnum.Composite,
+                   Description = "Glass."
                 },
                 new Component
                 {
                    Id = 29,
                    Name = "Quartz",
                    Type = (int)ComponentTypeEnum.Resource,
+                   Description = "Quartz."
                 },
                 new Component
                 {
@@ -245,8 +248,8 @@ namespace ResourceTracker.Tests.TestData.ExpectedOutputs.Subnautica
                         new RecipeComponent { ComponentId = 21, AmountRequired = 2 }, // Plasteel Ingot
                         new RecipeComponent { ComponentId = 23, AmountRequired = 2 }, // Aerogel
                         new RecipeComponent { ComponentId = 26, AmountRequired = 1 }, // Enameled Glass
-                        new RecipeComponent { ComponentId = 29, AmountRequired = 2 },// Diamond
-                        new RecipeComponent { ComponentId = 30, AmountRequired = 2 }, // Lead
+                        new RecipeComponent { ComponentId = 30, AmountRequired = 2 },// Diamond
+                        new RecipeComponent { ComponentId = 31, AmountRequired = 2 }, // Lead
                     }
                 },
                 new Recipe
@@ -435,7 +438,7 @@ namespace ResourceTracker.Tests.TestData.ExpectedOutputs.Subnautica
                     RequiredFacilityId = 3, // Fabricator
                     RecipeComponents = new Collection<RecipeComponent>()
                     {
-                        new RecipeComponent { ComponentId = 29, AmountRequired = 1 }, // Quartz
+                        new RecipeComponent { ComponentId = 29, AmountRequired = 2 }, // Quartz
                     }
                 },
             };
