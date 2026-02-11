@@ -45,7 +45,9 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries
         public async Task<PageableResponse<SearchQuestsResponse>> Handle(SearchQuestsQuery request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(request.OrderBy))
+            {
                 request.OrderBy = nameof(Quest.Id);
+            }
 
             var quests = await _repo.Search(request)
                  .Select(x => new SearchQuestsResponse

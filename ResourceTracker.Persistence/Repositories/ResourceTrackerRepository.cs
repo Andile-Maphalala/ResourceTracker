@@ -1,4 +1,5 @@
-﻿using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
+﻿using ResourceTracker.Application.Features.Queries.BuildPlanComponentQueries.SearchBuildPlanComponent;
+using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
 using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
 using ResourceTracker.Application.Features.Queries.QuestComponentQueres.SearchQuestComponent;
 using ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests;
@@ -15,20 +16,22 @@ namespace ResourceTracker.Persistence.Repositories
         private readonly IComponetQueryBuilder _componentQueryBuilder;
         private readonly IQuestQueryBuilder _questQueryBuilder;
         private readonly IQuestComponetsQueryBuilder _questComponetsQueryBuilder;
+        private readonly IBuildPlanComponentBuilder _buildPlanComponentBuilder;
 
-        public ResourceTrackerRepository(ResourceTrackerDbContext context, IGameQueryBuilder gameQueryBuilder, IComponetQueryBuilder componentQueryBuilder, IQuestQueryBuilder questQueryBuilder, IQuestComponetsQueryBuilder questComponetsQueryBuilder) : base(context)
+        public ResourceTrackerRepository(ResourceTrackerDbContext context, IGameQueryBuilder gameQueryBuilder, IComponetQueryBuilder componentQueryBuilder, IQuestQueryBuilder questQueryBuilder, IQuestComponetsQueryBuilder questComponetsQueryBuilder, IBuildPlanComponentBuilder buildPlanComponentBuilder) : base(context)
         {
             _gameQueryBuilder = gameQueryBuilder;
             _componentQueryBuilder = componentQueryBuilder;
             _questQueryBuilder = questQueryBuilder;
             _questComponetsQueryBuilder = questComponetsQueryBuilder;
+            _buildPlanComponentBuilder = buildPlanComponentBuilder;
         }
 
-        public IQueryable<User> Users  => Set<User>();
-        public IQueryable<Quest> Quests  => Set<Quest>();
-        public IQueryable<Component> Components  => Set<Component>();
-        public IQueryable<Recipe> Recipes  => Set<Recipe>();
-        public IQueryable<QuestComponents> QuestComponents  => Set<QuestComponents>();
+        public IQueryable<User> Users => Set<User>();
+        public IQueryable<Quest> Quests => Set<Quest>();
+        public IQueryable<Component> Components => Set<Component>();
+        public IQueryable<Recipe> Recipes => Set<Recipe>();
+        public IQueryable<QuestComponents> QuestComponents => Set<QuestComponents>();
         public IQueryable<RecipeComponent> RecipeComponents => Set<RecipeComponent>();
         public IQueryable<BuildPlan> BuildPlans => Set<BuildPlan>();
         public IQueryable<BuildPlanComponent> BuildPlanComponents => Set<BuildPlanComponent>();
@@ -55,6 +58,11 @@ namespace ResourceTracker.Persistence.Repositories
         public IQueryable<Quest> Search(SearchQuestsQuery request)
         {
             return _questQueryBuilder.ApplyFilters(Quests, request);
+        }
+
+        public IQueryable<BuildPlanComponent> Search(SearchBuildPlanComponentQuery request)
+        {
+            return _buildPlanComponentBuilder.ApplyFilters(BuildPlanComponents, request);
         }
     }
 }

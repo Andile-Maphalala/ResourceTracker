@@ -30,6 +30,7 @@ namespace ResourceTracker.Persistence
             services.AddScoped<IComponetQueryBuilder, ComponetQueryBuilder>();
             services.AddScoped<IQuestQueryBuilder, QuestQueryBuilder>();
             services.AddScoped<IQuestComponetsQueryBuilder, QuestComponetsQueryBuilder>();
+            services.AddScoped<IBuildPlanComponentBuilder, BuildPlanComponentBuilder>();
 
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             services.AddAuthentication(options =>
