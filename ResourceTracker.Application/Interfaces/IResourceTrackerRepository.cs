@@ -1,4 +1,5 @@
-﻿using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
+﻿using ResourceTracker.Application.Features.Queries.BuildPlanComponentQueries.SearchBuildPlanComponent;
+using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
 using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
 using ResourceTracker.Application.Features.Queries.QuestComponentQueres.SearchQuestComponent;
 using ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests;
@@ -25,5 +26,6 @@ namespace ResourceTracker.Application.Interfaces
         IQueryable<Component> Search(SearchComponentsQuery request);
         IQueryable<QuestComponents> Search(SearchQuestComponentsQuery request);
         IQueryable<Quest> Search(SearchQuestsQuery request);
+        IQueryable<BuildPlanComponent> Search(SearchBuildPlanComponentQuery request);
     }
 }
