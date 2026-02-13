@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ResourceTracker.Domain.Entities
 {
     public class RecipeComponent
@@ -11,9 +6,7 @@ namespace ResourceTracker.Domain.Entities
         public int RecipeId { get; set; }
         public int ComponentId { get; set; }
         public int AmountRequired { get; set; }
-
         public virtual Recipe Recipe { get; set; }
-
         public virtual Component Component { get; set; }
     }
 }

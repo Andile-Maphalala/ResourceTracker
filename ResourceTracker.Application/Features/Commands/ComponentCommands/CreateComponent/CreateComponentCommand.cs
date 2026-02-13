@@ -8,5 +8,5 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands.Create
         public string Description { get; set; }
         public int Type { get; set; }
         public int GameId { get; set; }
-        }
+    }
 }

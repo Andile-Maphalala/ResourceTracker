@@ -43,7 +43,7 @@ namespace ResourceTracker.IntegrationTests.Tests.ComponentTests
         public async Task GetComponent_WhenFound_ReturnsComponent()
         {
             Component existing = DbContext.Components.First(c => c.Name == "Iron Ore");
-            GetComponentQuery query = new GetComponentQuery { Id = existing.Id };
+            GetComponentQuery query = new GetComponentQuery(existing.Id);
 
             GetComponentResponse result = await Sender.Send(query, CancellationToken.None);
 
@@ -56,7 +56,7 @@ namespace ResourceTracker.IntegrationTests.Tests.ComponentTests
         [Fact]
         public async Task GetComponent_WhenNotFound_ThrowsNotFoundException()
         {
-            GetComponentQuery query = new GetComponentQuery { Id = 999999 };
+            GetComponentQuery query = new GetComponentQuery(999999);
 
             var result = await Assert.ThrowsAsync<NotFoundException>(() =>
                 Sender.Send(query, CancellationToken.None));

@@ -11,6 +11,5 @@ namespace ResourceTracker.Application.Interfaces
         Task UpdateAsync<T>(T entity, CancellationToken cancellationToken) where T : class;
         Task BulkUpdateAsync<T>(List<T> entities, CancellationToken cancellationToken) where T : class;
         Task DeleteAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class;
-
     }
 }

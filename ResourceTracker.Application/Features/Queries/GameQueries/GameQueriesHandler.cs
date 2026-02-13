@@ -31,8 +31,10 @@ namespace ResourceTracker.Application.Features.Queries.GameQueries
                     Name = x.Name,
                     Description = x.Description,
                 }).FirstOrDefaultAsync(cancellationToken);
+
             if (game is null)
                 throw new NotFoundException(nameof(Game), request.Id);
+
             return game;
         }
 

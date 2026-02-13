@@ -1,5 +1,4 @@
 ﻿using ResourceTracker.Application.Common.CQRS;
-using ResourceTracker.Application.Features.Commands.QuestComponentCommands.CreateQuestComponent;
 
 namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands.CreateQuestComponents
 {

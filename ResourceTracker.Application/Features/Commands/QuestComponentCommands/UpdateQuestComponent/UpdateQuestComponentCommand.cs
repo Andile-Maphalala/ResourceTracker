@@ -5,7 +5,6 @@ namespace ResourceTracker.Application.Features.Commands.QuestComponentCommands.U
     public class UpdateQuestComponentCommand : ICommand
     {
         public int Id { get; set; }
-
         public int AmountAquired { get; set; }
     }
 }

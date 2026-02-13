@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 
-
 namespace ResourceTracker.Application.Features.Commands.GameCommands.CreateGame
 {
     public class CreateGameValidator : AbstractValidator<CreateGameCommand>

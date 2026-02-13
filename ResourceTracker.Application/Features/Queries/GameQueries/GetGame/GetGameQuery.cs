@@ -2,8 +2,5 @@
 
 namespace ResourceTracker.Application.Features.Queries.GameQueries.GetGame
 {
-    public class GetGameQuery : IRequest<GetGameResponse>
-    {
-        public int Id { get; set; }
-    }
+    public record GetGameQuery(int Id) : IRequest<GetGameResponse>;
 }

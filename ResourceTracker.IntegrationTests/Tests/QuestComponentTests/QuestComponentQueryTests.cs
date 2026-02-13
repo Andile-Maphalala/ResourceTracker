@@ -70,7 +70,7 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         {
             // Arrange
             var existing = DbContext.QuestComponents.First();
-            var query = new GetQuestComponentQuery { Id = existing.Id };
+            var query = new GetQuestComponentQuery(existing.Id);
 
             // Act
             var result = await Sender.Send(query, CancellationToken.None);
@@ -88,7 +88,7 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         public async Task GetQuestComponent_WhenNotFound_ThrowsNotFoundException()
         {
             // Arrange
-            var query = new GetQuestComponentQuery { Id = 999999 };
+            var query = new GetQuestComponentQuery(999999);
 
             // Act
             // Assert

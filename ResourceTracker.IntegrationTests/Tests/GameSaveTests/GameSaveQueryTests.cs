@@ -55,7 +55,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
             // Arrange
             SetupNonAdminUser();
             var existing = DbContext.GameSaves.First(gs => gs.Name == "Coral Reef Base");
-            var query = new GetGameSaveQuery { Id = existing.Id };
+            var query = new GetGameSaveQuery(existing.Id);
 
             // Act
             var result = await Sender.Send(query, CancellationToken.None);
@@ -74,7 +74,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
         {
             // Arrange
             SetupNonAdminUser();
-            var query = new GetGameSaveQuery { Id = IncorrectValue };
+            var query = new GetGameSaveQuery(IncorrectValue);
 
             // Act
             // Assert
@@ -89,7 +89,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
             // Arrange
             SetUser(IncorrectValue);
             var existing = DbContext.GameSaves.First(gs => gs.Name == "Coral Reef Base");
-            var query = new GetGameSaveQuery { Id = existing.Id };
+            var query = new GetGameSaveQuery(existing.Id);
 
             // Act
             // Assert
@@ -103,7 +103,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
         {
             // Arrange
             SetupNonAdminUser();
-            var query = new GetGameSaveListQuery { GameId = _subnauticaGameId };
+            var query = new GetGameSaveListQuery(_subnauticaGameId);
 
             // Act
             var result = await Sender.Send(query, CancellationToken.None);
@@ -118,7 +118,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameSaveTests
         {
             // Arrange
             SetupNonAdminUser();
-            var query = new GetGameSaveListQuery { GameId = IncorrectValue };
+            var query = new GetGameSaveListQuery(IncorrectValue);
 
             // Act
             var result = await Sender.Send(query, CancellationToken.None);

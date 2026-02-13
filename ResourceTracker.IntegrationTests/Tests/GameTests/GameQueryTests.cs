@@ -37,7 +37,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         {
             // Arrange
             var existing = DbContext.Games.First();
-            var query = new GetGameQuery { Id = existing.Id };
+            var query = new GetGameQuery(existing.Id);
 
             // Act
             var result = await Sender.Send(query, CancellationToken.None);
@@ -51,7 +51,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task GetGame_WhenNotFound_ThrowsError()
         {
             await Assert.ThrowsAsync<NotFoundException>(() =>
-                Sender.Send(new GetGameQuery { Id = 9999 }, CancellationToken.None));
+                Sender.Send(new GetGameQuery(9999), CancellationToken.None));
         }
 
 

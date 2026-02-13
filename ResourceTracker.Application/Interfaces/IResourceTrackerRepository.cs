@@ -22,7 +22,6 @@ namespace ResourceTracker.Application.Interfaces
         IQueryable<Picture> Pictures { get; }
         IQueryable<GameSave> GameSaves { get; }
         IQueryable<BuildPlanQuest> BuildPlanQuests { get; }
-
         IQueryable<Game> Search(SearchGamesQuery request);
         IQueryable<Component> Search(SearchComponentsQuery request);
         IQueryable<QuestComponents> Search(SearchQuestComponentsQuery request);

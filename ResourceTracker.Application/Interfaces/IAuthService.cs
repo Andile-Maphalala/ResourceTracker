@@ -6,6 +6,5 @@ namespace ResourceTracker.Application.Interfaces
     {
         Task<AuthResponse> Login(AuthRequest request);
         Task<RegistrationResponse> Register(RegistrationRequest request);
-
     }
 }

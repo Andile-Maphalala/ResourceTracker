@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using ResourceTracker.Domain.Enums;
 
-
 namespace ResourceTracker.Application.Features.Commands.ComponentCommands.UpdateComponent
 {
     public class UpdateComponentValidator : AbstractValidator<UpdateComponentCommand>
@@ -24,5 +23,5 @@ namespace ResourceTracker.Application.Features.Commands.ComponentCommands.Update
             return Enum.IsDefined(typeof(ComponentTypeEnum), type);
         }
     }
-    }
+}
 

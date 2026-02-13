@@ -3,8 +3,5 @@ using MediatR;
 
 namespace ResourceTracker.Application.Features.Queries.GameSaveQueries.GetGameSaveList
 {
-    public class GetGameSaveListQuery : IRequest<List<GetGameSaveListResponse>>
-    {
-        public int GameId { get; set; }
-    }
+    public record GetGameSaveListQuery(int GameId) : IRequest<List<GetGameSaveListResponse>>;
 }

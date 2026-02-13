@@ -78,7 +78,7 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestTests
         public async Task GetQuest_WhenFound_ReturnsQuestWithAllFields()
         {
             Quest existing = DbContext.Quests.First(q => q.Name == "Find the Lost Cache");
-            GetQuestQuery query = new GetQuestQuery { Id = existing.Id };
+            GetQuestQuery query = new GetQuestQuery(existing.Id);
 
             GetQuestResponse result = await Sender.Send(query, CancellationToken.None);
 
@@ -92,7 +92,7 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestTests
         [Fact]
         public async Task GetQuest_WhenNotFound_ThrowsNotFoundException()
         {
-            GetQuestQuery query = new GetQuestQuery { Id = 999999 };
+            GetQuestQuery query = new GetQuestQuery(999999);
 
             NotFoundException result = await Assert.ThrowsAsync<NotFoundException>(() =>
                 Sender.Send(query, CancellationToken.None));

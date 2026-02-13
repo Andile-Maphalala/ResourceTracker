@@ -8,6 +8,5 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries.GetQuest
         public string Description { get; set; }
         public string Location { get; set; }
         public int GameSaveId { get; set; }
-
     }
 }
