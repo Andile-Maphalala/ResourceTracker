@@ -1,4 +1,5 @@
 ﻿using ResourceTracker.Application.Features.Queries.BuildPlanComponentQueries.SearchBuildPlanComponent;
+using ResourceTracker.Application.Features.Queries.BuildPlanQueries.SearchBuildPlans;
 using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
 using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
 using ResourceTracker.Application.Features.Queries.QuestComponentQueres.SearchQuestComponent;
@@ -17,14 +18,16 @@ namespace ResourceTracker.Persistence.Repositories
         private readonly IQuestQueryBuilder _questQueryBuilder;
         private readonly IQuestComponetsQueryBuilder _questComponetsQueryBuilder;
         private readonly IBuildPlanComponentBuilder _buildPlanComponentBuilder;
+        private readonly IBuildPlanQueryBuilder _buildPlanQueryBuilder;
 
-        public ResourceTrackerRepository(ResourceTrackerDbContext context, IGameQueryBuilder gameQueryBuilder, IComponetQueryBuilder componentQueryBuilder, IQuestQueryBuilder questQueryBuilder, IQuestComponetsQueryBuilder questComponetsQueryBuilder, IBuildPlanComponentBuilder buildPlanComponentBuilder) : base(context)
+        public ResourceTrackerRepository(ResourceTrackerDbContext context, IGameQueryBuilder gameQueryBuilder, IComponetQueryBuilder componentQueryBuilder, IQuestQueryBuilder questQueryBuilder, IQuestComponetsQueryBuilder questComponetsQueryBuilder, IBuildPlanComponentBuilder buildPlanComponentBuilder, IBuildPlanQueryBuilder buildPlanQueryBuilder) : base(context)
         {
             _gameQueryBuilder = gameQueryBuilder;
             _componentQueryBuilder = componentQueryBuilder;
             _questQueryBuilder = questQueryBuilder;
             _questComponetsQueryBuilder = questComponetsQueryBuilder;
             _buildPlanComponentBuilder = buildPlanComponentBuilder;
+            _buildPlanQueryBuilder = buildPlanQueryBuilder;
         }
 
         public IQueryable<User> Users => Set<User>();
@@ -63,6 +66,11 @@ namespace ResourceTracker.Persistence.Repositories
         public IQueryable<BuildPlanComponent> Search(SearchBuildPlanComponentQuery request)
         {
             return _buildPlanComponentBuilder.ApplyFilters(BuildPlanComponents, request);
+        }
+
+        public IQueryable<BuildPlan> Search(SearchBuildPlansQuery request)
+        {
+            return _buildPlanQueryBuilder.ApplyFilters(BuildPlans, request);
         }
     }
 }
