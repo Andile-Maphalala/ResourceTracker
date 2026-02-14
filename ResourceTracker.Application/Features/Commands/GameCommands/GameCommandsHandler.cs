@@ -39,8 +39,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
             Picture picture = new Picture();
             if (command.Image != null)
             {
-                var stream = await ConvertIFormFileToByteArray(command.Image);
-                picture = await _imageStorageService.UploadImage(stream, nameof(Game), command.Image.FileName, command.Image.ContentType, _userInfo.GetUserId(), command.AltText, cancellationToken);
+                picture = await _imageStorageService.UploadImage(command.Image, nameof(Game), _userInfo.GetUserId(), command.AltText, cancellationToken);
                 
             }
             Game item = new Game
@@ -55,26 +54,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
 
             return new CreateGameResponse(item.Id);
         }
-        public async Task<byte[]> ConvertIFormFileToByteArray(IFormFile file)
-        {
-            if (file == null || file.Length == 0)
-            {
-                throw new ArgumentException("No file provided");
-            }
-            using (var memoryStream = new MemoryStream())
-            {
-                await file.CopyToAsync(memoryStream);
-
-                if (memoryStream.Length == 0)
-                {
-                    throw new InvalidOperationException("Failed to read file content");
-                }
-
-                return memoryStream.ToArray();
-            }
-        }
-
-
+        
         public async Task<Unit> Handle(UpdateGameCommand command, CancellationToken cancellationToken)
         {
             var isAdmin = _userInfo.IsAdmin();

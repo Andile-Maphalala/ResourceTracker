@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Interfaces;
@@ -21,7 +22,13 @@ namespace ResourceTracker.ImageStorageService.Services
             _baseStoragePath = Path.Combine(baseStoragePath.Value.BasePath, "Images");
             _httpClient = httpClient;
         }
-        public async Task<Picture> UploadImage(byte[] imageStream, string folder, string fileName, string contentType, int? uploadedBy, string AltText, CancellationToken cancellationToken)
+        public async Task<Picture> UploadImage(IFormFile file, string folder, int? uploadedBy, string AltText, CancellationToken cancellationToken)
+        {
+            var imageStream = await ConvertIFormFileToByteArray(file);
+            return await SavePicture(imageStream, file.FileName, folder, file.ContentType, AltText, uploadedBy, cancellationToken);
+        }
+
+        private async Task<Picture>  SavePicture(byte[] imageStream, string fileName, string folder, string contentType, string altText, int? uploadedBy, CancellationToken cancellationToken)
         {
             var storedName = $"{Guid.NewGuid()}{Path.GetExtension(fileName)}";
             var folderPath = Path.Combine(_baseStoragePath, folder);
@@ -30,7 +37,7 @@ namespace ResourceTracker.ImageStorageService.Services
             {
                 Directory.CreateDirectory(folderPath);
             }
-            
+
             using (var targetStream = System.IO.File.Create(fullPath))
             {
                 await targetStream.WriteAsync(imageStream);
@@ -44,7 +51,7 @@ namespace ResourceTracker.ImageStorageService.Services
                 Size = imageStream.Length,
                 CreatedDate = DateTime.UtcNow,
                 UploadedBy = uploadedBy,
-                AltText = AltText
+                AltText = altText
             };
 
             await _repo.InsertAsync(picture, cancellationToken);
@@ -58,24 +65,36 @@ namespace ResourceTracker.ImageStorageService.Services
             var picture = await _repo.Pictures.FirstOrDefaultAsync(x => x.Id == pictureId,cancellationToken);
             if (picture == null)
             {
-                throw new NotFoundException("Picture not found");
+                throw new NotFoundException(nameof(Picture), pictureId);
             }
 
-            var fullPath = Path.Combine(_baseStoragePath, picture.Path);
+            var storedPath = (picture.Path ?? string.Empty).Trim();
+            storedPath = storedPath.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
+
+            string fullPath;
+            if (Path.IsPathRooted(storedPath))
+            {
+                fullPath = storedPath;
+            }
+            else
+            {
+                fullPath = Path.Combine(_baseStoragePath, storedPath);
+            }
+
             if (File.Exists(fullPath))
             {
-                File.Delete(fullPath);
+                try
+                {
+                    File.Delete(fullPath);
+                }
+                catch (IOException ex)
+                {
+                    throw new Exception($"Failed to delete image file at '{fullPath}'", ex);
+                }
             }
 
             await _repo.DeleteAsync(picture, cancellationToken);
             await _unitOfWork.Save(cancellationToken);
-        }
-
-        public async Task<Picture> GetImage(int pictureId, CancellationToken cancellationToken)
-        {
-            var picture = await _repo.Pictures.FirstOrDefaultAsync(x => x.Id == pictureId, cancellationToken);
-
-            return picture;
         }
 
         public async Task<Picture> UploadImage(string url, string folder, int? uploadedBy, string AltText, CancellationToken cancellationToken)
@@ -87,7 +106,27 @@ namespace ResourceTracker.ImageStorageService.Services
             var fileName = Path.GetFileName(new Uri(url).LocalPath);
             var contentType = response.Content.Headers.ContentType?.MediaType ?? "application/octet-stream";
 
-            return await UploadImage(bytes, folder, fileName, contentType, uploadedBy, AltText, cancellationToken);
+            return await SavePicture(bytes, fileName, folder, contentType, AltText, uploadedBy, cancellationToken);
+
+        }
+
+        private  async Task<byte[]> ConvertIFormFileToByteArray(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                throw new ArgumentException("No file provided");
+            }
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+
+                if (memoryStream.Length == 0)
+                {
+                    throw new InvalidOperationException("Failed to read file content");
+                }
+
+                return memoryStream.ToArray();
+            }
         }
     }
 }

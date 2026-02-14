@@ -54,15 +54,16 @@ namespace ResourceTracker.IntegrationTests.Setup
 
         protected virtual void ConfigureServices(IServiceCollection services)
         {
-            #pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
-            var configuration = new ConfigurationBuilder()
-               .AddInMemoryCollection(new Dictionary<string, string>
-               {
-                   ["ConnectionString"] = DbContainer.GetConnectionString()
-               }).Build();
-                #pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
-
-            services.ConfigureApplicationServices();
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+        var configuration = new ConfigurationBuilder()
+        .AddInMemoryCollection(new Dictionary<string, string>
+        {
+            ["ConnectionString"] = DbContainer.GetConnectionString(),
+            ["ApplicationOptions:BaseUrl"] = "http://localhost:5000"
+        })
+        .Build();
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            services.ConfigureApplicationServices(configuration);
             services.ConfigureImageStorageServices(Path.GetTempPath());
             services.AddEntitySecurity();
 

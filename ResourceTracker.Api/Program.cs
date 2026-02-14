@@ -21,7 +21,7 @@ public class Program
 
         // Register necessary services
         builder.Services.AddHttpContextAccessor();
-        builder.Services.ConfigureApplicationServices();
+        builder.Services.ConfigureApplicationServices(builder.Configuration);
         builder.Services.ConfigureImageStorageServices(builder.Environment.WebRootPath);
         builder.Services.AddEntitySecurity();
         builder.Services.AddScoped<IInfoSetter, InfoSetter>();
