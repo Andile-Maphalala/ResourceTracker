@@ -8,7 +8,7 @@ using ResourceTracker.Application.Features.Queries.BuildPlanQueries.SearchBuildP
 
 namespace ResourceTracker.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class BuildPlanController(ISender sender) : ControllerBase
     {
