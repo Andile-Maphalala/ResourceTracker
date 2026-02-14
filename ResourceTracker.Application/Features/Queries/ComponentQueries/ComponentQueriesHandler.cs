@@ -1,14 +1,16 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Pagination;
 using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
+using ResourceTracker.Application.Common.Helper;
 using ResourceTracker.Application.Features.Queries.ComponentQueries.GetComponent;
 using ResourceTracker.Application.Features.Queries.ComponentQueries.SearchComponents;
 using ResourceTracker.Application.Interfaces;
+using ResourceTracker.Application.Models;
 using ResourceTracker.Domain.Entities;
-using ResourceTracker.Application.Common.Helper;
 using ResourceTracker.Domain.Enums;
-using Pagination;
 
 namespace ResourceTracker.Application.Features.Queries.ComponentQueries
 {
@@ -17,10 +19,13 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries
         IRequestHandler<SearchComponentsQuery, PageableResponse<SearchComponentsResponse>>
     {
         private readonly IResourceTrackerRepository _repo;
+        private readonly string _baseUrl;
 
-        public ComponentQueriesHandler(IResourceTrackerRepository repo)
+        public ComponentQueriesHandler(IResourceTrackerRepository repo, IOptions<ApplicationOptions> options)
         {
             _repo = repo;
+            _baseUrl = options.Value.BaseUrl;
+
         }
 
         public async Task<GetComponentResponse> Handle(GetComponentQuery request, CancellationToken cancellationToken)
@@ -34,6 +39,7 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries
                      Description = x.Description,
                      Type = x.Type,
                      TypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Type),
+                     ImageUrl = x.Picture.GetFileUrl(_baseUrl)
                  }).FirstOrDefaultAsync(cancellationToken);
 
             if (quest is null)
@@ -54,7 +60,8 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries
                      Name = x.Name,
                      Description = x.Description,
                      Type = x.Type,
-                     TypeName = x.Type.ToString()
+                     TypeName = x.Type.ToString(),
+                     ImageUrl = x.Picture.GetFileUrl(_baseUrl)
                  }).ToPageableListAsync(request, cancellationToken);
 
             return quests;

@@ -1,11 +1,14 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Pagination;
 using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
+using ResourceTracker.Application.Common.Helper;
 using ResourceTracker.Application.Features.Queries.GameQueries.GetGame;
 using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
 using ResourceTracker.Application.Interfaces;
+using ResourceTracker.Application.Models;
 using ResourceTracker.Domain.Entities;
 
 namespace ResourceTracker.Application.Features.Queries.GameQueries
@@ -15,10 +18,12 @@ namespace ResourceTracker.Application.Features.Queries.GameQueries
         IRequestHandler<SearchGamesQuery, PageableResponse<SearchGamesResponse>>
     {
         private readonly IResourceTrackerRepository _repo;
+        private readonly string _baseUrl;
 
-        public GameQueriesHandler(IResourceTrackerRepository repo)
+        public GameQueriesHandler(IResourceTrackerRepository repo, IOptions<ApplicationOptions> options)
         {
             _repo = repo;
+            _baseUrl = options.Value.BaseUrl;
         }
 
         public async Task<GetGameResponse> Handle(GetGameQuery request, CancellationToken cancellationToken)
@@ -30,6 +35,7 @@ namespace ResourceTracker.Application.Features.Queries.GameQueries
                     Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
+                    ImageUrl = x.Picture.GetFileUrl(_baseUrl)
                 }).FirstOrDefaultAsync(cancellationToken);
 
             if (game is null)
@@ -50,6 +56,7 @@ namespace ResourceTracker.Application.Features.Queries.GameQueries
                     Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
+                    ImageUrl = x.Picture.GetFileUrl(_baseUrl)
                 }).ToPageableListAsync(request, cancellationToken);
 
             return result;

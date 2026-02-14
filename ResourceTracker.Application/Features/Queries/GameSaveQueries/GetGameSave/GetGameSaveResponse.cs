@@ -10,5 +10,6 @@ namespace ResourceTracker.Application.Features.Queries.GameSaveQueries.GetGameSa
         public DateTime Created { get; set; }
         public int GameId { get; set; }
         public string GameName { get; set; }
+        public string? GameImageUrl { get; set; }
     }
 }

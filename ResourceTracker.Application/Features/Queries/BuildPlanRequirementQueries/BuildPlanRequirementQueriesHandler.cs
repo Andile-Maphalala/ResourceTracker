@@ -1,10 +1,13 @@
 ﻿
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using ResourceTracker.Application.Common.Exceptions;
+using ResourceTracker.Application.Common.Helper;
 using ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueries.GetBuildPlanRequirement;
 using ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueries.GetBuildPlanRequirement.Dto;
 using ResourceTracker.Application.Interfaces;
+using ResourceTracker.Application.Models;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.Domain.Enums;
 using Component = ResourceTracker.Domain.Entities.Component;
@@ -14,10 +17,12 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
     public class BuildPlanRequirementQueriesHandler : IRequestHandler<GetBuildPlanRequirementQuery, GetBuildPlanRequirementsResponse>
     {
         private readonly IResourceTrackerRepository _repo;
+        private readonly string _baseUrl;
 
-        public BuildPlanRequirementQueriesHandler(IResourceTrackerRepository repo)
+        public BuildPlanRequirementQueriesHandler(IResourceTrackerRepository repo, IOptions<ApplicationOptions> options)
         {
             _repo = repo;
+            _baseUrl = options.Value.BaseUrl;
         }
 
         public async Task<GetBuildPlanRequirementsResponse> Handle(GetBuildPlanRequirementQuery request, CancellationToken cancellationToken)
@@ -197,7 +202,8 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                         FacilityId = facilityId,
                         Name = recipe.RequiredFacility.Name,
                         IsAvailable = isAvailable,
-                        RequiredFor = new List<int> { component.Id }
+                        RequiredFor = new List<int> { component.Id },
+                        ImageUrl = GetPictureUrl(recipe.RequiredFacility.PictureId)
                     };
 
                     facilityRequirementsMap[facilityId] = facilityReq;
@@ -251,7 +257,8 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                     RequiredAmount = required,
                     AvailableAmount = available,
                     MissingAmount = Math.Max(0, required - available),
-                    Type = component.Type
+                    Type = component.Type,
+                    ImageUrl = GetPictureUrl(component.PictureId)
                 });
             }
         }
@@ -265,5 +272,14 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
             }
         }
 
+        private string? GetPictureUrl(int? pictureId)
+        {
+            if(pictureId == null || (pictureId == 0))
+            {
+                return null;
+            }
+            var path = _repo.Pictures.FirstOrDefault(x => x.Id == pictureId)?.Path;
+            return ImageHelper.GetFileUrl(path,_baseUrl);
+        }
     }
 }

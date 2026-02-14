@@ -1,12 +1,15 @@
 ﻿
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Pagination;
 using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
+using ResourceTracker.Application.Common.Helper;
 using ResourceTracker.Application.Features.Queries.BuildPlanComponentQueries.GetBuildPlanComponent;
 using ResourceTracker.Application.Features.Queries.BuildPlanComponentQueries.SearchBuildPlanComponent;
 using ResourceTracker.Application.Interfaces;
+using ResourceTracker.Application.Models;
 using ResourceTracker.Domain.Entities;
 
 namespace ResourceTracker.Application.Features.Queries.BuildPlanComponentQueries
@@ -16,10 +19,12 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanComponentQueries
         IRequestHandler<GetBuildPlanComponentQuery, GetBuildPlanComponentResponse>
     {
         private readonly IResourceTrackerRepository _repo;
+        private readonly string _baseUrl;
 
-        public BuildPlanComponentQueriesHandler(IResourceTrackerRepository repo)
+        public BuildPlanComponentQueriesHandler(IResourceTrackerRepository repo, IOptions<ApplicationOptions> options)
         {
             _repo = repo;
+            _baseUrl = options.Value.BaseUrl;
         }
 
         public async Task<GetBuildPlanComponentResponse> Handle(GetBuildPlanComponentQuery request, CancellationToken cancellationToken)
@@ -36,7 +41,9 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanComponentQueries
                     ComponentType = x.Component.Type,
                     ComponentTypeName = x.Component.Type.ToString(),
                     BuildPlanId = x.BuildPlanId,
-                    BuildPlanName = x.BuildPlan.Name
+                    BuildPlanName = x.BuildPlan.Name,
+                    ComponentImageUrl = x.Component.Picture.GetFileUrl(_baseUrl)
+
                 }).FirstOrDefaultAsync(cancellationToken);
 
             if(response is null)
@@ -65,7 +72,8 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanComponentQueries
                     ComponentType = x.Component.Type,
                     ComponentTypeName = x.Component.Type.ToString(),
                     BuildPlanId = x.BuildPlanId,
-                    BuildPlanName = x.BuildPlan.Name
+                    BuildPlanName = x.BuildPlan.Name,
+                    ComponentImageUrl = x.Component.Picture.GetFileUrl(_baseUrl)
                 }).ToPageableListAsync(request, cancellationToken);
 
             return response;

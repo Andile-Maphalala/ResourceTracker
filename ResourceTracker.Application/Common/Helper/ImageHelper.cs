@@ -18,10 +18,23 @@ namespace ResourceTracker.Application.Common.Helper
 
         public static string GetFileUrl(this Picture picture, string baseUrl)
         {
-            if (picture == null) throw new ArgumentNullException(nameof(picture));
+            if (picture == null)
+            {
+                return string.Empty;
+            }
+
+            return GetFileUrl(picture.Path, baseUrl);
+        }
+
+        public static string GetFileUrl(string Path,string baseUrl)
+        {
+            if (Path == null)
+            {
+                return string.Empty;
+            }
 
             // Normalize separators
-            var path = (picture.Path ?? string.Empty).Replace('\\', '/').Trim();
+            var path = (Path ?? string.Empty).Replace('\\', '/').Trim();
 
             if (string.IsNullOrEmpty(path))
                 return baseUrl?.TrimEnd('/') ?? string.Empty;

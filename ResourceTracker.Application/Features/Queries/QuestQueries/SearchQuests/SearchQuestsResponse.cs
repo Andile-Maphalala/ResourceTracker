@@ -7,6 +7,7 @@ namespace ResourceTracker.Application.Features.Queries.QuestQueries.SearchQuests
         public string Name { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public string? ImageUrl { get; set; }
         public int GameSaveId { get; set; }
         public string GameSaveName { get; set; }
         public int GameId { get; set; }

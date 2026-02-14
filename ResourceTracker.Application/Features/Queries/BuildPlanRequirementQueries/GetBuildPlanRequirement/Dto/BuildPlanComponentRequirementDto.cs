@@ -10,5 +10,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
         public int AvailableAmount { get; set; }
         public int MissingAmount { get; set; }
         public int Type { get; set; }
+        public string? ImageUrl { get; set; }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Pagination;
 using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
@@ -7,6 +8,7 @@ using ResourceTracker.Application.Common.Helper;
 using ResourceTracker.Application.Features.Queries.QuestComponentQueres.GetQuestComponent;
 using ResourceTracker.Application.Features.Queries.QuestComponentQueres.SearchQuestComponent;
 using ResourceTracker.Application.Interfaces;
+using ResourceTracker.Application.Models;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.Domain.Enums;
 
@@ -19,10 +21,12 @@ namespace ResourceTracker.Application.Features.Queries.QuestComponentQueres
     {
 
         private readonly IResourceTrackerRepository _repo;
+        private readonly string _baseUrl;
 
-        public QuestComponentQueresHandler(IResourceTrackerRepository repo)
+        public QuestComponentQueresHandler(IResourceTrackerRepository repo, IOptions<ApplicationOptions> options)
         {
             _repo = repo;
+            _baseUrl = options.Value.BaseUrl;
         }
 
         public async Task<GetQuestComponentResponse> Handle(GetQuestComponentQuery request, CancellationToken cancellationToken)
@@ -36,8 +40,10 @@ namespace ResourceTracker.Application.Features.Queries.QuestComponentQueres
                     ComponentName = x.Component.Name,
                     ComponentType = x.Component.Type,
                     ComponentTypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Component.Type),
+                    ComponentImageUrl = x.Component.Picture.GetFileUrl(_baseUrl),
                     QuestId = x.QuestId,
-                    QuestName = x.Quest.Name
+                    QuestName = x.Quest.Name,
+                    QuestImageUrl = x.Quest.Picture.GetFileUrl(_baseUrl)
 
                  }).FirstOrDefaultAsync(cancellationToken);
 
@@ -60,9 +66,10 @@ namespace ResourceTracker.Application.Features.Queries.QuestComponentQueres
                        ComponentName = x.Component.Name,
                        ComponentType = x.Component.Type,
                        ComponentTypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Component.Type),
+                       ComponentImageUrl = x.Component.Picture.GetFileUrl(_baseUrl),
                        QuestId = x.QuestId,
-                       QuestName = x.Quest.Name
-
+                       QuestName = x.Quest.Name,
+                       QuestImageUrl = x.Quest.Picture.GetFileUrl(_baseUrl)
                    }).ToPageableListAsync(request, cancellationToken);
 
             return response;
