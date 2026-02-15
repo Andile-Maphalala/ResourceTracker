@@ -1,6 +1,34 @@
+
+name: resourcetracker.api
 services:
-  resourcetracker.api:
-    image: ${DOCKER_REGISTRY-}resourcetrackerapi
+  postgres:
+    image: postgres:17
+    container_name: postgres-db-resourcetracker
+    restart: always
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev123
+      POSTGRES_DB: ResourceTrackerDatabase
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
     build:
       context: .
-      dockerfile: ResourceTracker.Api/Dockerfile
+      dockerfile: ResourceTracker.API/Dockerfile
+    container_name: resourcetracker-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_HTTP_PORTS: 80
+    ports:
+      - "8001:80"
+    depends_on:
+      - postgres
+    volumes:
+     - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+
+volumes:
+  pgdata:
+  
