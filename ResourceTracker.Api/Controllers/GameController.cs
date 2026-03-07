@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pagination.Models;
 using ResourceTracker.Application.Features.Commands.GameCommands.CreateGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.DeleteGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.UpdateGame;
@@ -15,37 +16,42 @@ namespace ResourceTracker.Api.Controllers
     public class GameController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CreateGame([FromForm] CreateGameCommand request)
+        [ProducesResponseType(typeof(CreateGameResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult> CreateGame([FromForm] CreateGameCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateGame([FromBody] UpdateGameCommand request)
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult> UpdateGame([FromBody] UpdateGameCommand request, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(request, cancellationToken);
             return NoContent();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteGame([FromBody] DeleteGameCommand request)
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteGame(int id, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(new DeleteGameCommand(id), cancellationToken);
             return NoContent();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetGame([FromQuery] GetGameQuery request)
+        [ProducesResponseType(typeof(GetGameResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<GetGameResponse>> GetGame([FromQuery] GetGameQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchGame([FromQuery] SearchGamesQuery request)
+        [ProducesResponseType(typeof(PageableResponse<SearchGamesResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<PageableResponse<SearchGamesResponse>>> SearchGame([FromQuery] SearchGamesQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
     }

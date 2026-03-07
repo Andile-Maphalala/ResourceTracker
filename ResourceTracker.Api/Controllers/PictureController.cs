@@ -11,23 +11,26 @@ namespace ResourceTracker.Api.Controllers
     public class PictureController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CreatePicture([FromForm] CreatePictureCommand request)
+        [ProducesResponseType(typeof(CreatePictureResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult> CreatePicture([FromForm] CreatePictureCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeletePicture([FromBody] DeletePictureCommand request)
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeletePicture([FromBody] DeletePictureCommand request, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(request, cancellationToken);
             return NoContent();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPicture([FromQuery] GetPictureQuery request)
+        [ProducesResponseType(typeof(GetPictureResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult> GetPicture([FromQuery] GetPictureQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
     }

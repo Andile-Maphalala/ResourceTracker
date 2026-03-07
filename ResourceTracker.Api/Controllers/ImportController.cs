@@ -11,9 +11,10 @@ namespace ResourceTracker.Api.Controllers
     public class ImportController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> ImportGameComponents([FromForm] ImportGameCommand request)
+        [ProducesResponseType(typeof(ImportGameResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ImportGameComponents([FromForm] ImportGameCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
     }

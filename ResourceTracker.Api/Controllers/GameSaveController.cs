@@ -13,33 +13,42 @@ namespace ResourceTracker.Api.Controllers
     public class GameSaveController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CreateGameSave([FromBody] CreateGameSaveCommand request)
+        [ProducesResponseType(typeof(CreateGameSaveResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<CreateGameSaveResponse>> CreateGameSave([FromBody] CreateGameSaveCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
-        [HttpPost]
-        public async Task<IActionResult> UpdateGameSave([FromBody] UpdateGameSaveCommand request)
+
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateGameSave([FromBody] UpdateGameSaveCommand request, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(request, cancellationToken);
             return NoContent();
         }
-        [HttpPost]
-        public async Task<IActionResult> DeleteGameSave([FromBody] DeleteGameSaveCommand request)
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteGameSave(int id, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(new DeleteGameSaveCommand(id), cancellationToken);
             return NoContent();
         }
+
         [HttpGet]
-        public async Task<IActionResult> GetGameSave([FromQuery] GetGameSaveQuery request)
+        [ProducesResponseType(typeof(GetGameSaveResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult> GetGameSave([FromQuery] GetGameSaveQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
+
         [HttpGet]
-        public async Task<IActionResult> GetGameSaveList([FromQuery] GetGameSaveListQuery request)
+        [ProducesResponseType(typeof(List<GetGameSaveListResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult> GetGameSaveList([FromQuery] GetGameSaveListQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
     }

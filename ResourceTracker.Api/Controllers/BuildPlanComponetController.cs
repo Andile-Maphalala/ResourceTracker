@@ -14,44 +14,50 @@ namespace ResourceTracker.Api.Controllers
     public class BuildPlanComponetController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CreateBuildPlanCompoent([FromBody] CreateBuildPlanComponentCommand request)
+        [ProducesResponseType(typeof(CreateBuildPlanComponentResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<CreateBuildPlanComponentResponse>> CreateBuildPlanCompoent([FromBody] CreateBuildPlanComponentCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBuildPlanCompoentBulk([FromBody] CreateBuildPlanComponentsCommand request)
+        [ProducesResponseType(typeof(CreateBuildPlanComponentsResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<CreateBuildPlanComponentsResponse>> CreateBuildPlanCompoentBulk([FromBody] CreateBuildPlanComponentsCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateBuildPlanComponent([FromBody] UpdateBuildPlanComponentCommand request)
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateBuildPlanComponent([FromBody] UpdateBuildPlanComponentCommand request, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(request, cancellationToken);
+            return NoContent();
+        }
+
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateBuildPlanComponentBulk([FromBody] UpdateBuildPlanComponentsCommand request, CancellationToken cancellationToken)
+        {
+            await sender.Send(request, cancellationToken);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteBuildPlanComponent(int id, CancellationToken cancellationToken)
+        {
+            await sender.Send(new DeleteBuildPlanComponentCommand(id), cancellationToken);
             return NoContent();
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateBuildPlanComponentBulk([FromBody] UpdateBuildPlanComponentsCommand request)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteBuildPlanComponentBulk([FromBody] DeleteBuildPlanComponentsCommand request, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
-            return NoContent();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteBuildPlanComponent([FromBody] DeleteBuildPlanComponentCommand request)
-        {
-            await sender.Send(request);
-            return NoContent();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteBuildPlanComponentBulk([FromBody] DeleteBuildPlanComponentsCommand request)
-        {
-            await sender.Send(request);
+            await sender.Send(request, cancellationToken);
             return NoContent();
         }
     }

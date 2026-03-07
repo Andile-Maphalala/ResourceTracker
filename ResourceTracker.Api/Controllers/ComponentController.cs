@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pagination.Models;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.CreateComponent;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.DeleteComponent;
 using ResourceTracker.Application.Features.Commands.ComponentCommands.UpdateComponent;
@@ -15,37 +16,42 @@ namespace ResourceTracker.Api.Controllers
     public class ComponentController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CreateCompoent([FromBody] CreateComponentCommand request)
+        [ProducesResponseType(typeof(CreateComponentResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<CreateComponentResponse>> CreateCompoent([FromBody] CreateComponentCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateComponent([FromBody] UpdateComponentCommand request)
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateComponent([FromBody] UpdateComponentCommand request, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(request, cancellationToken);
             return NoContent();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteComponent([FromBody] DeleteComponentCommand request)
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteComponent(int id, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(new DeleteComponentCommand(id), cancellationToken);
             return NoContent();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetComponent([FromQuery] GetComponentQuery request)
+        [ProducesResponseType(typeof(GetComponentResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<GetComponentResponse>> GetComponent([FromQuery] GetComponentQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchComponent([FromQuery] SearchComponentsQuery request)
+        [ProducesResponseType(typeof(PageableResponse<SearchComponentsResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<PageableResponse<SearchComponentsResponse>>> SearchComponent([FromQuery] SearchComponentsQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
     }

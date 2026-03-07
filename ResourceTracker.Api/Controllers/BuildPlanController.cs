@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Pagination.Models;
 using ResourceTracker.Application.Features.Commands.BuildPlanCommands.CreateBuildPlan;
 using ResourceTracker.Application.Features.Commands.BuildPlanCommands.DeleteBuildPlan;
 using ResourceTracker.Application.Features.Commands.BuildPlanCommands.UpdateBuildPlan;
@@ -13,37 +14,42 @@ namespace ResourceTracker.Api.Controllers
     public class BuildPlanController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CreateBuildPlan([FromBody] CreateBuildPlanCommand request)
+        [ProducesResponseType(typeof(CreateBuildPlanResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<CreateBuildPlanResponse>> CreateBuildPlan([FromBody] CreateBuildPlanCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateBuildPlan([FromBody] UpdateBuildPlanCommand request)
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateBuildPlan([FromBody] UpdateBuildPlanCommand request, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(request, cancellationToken);
             return NoContent();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteBuildPlan([FromBody] DeleteBuildPlanCommand request)
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteBuildPlan(int id, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(new DeleteBuildPlanCommand(id), cancellationToken);
             return NoContent();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBuildPlan([FromQuery] GetBuildPlanQuery request)
+        [ProducesResponseType(typeof(GetBuildPlanResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<GetBuildPlanResponse>> GetBuildPlan([FromQuery] GetBuildPlanQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchBuildPlan([FromQuery] SearchBuildPlansQuery request)
+        [ProducesResponseType(typeof(PageableResponse<SearchBuildPlansResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<PageableResponse<SearchBuildPlansResponse>>> SearchBuildPlan([FromQuery] SearchBuildPlansQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
     }

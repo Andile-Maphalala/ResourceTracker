@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Pagination.Models;
 using ResourceTracker.Application.Features.Commands.QuestCommands.CreateQuest;
 using ResourceTracker.Application.Features.Commands.QuestCommands.DeleteQuest;
 using ResourceTracker.Application.Features.Commands.QuestCommands.UpdateQuest;
@@ -13,37 +14,42 @@ namespace ResourceTracker.Api.Controllers
     public class QuestController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CreateQuest([FromBody] CreateQuestCommand request)
+        [ProducesResponseType(typeof(CreateQuestResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<CreateQuestResponse>> CreateQuest([FromBody] CreateQuestCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateQuest([FromBody] UpdateQuestCommand request)
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateQuest([FromBody] UpdateQuestCommand request, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(request, cancellationToken);
             return NoContent();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteQuest([FromBody] DeleteQuestCommand request)
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteQuest(int id, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(new DeleteQuestCommand(id), cancellationToken);
             return NoContent();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetQuest([FromQuery] GetQuestQuery request)
+        [ProducesResponseType(typeof(GetQuestResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<GetQuestResponse>> GetQuest([FromQuery] GetQuestQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchQuest([FromQuery] SearchQuestsQuery request)
+        [ProducesResponseType(typeof(PageableResponse<SearchQuestsResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<PageableResponse<SearchQuestsResponse>>> SearchQuest([FromQuery] SearchQuestsQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
     }

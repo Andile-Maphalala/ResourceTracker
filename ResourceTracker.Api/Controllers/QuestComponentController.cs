@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Pagination.Models;
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.CreateQuestComponent;
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.CreateQuestComponents;
 using ResourceTracker.Application.Features.Commands.QuestComponentCommands.DeleteQuestComponent;
@@ -16,58 +17,66 @@ namespace ResourceTracker.Api.Controllers
     public class QuestComponentController(ISender sender) : Controller
     {
         [HttpPost]
-        public async Task<IActionResult> CreateQuestCompoent([FromBody] CreateQuestComponentCommand request)
+        [ProducesResponseType(typeof(CreateQuestComponentResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<CreateQuestComponentResponse>> CreateQuestCompoent([FromBody] CreateQuestComponentCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateQuestCompoentBulk([FromBody] CreateQuestComponentsCommand request)
+        [ProducesResponseType(typeof(CreateQuestComponentsResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<CreateQuestComponentsResponse>> CreateQuestCompoentBulk([FromBody] CreateQuestComponentsCommand request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateQuestComponent([FromBody] UpdateQuestComponentCommand request)
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateQuestComponent([FromBody] UpdateQuestComponentCommand request, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
+            await sender.Send(request, cancellationToken);
+            return NoContent();
+        }
+
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateQuestComponentBulk([FromBody] UpdateQuestComponentsCommand request, CancellationToken cancellationToken)
+        {
+            await sender.Send(request, cancellationToken);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteQuestComponent(int id, CancellationToken cancellationToken)
+        {
+            await sender.Send(new DeleteQuestComponentCommand(id), cancellationToken);
             return NoContent();
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateQuestComponentBulk([FromBody] UpdateQuestComponentsCommand request)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteQuestComponentBulk([FromBody] DeleteQuestComponentsCommand request, CancellationToken cancellationToken)
         {
-            await sender.Send(request);
-            return NoContent();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteQuestComponent([FromBody] DeleteQuestComponentCommand request)
-        {
-            await sender.Send(request);
-            return NoContent();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteQuestComponentBulk([FromBody] DeleteQuestComponentsCommand request)
-        {
-            await sender.Send(request);
+            await sender.Send(request, cancellationToken);
             return NoContent();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetQuestComponent([FromQuery] GetQuestComponentQuery request)
+        [ProducesResponseType(typeof(GetQuestComponentResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<GetQuestComponentResponse>> GetQuestComponent([FromQuery] GetQuestComponentQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchQuestComponent([FromQuery] SearchQuestComponentsQuery request)
+        [ProducesResponseType(typeof(PageableResponse<SearchQuestComponentsResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<PageableResponse<SearchQuestComponentsResponse>>> SearchQuestComponent([FromQuery] SearchQuestComponentsQuery request, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request);
+            var response = await sender.Send(request, cancellationToken);
             return Ok(response);
         }
     }
