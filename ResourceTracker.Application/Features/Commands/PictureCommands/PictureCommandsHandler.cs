@@ -42,7 +42,7 @@ namespace ResourceTracker.Application.Features.Commands.PictureCommands
             if (request.ImageUploadType == ImageUploadTypeEnum.Game && _userInfo.IsAdmin() == false)
                 throw new BadRequestException("Unauthorised action");
 
-            var picture = await _imageService.UploadImage(request.Data, request.ImageUploadType.ToString(), userId, request.AltText, cancellationToken);
+            var picture = await _imageService.UploadImage(request.Data, (int)request.ImageUploadType, request.ImageUploadType.ToString(), userId, request.AltText, cancellationToken);
 
             switch(request.ImageUploadType)
             {

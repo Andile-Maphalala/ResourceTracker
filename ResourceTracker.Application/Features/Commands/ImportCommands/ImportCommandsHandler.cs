@@ -6,6 +6,7 @@ using ResourceTracker.Application.Common.User;
 using ResourceTracker.Application.Features.Commands.ImportCommands.Dtos;
 using ResourceTracker.Application.Features.Commands.ImportCommands.ImportGame;
 using ResourceTracker.Application.Interfaces;
+using ResourceTracker.Application.Models.Enums;
 using ResourceTracker.Application.Services;
 using ResourceTracker.Domain.Entities;
 
@@ -46,7 +47,7 @@ namespace ResourceTracker.Application.Features.Commands.ImportCommands
                 var dto = gameData.Components.FirstOrDefault(c => c.Name == component.Name);
                 if (dto != null && dto.Image_url != null)
                 {
-                    var picture = await _imageStorageService.UploadImage(dto.Image_url, nameof(Component), _userInfo.GetUserId(), dto.Name, cancellationToken);
+                    var picture = await _imageStorageService.UploadImage(dto.Image_url, (int)ImageUploadTypeEnum.Component, nameof(Component), _userInfo.GetUserId(), dto.Name, cancellationToken);
                     component.PictureId = picture.Id;
                 }
             }

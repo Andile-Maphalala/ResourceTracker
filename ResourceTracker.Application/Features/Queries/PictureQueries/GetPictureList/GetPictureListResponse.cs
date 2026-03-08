@@ -1,8 +1,8 @@
 ﻿
 
-namespace ResourceTracker.Application.Features.Queries.PictureQueries.GetPicture
+namespace ResourceTracker.Application.Features.Queries.PictureQueries.GetPictureList
 {
-    public class GetPictureResponse
+    public class GetPictureListResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }

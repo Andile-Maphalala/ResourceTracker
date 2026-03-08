@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ResourceTracker.Persistence.Data;
@@ -11,9 +12,11 @@ using ResourceTracker.Persistence.Data;
 namespace ResourceTracker.Persistence.Migrations
 {
     [DbContext(typeof(ResourceTrackerDbContext))]
-    partial class ResourceTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260308115103_AddPictureLinkedEntityType")]
+    partial class AddPictureLinkedEntityType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

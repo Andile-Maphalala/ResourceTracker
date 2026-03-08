@@ -22,13 +22,13 @@ namespace ResourceTracker.ImageStorageService.Services
             _baseStoragePath = Path.Combine(baseStoragePath.Value.BasePath, "Images");
             _httpClient = httpClient;
         }
-        public async Task<Picture> UploadImage(IFormFile file, string folder, int? uploadedBy, string AltText, CancellationToken cancellationToken)
+        public async Task<Picture> UploadImage(IFormFile file, int? linkedentityType, string folder, int? uploadedBy, string AltText, CancellationToken cancellationToken)
         {
             var imageStream = await ConvertIFormFileToByteArray(file);
-            return await SavePicture(imageStream, file.FileName, folder, file.ContentType, AltText, uploadedBy, cancellationToken);
+            return await SavePicture(imageStream, linkedentityType, file.FileName, folder, file.ContentType, AltText, uploadedBy, cancellationToken);
         }
 
-        private async Task<Picture>  SavePicture(byte[] imageStream, string fileName, string folder, string contentType, string altText, int? uploadedBy, CancellationToken cancellationToken)
+        private async Task<Picture>  SavePicture(byte[] imageStream, int? linkedentityType, string fileName, string folder, string contentType, string altText, int? uploadedBy, CancellationToken cancellationToken)
         {
             var storedName = $"{Guid.NewGuid()}{Path.GetExtension(fileName)}";
             var folderPath = Path.Combine(_baseStoragePath, folder);
@@ -51,7 +51,8 @@ namespace ResourceTracker.ImageStorageService.Services
                 Size = imageStream.Length,
                 CreatedDate = DateTime.UtcNow,
                 UploadedBy = uploadedBy,
-                AltText = altText
+                AltText = altText,
+                LinkedEntityType = linkedentityType
             };
 
             await _repo.InsertAsync(picture, cancellationToken);
@@ -97,7 +98,7 @@ namespace ResourceTracker.ImageStorageService.Services
             await _unitOfWork.Save(cancellationToken);
         }
 
-        public async Task<Picture> UploadImage(string url, string folder, int? uploadedBy, string AltText, CancellationToken cancellationToken)
+        public async Task<Picture> UploadImage(string url, int? linkedentityType, string folder, int? uploadedBy, string AltText, CancellationToken cancellationToken)
         {
             using var response = await _httpClient.GetAsync(url, cancellationToken);
             response.EnsureSuccessStatusCode();
@@ -106,7 +107,7 @@ namespace ResourceTracker.ImageStorageService.Services
             var fileName = Path.GetFileName(new Uri(url).LocalPath);
             var contentType = response.Content.Headers.ContentType?.MediaType ?? "application/octet-stream";
 
-            return await SavePicture(bytes, fileName, folder, contentType, AltText, uploadedBy, cancellationToken);
+            return await SavePicture(bytes, linkedentityType, fileName, folder, contentType, AltText, uploadedBy, cancellationToken);
 
         }
 

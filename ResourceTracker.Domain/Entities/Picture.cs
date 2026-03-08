@@ -11,6 +11,7 @@ namespace ResourceTracker.Domain.Entities
         public string AltText { get; set; }
         public DateTime CreatedDate { get; set; }
         public int? UploadedBy { get; set; }
+        public int? LinkedEntityType { get; set; }
         public virtual ICollection<Game> Games { get; set; }
         public virtual ICollection<Quest> Quests { get; set; }
         public virtual ICollection<Component> Components { get; set; }

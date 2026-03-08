@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ResourceTracker.Application.Models.Enums;
+using System.ComponentModel;
 
 namespace ResourceTracker.Application.Common.Helper
 {
@@ -9,6 +10,21 @@ namespace ResourceTracker.Application.Common.Helper
             var field = value.GetType().GetField(value.ToString());
             var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
             return attribute == null ? value.ToString() : attribute.Description;
+        }
+
+        public static ImageUploadTypeEnum? GetEnumValue(int? value)
+        {
+            if (value == null)
+                return null;
+
+            if (Enum.IsDefined(typeof(ImageUploadTypeEnum), value))
+            {
+                return (ImageUploadTypeEnum)value;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

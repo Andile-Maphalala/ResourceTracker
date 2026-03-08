@@ -8,6 +8,7 @@ using ResourceTracker.Application.Features.Commands.GameCommands.CreateGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.DeleteGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.UpdateGame;
 using ResourceTracker.Application.Interfaces;
+using ResourceTracker.Application.Models.Enums;
 using ResourceTracker.Domain.Entities;
 
 namespace ResourceTracker.Application.Features.Commands.GameCommands
@@ -39,7 +40,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
             Picture picture = new Picture();
             if (command.Image != null)
             {
-                picture = await _imageStorageService.UploadImage(command.Image, nameof(Game), _userInfo.GetUserId(), command.AltText, cancellationToken);
+                picture = await _imageStorageService.UploadImage(command.Image, (int)ImageUploadTypeEnum.Game, nameof(Game), _userInfo.GetUserId(), command.AltText, cancellationToken);
                 
             }
             Game item = new Game

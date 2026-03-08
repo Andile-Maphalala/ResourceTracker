@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ResourceTracker.Application.Features.Commands.PictureCommands.CreatePicture;
 using ResourceTracker.Application.Features.Commands.PictureCommands.DeletePicture;
 using ResourceTracker.Application.Features.Queries.PictureQueries.GetPicture;
+using ResourceTracker.Application.Features.Queries.PictureQueries.GetPictureList;
 
 namespace ResourceTracker.Api.Controllers
 {
@@ -28,7 +29,15 @@ namespace ResourceTracker.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(GetPictureResponse), StatusCodes.Status200OK)]
-        public async Task<ActionResult> GetPicture([FromQuery] GetPictureQuery request, CancellationToken cancellationToken)
+        public async Task<ActionResult<GetPictureResponse>> GetPicture([FromQuery] GetPictureQuery request, CancellationToken cancellationToken)
+        {
+            var response = await sender.Send(request, cancellationToken);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<GetPictureListResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<GetPictureListResponse>>> GetPictureList([FromQuery] GetPictureListQuery request, CancellationToken cancellationToken)
         {
             var response = await sender.Send(request, cancellationToken);
             return Ok(response);
