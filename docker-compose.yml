@@ -28,7 +28,7 @@ services:
       - postgres
     volumes:
      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-
+     - ./wwwroot:/app/wwwroot
 volumes:
   pgdata:
   
