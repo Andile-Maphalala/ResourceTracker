@@ -17,7 +17,7 @@ namespace ResourceTracker.Application
         public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-            services.AddValidatorsFromAssemblyContaining<CreateGameValidator>();
+            services.AddValidatorsFromAssemblyContaining<CreateGameWithImageValidator>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviorWithIRequest<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviorWithIRequestAndIResponse<,>));
             services.AddScoped<IUserInfo, UserInfo>();

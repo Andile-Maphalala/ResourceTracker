@@ -23,6 +23,14 @@ namespace ResourceTracker.Api.Controllers
             return Ok(response);
         }
 
+        [HttpPost]
+        [ProducesResponseType(typeof(CreateGameWithImageResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult> CreateGameWithImage([FromForm] CreateGameWithImageCommand request, CancellationToken cancellationToken)
+        {
+            var response = await sender.Send(request, cancellationToken);
+            return Ok(response);
+        }
+
         [HttpPatch]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> UpdateGame([FromBody] UpdateGameCommand request, CancellationToken cancellationToken)

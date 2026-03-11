@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Common.CQRS;
 using ResourceTracker.Application.Common.Exceptions;
@@ -10,10 +9,12 @@ using ResourceTracker.Application.Features.Commands.GameCommands.UpdateGame;
 using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Application.Models.Enums;
 using ResourceTracker.Domain.Entities;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ResourceTracker.Application.Features.Commands.GameCommands
 {
     public class GameCommandsHandler :
+        ICommandHandler<CreateGameWithImageCommand, CreateGameWithImageResponse>,
         ICommandHandler<CreateGameCommand, CreateGameResponse>,
         ICommandHandler<UpdateGameCommand>,
         ICommandHandler<DeleteGameCommand>
@@ -31,7 +32,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
             _imageStorageService = imageStorageService;
         }
 
-        public async Task<CreateGameResponse> Handle(CreateGameCommand command, CancellationToken cancellationToken)
+        public async Task<CreateGameWithImageResponse> Handle(CreateGameWithImageCommand command, CancellationToken cancellationToken)
         {
             var isAdmin = _userInfo.IsAdmin();
             if (!isAdmin)
@@ -53,7 +54,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
             await _unitOfWork.Save(cancellationToken);
 
 
-            return new CreateGameResponse(item.Id);
+            return new CreateGameWithImageResponse(item.Id);
         }
         
         public async Task<Unit> Handle(UpdateGameCommand command, CancellationToken cancellationToken)
@@ -87,6 +88,26 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
             await _repo.DeleteAsync(item, cancellationToken);
             await _unitOfWork.Save(cancellationToken);
             return Unit.Value;
+        }
+
+        public async Task<CreateGameResponse> Handle(CreateGameCommand command, CancellationToken cancellationToken)
+        {
+            var isAdmin = _userInfo.IsAdmin();
+            if (!isAdmin)
+                throw new BadRequestException("Unauthorised action");
+
+
+            Game item = new Game
+            {
+                Name = command.Name,
+                Description = command.Description,
+                PictureId = null
+            };
+            await _repo.InsertAsync(item, cancellationToken);
+            await _unitOfWork.Save(cancellationToken);
+
+
+            return new CreateGameResponse(item.Id);
         }
     }
 }

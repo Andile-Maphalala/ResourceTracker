@@ -21,7 +21,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task CreateGame_NameExceedMaximumLength_ThrowError()
         {
             // Arrange
-            var command = new CreateGameCommand
+            var command = new CreateGameWithImageCommand
             {
                 Name = new string('A', 101),
                 Description = "Desc",
@@ -38,7 +38,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task CreateGame_NameEmpty_ThrowError()
         {
             // Arrange
-            var command = new CreateGameCommand
+            var command = new CreateGameWithImageCommand
             {
                 Name = "",
                 Description = "Desc",
@@ -54,7 +54,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
         public async Task CreateGame_DescriptionExceedMaximumLength_ThrowError()
         {
             // Arrange
-            var command = new CreateGameCommand
+            var command = new CreateGameWithImageCommand
             {
                 Name = "Name",
                 Description = new string('A', 226),
@@ -73,7 +73,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             // Arrange
             SetupNonAdminUser();
 
-            var command = new CreateGameCommand
+            var command = new CreateGameWithImageCommand
             {
                 Name = "Test",
                 Description = "Desc"
@@ -91,7 +91,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             // Arrange
             SetupAdminUser();
 
-            var command = new CreateGameCommand
+            var command = new CreateGameWithImageCommand
             {
                 Name = "Test Game",
                 Description = "This is a test game"
@@ -116,7 +116,7 @@ namespace ResourceTracker.IntegrationTests.Tests.GameTests
             // Arrange
             SetupAdminUser();
 
-            var command = new CreateGameCommand
+            var command = new CreateGameWithImageCommand
             {
                 Name = "Test Game with Image",
                 Description = "This is a test game with image",
