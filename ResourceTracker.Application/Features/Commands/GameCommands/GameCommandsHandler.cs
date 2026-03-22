@@ -41,13 +41,13 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
             Picture picture = new Picture();
             if (command.Image != null)
             {
-                picture = await _imageStorageService.UploadImage(command.Image, (int)ImageUploadTypeEnum.Game, nameof(Game), _userInfo.GetUserId(), command.AltText, cancellationToken);
+                picture = await _imageStorageService.UploadImage(command.Image, (int)ImageUploadTypeEnum.Game, nameof(Game), _userInfo.GetUserId(), command.AltText ?? string.Empty, cancellationToken);
                 
             }
             Game item = new Game
             {
                 Name = command.Name,
-                Description = command.Description,
+                Description = command.Description ?? string.Empty,
                 PictureId = picture.Id != 0 ? picture.Id : null
             };
             await _repo.InsertAsync(item, cancellationToken);
@@ -100,7 +100,7 @@ namespace ResourceTracker.Application.Features.Commands.GameCommands
             Game item = new Game
             {
                 Name = command.Name,
-                Description = command.Description,
+                Description = command.Description ?? string.Empty,
                 PictureId = null
             };
             await _repo.InsertAsync(item, cancellationToken);

@@ -40,7 +40,7 @@ namespace ResourceTracker.ImageStorageService.Services
 
             using (var targetStream = System.IO.File.Create(fullPath))
             {
-                await targetStream.WriteAsync(imageStream);
+                await targetStream.WriteAsync(imageStream,cancellationToken);
             }
 
             var picture = new Picture
@@ -111,7 +111,7 @@ namespace ResourceTracker.ImageStorageService.Services
 
         }
 
-        private  async Task<byte[]> ConvertIFormFileToByteArray(IFormFile file)
+        private async Task<byte[]> ConvertIFormFileToByteArray(IFormFile file)
         {
             if (file == null || file.Length == 0)
             {

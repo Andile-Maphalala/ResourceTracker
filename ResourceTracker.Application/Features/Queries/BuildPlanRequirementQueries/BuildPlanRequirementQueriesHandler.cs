@@ -279,7 +279,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                 return null;
             }
             var path = _repo.Pictures.FirstOrDefault(x => x.Id == pictureId)?.Path;
-            return ImageHelper.GetFileUrl(path,_baseUrl);
+            return ImageHelper.GetFileUrl(path ?? string.Empty, _baseUrl);
         }
     }
 }

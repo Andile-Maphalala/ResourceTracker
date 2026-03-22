@@ -8,8 +8,18 @@ namespace ResourceTracker.Application.Common.Helper
         public static string GetEnumDescription(Enum value)
         {
             var field = value.GetType().GetField(value.ToString());
-            var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
-            return attribute == null ? value.ToString() : attribute.Description;
+            if (field == null)
+                return value.ToString(); 
+
+            var attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
+            if(attribute == null) 
+                return value.ToString();
+
+            var descriptionAttribute = attribute as DescriptionAttribute;
+            if (descriptionAttribute == null)
+                return value.ToString();
+
+            return descriptionAttribute.Description;
         }
 
         public static ImageUploadTypeEnum? GetEnumValue(int? value)

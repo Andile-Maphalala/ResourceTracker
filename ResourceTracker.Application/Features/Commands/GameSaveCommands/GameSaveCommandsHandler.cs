@@ -37,7 +37,7 @@ namespace ResourceTracker.Application.Features.Commands.GameSaveCommands
             GameSave item = new GameSave
             {
                 Name = command.Name,
-                Description = command.Description,
+                Description = command.Description ?? string.Empty,
                 GameId = command.GameId,
                 UserId = userId,
                 Created = DateTime.UtcNow
@@ -64,7 +64,7 @@ namespace ResourceTracker.Application.Features.Commands.GameSaveCommands
             }
 
             item.Name = command.Name;
-            item.Description = command.Description;
+            item.Description = command.Description ?? string.Empty;
 
             await _repo.UpdateAsync(item, cancellationToken);
             await _unitOfWork.Save(cancellationToken);
