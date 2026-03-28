@@ -39,7 +39,8 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries
                      Description = x.Description,
                      Type = x.Type,
                      TypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Type),
-                     ImageUrl = x.Picture.GetFileUrl(_baseUrl)
+                     ImageUrl = x.Picture.GetFileUrl(_baseUrl),
+                     GameId = x.GameId
                  }).FirstOrDefaultAsync(cancellationToken);
 
             if (quest is null)
