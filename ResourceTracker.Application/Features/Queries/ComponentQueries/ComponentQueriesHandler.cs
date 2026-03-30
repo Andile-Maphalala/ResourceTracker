@@ -61,7 +61,7 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries
                      Name = x.Name,
                      Description = x.Description,
                      Type = x.Type,
-                     TypeName = x.Type.ToString(),
+                     TypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Type),
                      ImageUrl = x.Picture.GetFileUrl(_baseUrl)
                  }).ToPageableListAsync(request, cancellationToken);
 
