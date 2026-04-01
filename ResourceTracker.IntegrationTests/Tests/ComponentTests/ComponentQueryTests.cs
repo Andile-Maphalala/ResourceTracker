@@ -52,6 +52,8 @@ namespace ResourceTracker.IntegrationTests.Tests.ComponentTests
             result.Description.Should().Be(existing.Description);
             result.Type.Should().Be(existing.Type);
             result.GameId.Should().Be(existing.GameId);
+            result.GameName.Should().Be(existing.Game.Name);
+
         }
 
         [Fact]
