@@ -100,15 +100,49 @@ namespace ResourceTracker.ImageStorageService.Services
 
         public async Task<Picture> UploadImage(string url, int? linkedentityType, string folder, int? uploadedBy, string AltText, CancellationToken cancellationToken)
         {
-            using var response = await _httpClient.GetAsync(url, cancellationToken);
-            response.EnsureSuccessStatusCode();
 
-            var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
-            var fileName = Path.GetFileName(new Uri(url).LocalPath);
-            var contentType = response.Content.Headers.ContentType?.MediaType ?? "application/octet-stream";
+            byte[] bytes;
+            string fileName;
+            string contentType;
+
+            if (File.Exists(url))
+            {
+                bytes = await File.ReadAllBytesAsync(url, cancellationToken);
+                fileName = Path.GetFileName(url);
+                contentType = GetContentTypeFromExtension(fileName);
+            }
+            else
+            {
+                using var response = await _httpClient.GetAsync(url, cancellationToken);
+                response.EnsureSuccessStatusCode();
+
+                bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+                fileName = Path.GetFileName(new Uri(url).LocalPath);
+                contentType = response.Content.Headers.ContentType?.MediaType ?? "application/octet-stream";
+            }
+                
 
             return await SavePicture(bytes, linkedentityType, fileName, folder, contentType, AltText, uploadedBy, cancellationToken);
 
+        }
+
+        private string GetContentTypeFromExtension(string fileName)
+        {
+            var extension = Path.GetExtension(fileName).ToLowerInvariant();
+            switch(extension)
+            {
+                case ".jpg":
+                case ".jpeg":
+                    return "image/jpeg";
+                case ".png":
+                    return "image/png";
+                case ".gif":
+                    return "image/gif";
+                case ".bmp":
+                    return "image/bmp";
+                default:
+                    return "application/octet-stream";
+            }
         }
 
         private async Task<byte[]> ConvertIFormFileToByteArray(IFormFile file)
