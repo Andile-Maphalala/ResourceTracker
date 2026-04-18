@@ -101,13 +101,63 @@ namespace ResourceTracker.ImageStorageService.Services
         public async Task<Picture> UploadImage(string url, int? linkedentityType, string folder, int? uploadedBy, string AltText, CancellationToken cancellationToken)
         {
 
-            byte[] bytes;
+            var (bytes, fileName, contentType) = await DownloadImageData(url, cancellationToken);
+
+            var picture = await CreatePictureRecord(fileName, contentType, bytes.Length,uploadedBy, AltText, linkedentityType, cancellationToken);
+
+            await SaveImageFileAndUpdatePicture(picture, bytes, folder, cancellationToken);
+            await _unitOfWork.Save(cancellationToken);
+
+            return picture;
+
+        }
+
+        public async Task<Picture> CreatePictureRecord(string fileName,string contentType,long size,int? uploadedBy,string altText,int? linkedentityType,CancellationToken cancellationToken)
+        {
+            var picture = new Picture
+            {
+                Name = fileName,
+                ContentType = contentType,
+                Size = size,
+                CreatedDate = DateTime.UtcNow,
+                UploadedBy = uploadedBy,
+                AltText = altText,
+                LinkedEntityType = linkedentityType,
+                Path = null 
+            };
+
+            return picture;
+        }
+
+        public async Task<string> SaveImageFileAndUpdatePicture(Picture picture,byte[] imageData,string folder,CancellationToken cancellationToken)
+        {
+            var storedName = $"{Guid.NewGuid()}{Path.GetExtension(picture.Name)}";
+            var folderPath = Path.Combine(_baseStoragePath, folder);
+            var fullPath = Path.Combine(folderPath, storedName);
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            await File.WriteAllBytesAsync(fullPath, imageData, cancellationToken);
+
+            picture.Path = fullPath.Replace('\\', '/');
+            await _repo.InsertAsync(picture, cancellationToken);
+
+            return fullPath;
+        }
+
+
+        private async Task<(byte[] ImageData, string FileName, string ContentType)> DownloadImageData(string url, CancellationToken cancellationToken)
+        {
+            byte[] imageData;
             string fileName;
             string contentType;
 
-            if (File.Exists(url))
+            if (IsLocalFilePath(url))
             {
-                bytes = await File.ReadAllBytesAsync(url, cancellationToken);
+                imageData = await File.ReadAllBytesAsync(url, cancellationToken);
                 fileName = Path.GetFileName(url);
                 contentType = GetContentTypeFromExtension(fileName);
             }
@@ -115,16 +165,41 @@ namespace ResourceTracker.ImageStorageService.Services
             {
                 using var response = await _httpClient.GetAsync(url, cancellationToken);
                 response.EnsureSuccessStatusCode();
-
-                bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+                imageData = await response.Content.ReadAsByteArrayAsync(cancellationToken);
                 fileName = Path.GetFileName(new Uri(url).LocalPath);
                 contentType = response.Content.Headers.ContentType?.MediaType ?? "application/octet-stream";
             }
-                
 
-            return await SavePicture(bytes, linkedentityType, fileName, folder, contentType, AltText, uploadedBy, cancellationToken);
-
+            return (imageData, fileName, contentType);
         }
+
+        private bool IsLocalFilePath(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return false;
+
+            if (Path.IsPathRooted(path) && (path.Contains(":\\") || path.StartsWith(@"\\")))
+                return true;
+
+            if (path.StartsWith("/") && !path.StartsWith("//"))
+                return true;
+
+            if (path.StartsWith("file://", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            bool hasDirectorySeparator = path.Contains('\\') || path.Contains('/');
+            bool hasFileExtension = Path.HasExtension(path);
+            bool isLikelyFilePath = hasDirectorySeparator && hasFileExtension;
+            try
+            {
+                var result = File.Exists(path);
+                return result;
+            }
+            catch
+            {
+                return isLikelyFilePath;
+            }
+        }
+
 
         private string GetContentTypeFromExtension(string fileName)
         {

@@ -1,5 +1,4 @@
 ﻿
-using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Common.CQRS;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Common.User;
@@ -9,6 +8,7 @@ using ResourceTracker.Application.Interfaces;
 using ResourceTracker.Application.Models.Enums;
 using ResourceTracker.Application.Services;
 using ResourceTracker.Domain.Entities;
+using ResourceTracker.Domain.Enums;
 
 namespace ResourceTracker.Application.Features.Commands.ImportCommands
 {
@@ -57,7 +57,11 @@ namespace ResourceTracker.Application.Features.Commands.ImportCommands
             await _repo.BulkInsertAsync(recipes, cancellationToken);
 
             await _unitOfWork.Save(cancellationToken);
-            return new ImportGameResponse();
+            return new ImportGameResponse
+            {
+                TotalComponet = components.Where(x => x.Type == (int)ComponentTypeEnum.Composite || x.Type == (int)ComponentTypeEnum.Resource).Count(),
+                TotalFacilities = components.Where(x => x.Type == (int)ComponentTypeEnum.Facility).Count()
+            };
         }
     }
 }
