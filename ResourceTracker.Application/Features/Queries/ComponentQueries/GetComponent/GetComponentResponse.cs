@@ -11,6 +11,7 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries.GetCompo
         public string? ImageUrl { get; set; }
         public int GameId { get; set; }
         public string GameName { get; set; }
+        public int? PictureId { get; set; }
 
     }
 

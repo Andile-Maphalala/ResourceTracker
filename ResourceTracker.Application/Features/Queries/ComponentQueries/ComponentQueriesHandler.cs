@@ -40,6 +40,7 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries
                      Type = x.Type,
                      TypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Type),
                      ImageUrl = x.Picture.GetFileUrl(_baseUrl),
+                     PictureId = x.PictureId,
                      GameId = x.GameId,
                      GameName = x.Game.Name
                  }).FirstOrDefaultAsync(cancellationToken);
@@ -63,7 +64,8 @@ namespace ResourceTracker.Application.Features.Queries.ComponentQueries
                      Description = x.Description,
                      Type = x.Type,
                      TypeName = EnumHelper.GetEnumDescription((ComponentTypeEnum)x.Type),
-                     ImageUrl = x.Picture.GetFileUrl(_baseUrl)
+                     ImageUrl = x.Picture.GetFileUrl(_baseUrl),
+                     PictureId = x.PictureId
                  }).ToPageableListAsync(request, cancellationToken);
 
             return quests;

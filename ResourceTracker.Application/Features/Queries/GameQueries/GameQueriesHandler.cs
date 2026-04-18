@@ -35,7 +35,8 @@ namespace ResourceTracker.Application.Features.Queries.GameQueries
                     Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
-                    ImageUrl = x.Picture.GetFileUrl(_baseUrl)
+                    ImageUrl = x.Picture.GetFileUrl(_baseUrl), 
+                    PictureId = x.PictureId
                 }).FirstOrDefaultAsync(cancellationToken);
 
             if (game is null)
@@ -56,7 +57,8 @@ namespace ResourceTracker.Application.Features.Queries.GameQueries
                     Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
-                    ImageUrl = x.Picture.GetFileUrl(_baseUrl)
+                    ImageUrl = x.Picture.GetFileUrl(_baseUrl),
+                    PictureId = x.PictureId
                 }).ToPageableListAsync(request, cancellationToken);
 
             return result;
