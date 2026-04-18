@@ -21,9 +21,9 @@ namespace ResourceTracker.Api.Controllers
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeletePicture([FromBody] DeletePictureCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeletePicture(int id, CancellationToken cancellationToken)
         {
-            await sender.Send(request, cancellationToken);
+            await sender.Send(new DeletePictureCommand(id), cancellationToken);
             return NoContent();
         }
 
