@@ -78,6 +78,7 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
             // Assert
             result.Id.Should().Be(existing.Id);
             result.AmountAquired.Should().Be(existing.AmountAquired);
+            result.ComponentId.Should().Be(existing.ComponentId);
             result.ComponentName.Should().Be(existing.Component.Name);
             result.ComponentType.Should().Be(existing.Component.Type);
             result.QuestId.Should().Be(existing.QuestId);
