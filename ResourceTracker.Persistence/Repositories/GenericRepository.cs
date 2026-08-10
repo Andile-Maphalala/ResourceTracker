@@ -38,7 +38,10 @@ namespace ResourceTracker.Persistence.Repositories
         {
             if (entities.Any())
             {
-                await _dbContext.BulkInsertAsync(entities);
+                await _dbContext.BulkInsertAsync(entities, new BulkConfig
+                {
+                    IncludeGraph = true
+                });
             }
         }
 

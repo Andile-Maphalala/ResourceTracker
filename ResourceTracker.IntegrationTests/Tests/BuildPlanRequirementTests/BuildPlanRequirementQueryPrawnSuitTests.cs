@@ -312,7 +312,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         }
 
         [Fact]
-        public async Task GetBuildPlanRequirement_WithFacility_WithResourcesAndCompositeInInventoryGlass_ShouldReturnCorrectRequirements()
+        public async Task GetBuildPlanRequirement_WithFacility_WithResourcesAndCompositeInInventoryEnameldGlass_ShouldReturnCorrectRequirements()
         {
             //same as prevbious test but with faciluity requirments 
             // Arrange
@@ -327,35 +327,35 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             await SeedInventoryAsync(
             (30, 1),// Diamond 2-1
             (24, 2),  // Gell Sack 2-2
-            (14, 13) // Titanium 20-13
+            (14, 13) // Titanium 31-13
             );
 
             //Should return 1 enameled glass needed
             //Not return : Quartz,Stalker tooth
             //rest same
             await SeedInventoryAsync(
-            (28, 3));//Glass
+            (26, 3));//Enameled Glass
 
             // Act
             var result = await Sender.Send(query);
 
             // Assert
-            var expectedRequirements = PrawnSuitBuildPlanOutput.ExpectedResponseDataWithFacilityyWithInvestoryCompositeAndResources_Glass();
+            var expectedRequirements = PrawnSuitBuildPlanOutput.ExpectedResponseDataWithFacilityyWithInvestoryCompositeAndResources_EnameldGlass();
 
             result.Should().NotBeNull();
             result.BuildPlanId.Should().Be(_buildPlanId);
             result.BuildPlanName.Should().Be("Prawn Suit Only");
-            result.Requirements.Should().HaveCount(14);
+            result.Requirements.Should().HaveCount(13);
             foreach (var expected in expectedRequirements)
             {
                 var requirement = result.Requirements.FirstOrDefault(r => r.ComponentName == expected.ComponentName);
 
-                requirement.Should().NotBeNull();
+                requirement.Should().NotBeNull($"Requirement for {expected.ComponentName} not found");
 
-                requirement.ComponentId.Should().Be(expected.ComponentId);
-                requirement.RequiredAmount.Should().Be(expected.RequiredAmount);
-                requirement.AvailableAmount.Should().Be(expected.AvailableAmount);
-                requirement.MissingAmount.Should().Be(expected.MissingAmount);
+                requirement.ComponentId.Should().Be(expected.ComponentId, $"ComponentId for {expected.ComponentName} does not match");
+                requirement.RequiredAmount.Should().Be(expected.RequiredAmount, $"RequiredAmount for {expected.ComponentName} does not match");
+                requirement.AvailableAmount.Should().Be(expected.AvailableAmount, $"AvailableAmount for {expected.ComponentName} does not match");
+                requirement.MissingAmount.Should().Be(expected.MissingAmount, $"MissingAmount for {expected.ComponentName} does not match");
             }
             result.TotalAvailable.Should().Be(expectedRequirements.Sum(r => r.AvailableAmount));
             result.TotalMissing.Should().Be(expectedRequirements.Sum(r => r.MissingAmount));
@@ -367,9 +367,9 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             foreach (var expected in expectedFacilityRequirements)
             {
                 var facilityRequirement = result.FacilityRequirements.FirstOrDefault(fr => fr.Name == expected.Name);
-                facilityRequirement.Should().NotBeNull();
-                facilityRequirement.FacilityId.Should().Be(expected.FacilityId);
-                facilityRequirement.Name.Should().Be(expected.Name);
+                facilityRequirement.Should().NotBeNull($"Facility requirement for {expected.Name} not found");
+                facilityRequirement.FacilityId.Should().Be(expected.FacilityId, $"FacilityId for {expected.Name} does not match");
+                facilityRequirement.Name.Should().Be(expected.Name, $"Name for {expected.Name} does not match");
             }
         }
 

@@ -12,9 +12,9 @@ namespace ResourceTracker.IntegrationTests.Setup
     public abstract class IntegrationTestBase
     {
         protected readonly IntegrationTestFixture Fixture;
-        protected readonly IServiceScope Scope;
-        protected readonly ISender Sender;
-        protected readonly ResourceTrackerDbContext DbContext;
+        protected IServiceScope Scope;
+        protected ISender Sender;
+        protected ResourceTrackerDbContext DbContext;
         protected Mock<IUserInfo> UserInfoMock;
         public readonly int AdminUserId = 1;
         public readonly int NonAdminUserId = 2;
@@ -22,18 +22,31 @@ namespace ResourceTracker.IntegrationTests.Setup
         public IntegrationTestBase(IntegrationTestFixture fixture)
         {
             Fixture = fixture;
-            Scope = fixture.ScopeFactory.CreateScope();
-
-            Sender = Scope.ServiceProvider.GetRequiredService<ISender>();
-            DbContext = Scope.ServiceProvider.GetRequiredService<ResourceTrackerDbContext>();
-            UserInfoMock = Scope.ServiceProvider.GetRequiredService<Mock<IUserInfo>>();
+            CreateScope();
 
             ResetAsync(DbContext).GetAwaiter().GetResult();
             ClassSetup().GetAwaiter().GetResult();
+
+            // Throw away the context that was used for seeding
+            //This is to ensure that the context used for tests is clean and not affected by any state from the seeding process
+            RefreshScope();
         }
 
         protected virtual Task ClassSetup() => Task.CompletedTask;
 
+        private void CreateScope()
+        {
+            Scope = Fixture.ScopeFactory.CreateScope();
+            Sender = Scope.ServiceProvider.GetRequiredService<ISender>();
+            DbContext = Scope.ServiceProvider.GetRequiredService<ResourceTrackerDbContext>();
+            UserInfoMock = Scope.ServiceProvider.GetRequiredService<Mock<IUserInfo>>();
+        }
+
+        private void RefreshScope()
+        {
+            Scope.Dispose();
+            CreateScope();
+        }
         private static async Task ResetAsync(ResourceTrackerDbContext db)
         {
             await db.Database.ExecuteSqlRawAsync("""

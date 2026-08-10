@@ -222,7 +222,7 @@
             "name": "Titanium",
             "description": "Ti. Basic building material.",
             "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cc/Titanium.png",
-            "rawMaterial": false,
+            "rawMaterial": true,
             "recipe": {
                 "output_quantity": 4,
                 "station": "Fabricator",

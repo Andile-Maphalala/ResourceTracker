@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Queries.ComponentQueries.GetComponent;
@@ -42,7 +43,7 @@ namespace ResourceTracker.IntegrationTests.Tests.ComponentTests
         [Fact]
         public async Task GetComponent_WhenFound_ReturnsComponent()
         {
-            Component existing = DbContext.Components.First(c => c.Name == "Iron Ore");
+            Component existing = DbContext.Components.Include(c => c.Game).First(c => c.Name == "Iron Ore");
             GetComponentQuery query = new GetComponentQuery(existing.Id);
 
             GetComponentResponse result = await Sender.Send(query, CancellationToken.None);

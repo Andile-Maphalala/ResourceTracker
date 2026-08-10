@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Pagination.Models;
 using ResourceTracker.Application.Common.Exceptions;
 using ResourceTracker.Application.Features.Queries.QuestComponentQueres.GetQuestComponent;
@@ -69,7 +70,7 @@ namespace ResourceTracker.IntegrationTests.Tests.QuestComponentTests
         public async Task GetQuestComponent_WhenFound_ReturnsQuestComponent()
         {
             // Arrange
-            var existing = DbContext.QuestComponents.First();
+            var existing = DbContext.QuestComponents.Include(qc => qc.Component).Include(qc => qc.Quest).First();
             var query = new GetQuestComponentQuery(existing.Id);
 
             // Act

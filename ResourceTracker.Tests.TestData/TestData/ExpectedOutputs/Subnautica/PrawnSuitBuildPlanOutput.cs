@@ -312,7 +312,7 @@ namespace ResourceTracker.Tests.TestData.TestData.ExpectedOutputs.Subnautica
             };
         }
 
-        public static List<BuildPlanComponentRequirementDto> ExpectedResponseDataWithFacilityyWithInvestoryCompositeAndResources_Glass()
+        public static List<BuildPlanComponentRequirementDto> ExpectedResponseDataWithFacilityyWithInvestoryCompositeAndResources_EnameldGlass()
         {
             return new List<BuildPlanComponentRequirementDto>
             {
@@ -363,26 +363,17 @@ namespace ResourceTracker.Tests.TestData.TestData.ExpectedOutputs.Subnautica
                 }
                 ,new BuildPlanComponentRequirementDto
                 {
-                    ComponentId = 27,
-                    ComponentName = "Stalker Tooth",
-                    RequiredAmount = 1,
-                    MissingAmount = 1,
-                    AvailableAmount = 0,
-                    Type = (int)ComponentTypeEnum.Resource
-                }
-                ,new BuildPlanComponentRequirementDto
-                {
                     ComponentId = 14,
                     ComponentName = "Titanium",
-                    RequiredAmount = 20 + 11,//for the facility requirements
-                    MissingAmount = 7 + 11 ,//for the facility requirements
+                    RequiredAmount = 20 + 11,//21 for the facility requirements
+                    MissingAmount = 7 + 11 ,//18 for the facility requirements
                     AvailableAmount = 13,
                     Type = (int)ComponentTypeEnum.Resource
                 }
                 ,new BuildPlanComponentRequirementDto
                 {
-                    ComponentId = 28,
-                    ComponentName = "Glass",
+                    ComponentId = 26,
+                    ComponentName = "Enameled Glass",
                     RequiredAmount = 1,
                     MissingAmount = 0,
                     AvailableAmount = 3,
@@ -418,15 +409,6 @@ namespace ResourceTracker.Tests.TestData.TestData.ExpectedOutputs.Subnautica
                 }
                 ,new BuildPlanComponentRequirementDto
                 {
-                    ComponentId = 6,
-                    ComponentName = "Silver Ore",
-                    RequiredAmount = 2,
-                    MissingAmount = 2,
-                    AvailableAmount = 0,
-                    Type = (int)ComponentTypeEnum.Resource
-                }
-                ,new BuildPlanComponentRequirementDto
-                {
                     ComponentId = 13,
                     ComponentName = "Acid Mushroom",
                     RequiredAmount = 6,
@@ -438,6 +420,15 @@ namespace ResourceTracker.Tests.TestData.TestData.ExpectedOutputs.Subnautica
                 {
                     ComponentId = 18,
                     ComponentName = "Creepvine Seed Cluster",
+                    RequiredAmount = 2,
+                    MissingAmount = 2,
+                    AvailableAmount = 0,
+                    Type = (int)ComponentTypeEnum.Resource
+                }
+                ,new BuildPlanComponentRequirementDto
+                {
+                    ComponentId = 6,
+                    ComponentName = "Silver Ore",
                     RequiredAmount = 2,
                     MissingAmount = 2,
                     AvailableAmount = 0,

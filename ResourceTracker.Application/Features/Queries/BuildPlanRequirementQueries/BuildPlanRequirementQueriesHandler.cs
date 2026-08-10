@@ -34,20 +34,32 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
 
             //get all componets to build and their recipes in a single query to avoid N+1 issues during recursion
             var buildPlan = await _repo.BuildPlans.Where(x => x.Id == request.BuildPlanId)
+                .Include(x => x.GameSave)
                 .Include(z => z.BuildPlanQuests)
                 .ThenInclude(y => y.Quest)
                 .ThenInclude(x => x.QuestComponents)
                 .ThenInclude(y => y.Component)
-                .ThenInclude(x => x.Recipes)
                 .Include(z => z.BuildPlanComponents)
                 .ThenInclude(y => y.Component)
-                .ThenInclude(x => x.Recipes)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if(buildPlan == null)
+
+            if (buildPlan == null)
             {
                 throw new NotFoundException(nameof(buildPlan), request.BuildPlanId);
             }
+
+            if(buildPlan.GameSave == null)
+            {
+                throw new NotFoundException($"Game Save not found for Build Plan {request.BuildPlanId}");
+            }
+
+            var recipes = await _repo.Recipes
+               .Include(x => x.RequiredFacility)
+               .Include(x => x.RecipeComponents)
+               .ThenInclude(x => x.Component)
+               .Where(x => x.Component.GameId == buildPlan.GameSave.GameId)
+               .ToListAsync(cancellationToken);
 
             var allInventory = buildPlan.BuildPlanQuests.SelectMany(x => x.Quest.QuestComponents).ToList();
 
@@ -71,6 +83,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                     await CalculateRequirementsRecursive(
                         buildPlanComponent.Component,
                         buildPlanComponent.QuantityNeeded,
+                        recipes,
                         requirements,
                         facilityRequirementsMap,
                         workingInventory,
@@ -96,9 +109,6 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                         var facilityComponents = _repo.Components
                             .Where(c => toProcessIds.Contains(c.Id))
                             .Include(c => c.Recipes)
-                                .ThenInclude(r => r.RecipeComponents)
-                                    .ThenInclude(rc => rc.Component)
-                            .Include(c => c.Recipes)
                                 .ThenInclude(r => r.RequiredFacility)
                             .ToList();
 
@@ -113,6 +123,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                             await CalculateRequirementsRecursive(
                                 facilityComponent,
                                 1,
+                                recipes,
                                 requirements,
                                 facilityRequirementsMap,
                                 workingInventory,
@@ -143,6 +154,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
         private async Task CalculateRequirementsRecursive(
             Component component,
             int quantityNeeded,
+            List<Recipe> gameRecipes,
             List<BuildPlanComponentRequirementDto> requirements,
             Dictionary<int, BuildPlanFacilityRequirementDto> facilityRequirementsMap,
             List<QuestComponents> workingInventory,
@@ -180,8 +192,8 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                 return;
             }
 
-            var recipes = component.Recipes.ToList();
-            if (!recipes.Any())
+            var recipes = gameRecipes.Where(r => r.ComponentId == component.Id).ToList();
+            if (recipes == null || !recipes.Any())
             {
                 // No recipe exists (shouldn't happen for composites/facilities)
                 return;
@@ -220,20 +232,24 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
             int batchesToCraft = (int)Math.Ceiling((double)toCraft / recipe.AmountMade);
 
             // Process each ingredient
-            foreach (var recipeComponent in recipe.RecipeComponents)
+            if(recipe.RecipeComponents != null)
             {
-                int ingredientNeeded = recipeComponent.AmountRequired * batchesToCraft;
+                foreach (var recipeComponent in recipe.RecipeComponents)
+                {
+                    int ingredientNeeded = recipeComponent.AmountRequired * batchesToCraft;
 
-                await CalculateRequirementsRecursive(
-                    recipeComponent.Component,
-                    ingredientNeeded,
-                    requirements,
-                    facilityRequirementsMap,
-                    workingInventory,
-                    inventorySnapshot,
-                    includeInventory,
-                    includeFacilityRequirements,
-                    cancellationToken);
+                    await CalculateRequirementsRecursive(
+                        recipeComponent.Component,
+                        ingredientNeeded,
+                        gameRecipes,
+                        requirements,
+                        facilityRequirementsMap,
+                        workingInventory,
+                        inventorySnapshot,
+                        includeInventory,
+                        includeFacilityRequirements,
+                        cancellationToken);
+                }
             }
         }
 
