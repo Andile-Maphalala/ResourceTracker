@@ -22,6 +22,7 @@
     <ProjectReference Include="..\ResourceTracker.Application\ResourceTracker.Application.csproj" />
     <ProjectReference Include="..\ResourceTracker.ImageStorageService\ResourceTracker.ImageStorageService.csproj" />
     <ProjectReference Include="..\ResourceTracker.Persistence\ResourceTracker.Persistence.csproj" />
+    <ProjectReference Include="..\ResourceTracker.Tests.TestData\ResourceTracker.Tests.TestData.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,8 +2,7 @@
 using ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueries.GetBuildPlanRequirement;
 using ResourceTracker.Domain.Entities;
 using ResourceTracker.IntegrationTests.Setup;
-using ResourceTracker.IntegrationTests.TestData.InputData.Subnautica;
-using ResourceTracker.IntegrationTests.TestData.OutputData.Subnautica;
+using ResourceTracker.Tests.TestData.TestData.ExpectedOutputs.Subnautica;
 
 namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
 {
@@ -41,7 +40,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             await DbContext.SaveChangesAsync();
             _GameSaveId = DbContext.GameSaves.First(gs => gs.Name == "Coral Reef Base").Id;
 
-            var prawnSuitComponets = PrawnSuit.ExpectedComponentData();
+            var prawnSuitComponets = PrawnSuitComponentOutput.ExpectedComponentData();
             foreach (var component in prawnSuitComponets)
             {
                 component.GameId = _GameId;
@@ -49,7 +48,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             DbContext.Components.AddRange(prawnSuitComponets);
             await DbContext.SaveChangesAsync();
 
-            var prawnSuitRecipes = PrawnSuit.ExpectedRecipeData();
+            var prawnSuitRecipes = PrawnSuitComponentOutput.ExpectedRecipeData();
             DbContext.Recipes.AddRange(prawnSuitRecipes);
             await DbContext.SaveChangesAsync();
             var prawnSuitId = DbContext.Components.First(c => c.Name == "Prawn Suit").Id;
@@ -111,7 +110,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             var result = await Sender.Send(query);
 
             // Assert
-            var expectedRequirements = PrawnSuitOutput.ExpectedResponseDataNoFacilityNoInvestory();
+            var expectedRequirements = PrawnSuitBuildPlanOutput.ExpectedResponseDataNoFacilityNoInvestory();
 
             result.Should().NotBeNull();
             result.BuildPlanId.Should().Be(_buildPlanId);
@@ -156,7 +155,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             var result = await Sender.Send(query);
 
             // Assert
-            var expectedRequirements = PrawnSuitOutput.ExpectedResponseDataNoFacilityWithInvestoryOnlyResources();
+            var expectedRequirements = PrawnSuitBuildPlanOutput.ExpectedResponseDataNoFacilityWithInvestoryOnlyResources();
 
             result.Should().NotBeNull();
             result.BuildPlanId.Should().Be(_buildPlanId);
@@ -206,7 +205,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             var result = await Sender.Send(query);
 
             // Assert
-            var expectedRequirements = PrawnSuitOutput.ExpectedResponseDataNoFacilityWithInvestoryCompositeAndResources_EnameldGlass();
+            var expectedRequirements = PrawnSuitBuildPlanOutput.ExpectedResponseDataNoFacilityWithInvestoryCompositeAndResources_EnameldGlass();
 
             result.Should().NotBeNull();
             result.BuildPlanId.Should().Be(_buildPlanId);
@@ -255,7 +254,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             var result = await Sender.Send(query);
 
             // Assert
-            var expectedRequirements = PrawnSuitOutput.ExpectedResponseDataNoFacilityWithInvestoryCompositeAndResources_Glass();
+            var expectedRequirements = PrawnSuitBuildPlanOutput.ExpectedResponseDataNoFacilityWithInvestoryCompositeAndResources_Glass();
 
             result.Should().NotBeNull();
             result.BuildPlanId.Should().Be(_buildPlanId);
@@ -341,7 +340,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             var result = await Sender.Send(query);
 
             // Assert
-            var expectedRequirements = PrawnSuitOutput.ExpectedResponseDataWithFacilityyWithInvestoryCompositeAndResources_Glass();
+            var expectedRequirements = PrawnSuitBuildPlanOutput.ExpectedResponseDataWithFacilityyWithInvestoryCompositeAndResources_Glass();
 
             result.Should().NotBeNull();
             result.BuildPlanId.Should().Be(_buildPlanId);
@@ -363,7 +362,7 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             result.TotalRequired.Should().Be(expectedRequirements.Sum(r => r.RequiredAmount));
 
             //Facility Requirements
-            var expectedFacilityRequirements = PrawnSuitOutput.ExpectedFacilityWithNoneInvestory();
+            var expectedFacilityRequirements = PrawnSuitBuildPlanOutput.ExpectedFacilityWithNoneInvestory();
             result.FacilityRequirements.Should().HaveCount(expectedFacilityRequirements.Count);
             foreach (var expected in expectedFacilityRequirements)
             {

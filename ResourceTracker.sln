@@ -34,6 +34,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceTracker.IntegrationTests", "ResourceTracker.IntegrationTests\ResourceTracker.IntegrationTests.csproj", "{C39F74D0-4E26-4D32-B2FA-43D4FDE19964}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceTracker.Tests.TestData", "ResourceTracker.Tests.TestData\ResourceTracker.Tests.TestData.csproj", "{2D311E9C-7E4A-4C9B-89F6-9FAA104B74D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{C39F74D0-4E26-4D32-B2FA-43D4FDE19964}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C39F74D0-4E26-4D32-B2FA-43D4FDE19964}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C39F74D0-4E26-4D32-B2FA-43D4FDE19964}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D311E9C-7E4A-4C9B-89F6-9FAA104B74D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D311E9C-7E4A-4C9B-89F6-9FAA104B74D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D311E9C-7E4A-4C9B-89F6-9FAA104B74D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D311E9C-7E4A-4C9B-89F6-9FAA104B74D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{67A8AF9A-21AB-4EA6-8339-55C117AFF3FA} = {EEBA2F9B-90C3-4445-B440-C8DC34FBC907}
 		{A9855B1F-F6FE-45C2-8C96-5693D80EFE8E} = {10F6F2DB-5319-447D-9E12-91CEE4E612AE}
 		{C39F74D0-4E26-4D32-B2FA-43D4FDE19964} = {10F6F2DB-5319-447D-9E12-91CEE4E612AE}
+		{2D311E9C-7E4A-4C9B-89F6-9FAA104B74D2} = {10F6F2DB-5319-447D-9E12-91CEE4E612AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1FEA7B59-14DC-404F-ADEA-201B713C9D4E}

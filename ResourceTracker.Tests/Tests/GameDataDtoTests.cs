@@ -1,5 +1,5 @@
 ﻿using ResourceTracker.Application.Features.Commands.ImportCommands.Dtos;
-using ResourceTracker.Tests.Fixtures;
+using ResourceTracker.Tests.TestData.Fixtures;
 
 
 namespace ResourceTracker.Tests.Tests

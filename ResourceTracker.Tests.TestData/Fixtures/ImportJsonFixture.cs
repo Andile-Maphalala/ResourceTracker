@@ -1,9 +1,6 @@
-﻿
+﻿using System.Text.Json;
 
-using ResourceTracker.Application.Features.Commands.ImportCommands.Dtos;
-using System.Text.Json;
-
-namespace ResourceTracker.Tests.Fixtures
+namespace ResourceTracker.Tests.TestData.Fixtures
 {
     public class ImportJsonFixture<T>
     {

@@ -3,9 +3,9 @@ using ResourceTracker.Domain.Enums;
 using System.Collections.ObjectModel;
 
 
-namespace ResourceTracker.IntegrationTests.TestData.InputData.Subnautica
+namespace ResourceTracker.Tests.TestData.TestData.ExpectedOutputs.Subnautica
 {
-    public static class PrawnSuit
+    public static class PrawnSuitComponentOutput
     {
         public static List<Component> ExpectedComponentData()
         {

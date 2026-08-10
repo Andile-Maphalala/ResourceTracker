@@ -1,10 +1,9 @@
-﻿
-using ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueries.GetBuildPlanRequirement.Dto;
+﻿using ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueries.GetBuildPlanRequirement.Dto;
 using ResourceTracker.Domain.Enums;
 
-namespace ResourceTracker.IntegrationTests.TestData.OutputData.Subnautica
+namespace ResourceTracker.Tests.TestData.TestData.ExpectedOutputs.Subnautica
 {
-    public static class PrawnSuitOutput
+    public static class PrawnSuitBuildPlanOutput
     {
         public static List<BuildPlanComponentRequirementDto> ExpectedResponseDataNoFacilityNoInvestory ()
         {

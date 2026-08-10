@@ -10,20 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="TestData\ImportSamples\Subnautica\AllComponents.json" />
-    <None Remove="TestData\ImportSamples\Subnautica\PrawnSuit.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="TestData\ImportSamples\Subnautica\AllComponents.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\ImportSamples\Subnautica\PrawnSuit.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -47,6 +33,7 @@
     <ProjectReference Include="..\ResourceTracker.Application\ResourceTracker.Application.csproj" />
     <ProjectReference Include="..\ResourceTracker.ImageStorageService\ResourceTracker.ImageStorageService.csproj" />
     <ProjectReference Include="..\ResourceTracker.Persistence\ResourceTracker.Persistence.csproj" />
+    <ProjectReference Include="..\ResourceTracker.Tests.TestData\ResourceTracker.Tests.TestData.csproj" />
   </ItemGroup>
 
 </Project>

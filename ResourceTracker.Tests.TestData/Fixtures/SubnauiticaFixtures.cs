@@ -1,7 +1,5 @@
-﻿using ResourceTracker.Application.Features.Commands.ImportCommands.Dtos;
-
-
-namespace ResourceTracker.Tests.Fixtures
+﻿
+namespace ResourceTracker.Tests.TestData.Fixtures
 {
 
     public class SubnauticaFixture<T> : ImportJsonFixture<T>

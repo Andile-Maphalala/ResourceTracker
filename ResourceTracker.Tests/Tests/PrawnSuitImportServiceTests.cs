@@ -5,11 +5,11 @@ using ResourceTracker.Tests.TestData.Fixtures;
 
 namespace ResourceTracker.Tests.Tests
 {
-    public class ImportServiceTests : IClassFixture<PrawnSuitFixture<GameDataDto>>
+    public class PrawnSuitImportServiceTests : IClassFixture<PrawnSuitFixture<GameDataDto>>
     {
         private readonly GameDataDto _gameData;
 
-        public ImportServiceTests(PrawnSuitFixture<GameDataDto> fixture)
+        public PrawnSuitImportServiceTests(PrawnSuitFixture<GameDataDto> fixture)
         {
             _gameData = fixture.Data;
         }

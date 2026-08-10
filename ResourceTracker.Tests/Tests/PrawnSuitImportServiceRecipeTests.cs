@@ -5,11 +5,11 @@ using ResourceTracker.Tests.TestData.TestData.ExpectedOutputs.Subnautica;
 
 namespace ResourceTracker.Tests.Tests
 {
-    public class ImportServiceRecipeTests : IClassFixture<PrawnSuitFixture<GameDataDto>>
+    public class PrawnSuitImportServiceRecipeTests : IClassFixture<PrawnSuitFixture<GameDataDto>>
     {
         private readonly GameDataDto _gameData;
 
-        public ImportServiceRecipeTests(PrawnSuitFixture<GameDataDto> fixture)
+        public PrawnSuitImportServiceRecipeTests(PrawnSuitFixture<GameDataDto> fixture)
         {
             _gameData = fixture.Data;
         }
