@@ -37,6 +37,19 @@ namespace ResourceTracker.Application.Common.Behavior
 
                 await context.Response.WriteAsync(result);
             }
+            catch (NotFoundException ex)
+            {
+                context.Response.ContentType = "application/json";
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+
+                var result = JsonSerializer.Serialize(new
+                {
+                    StatusCode = context.Response.StatusCode,
+                    Message = ex.Message
+                });
+
+                await context.Response.WriteAsync(result);
+            }
         }
     }
 }

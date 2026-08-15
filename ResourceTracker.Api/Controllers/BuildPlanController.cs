@@ -31,17 +31,19 @@ namespace ResourceTracker.Api.Controllers
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteBuildPlan(int id, CancellationToken cancellationToken)
         {
             await sender.Send(new DeleteBuildPlanCommand(id), cancellationToken);
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GetBuildPlanResponse), StatusCodes.Status200OK)]
-        public async Task<ActionResult<GetBuildPlanResponse>> GetBuildPlan([FromQuery] GetBuildPlanQuery request, CancellationToken cancellationToken)
+        public async Task<ActionResult<GetBuildPlanResponse>> GetBuildPlan(int id, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request, cancellationToken);
+            var response = await sender.Send(new GetBuildPlanQuery(id), cancellationToken);
             return Ok(response);
         }
 

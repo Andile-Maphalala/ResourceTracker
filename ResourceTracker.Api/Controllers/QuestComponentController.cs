@@ -49,6 +49,7 @@ namespace ResourceTracker.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteQuestComponent(int id, CancellationToken cancellationToken)
         {
@@ -64,11 +65,12 @@ namespace ResourceTracker.Api.Controllers
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GetQuestComponentResponse), StatusCodes.Status200OK)]
-        public async Task<ActionResult<GetQuestComponentResponse>> GetQuestComponent([FromQuery] GetQuestComponentQuery request, CancellationToken cancellationToken)
+        public async Task<ActionResult<GetQuestComponentResponse>> GetQuestComponent(int id, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request, cancellationToken);
+            var response = await sender.Send(new GetQuestComponentQuery(id), cancellationToken);
             return Ok(response);
         }
 

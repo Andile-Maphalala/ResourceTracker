@@ -20,6 +20,7 @@ namespace ResourceTracker.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeletePicture(int id, CancellationToken cancellationToken)
         {
@@ -27,11 +28,12 @@ namespace ResourceTracker.Api.Controllers
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GetPictureResponse), StatusCodes.Status200OK)]
-        public async Task<ActionResult<GetPictureResponse>> GetPicture([FromQuery] GetPictureQuery request, CancellationToken cancellationToken)
+        public async Task<ActionResult<GetPictureResponse>> GetPicture(int id, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request, cancellationToken);
+            var response = await sender.Send(new GetPictureQuery(id), cancellationToken);
             return Ok(response);
         }
 

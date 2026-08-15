@@ -40,6 +40,7 @@ namespace ResourceTracker.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteGame(int id, CancellationToken cancellationToken)
         {
@@ -47,11 +48,12 @@ namespace ResourceTracker.Api.Controllers
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GetGameResponse), StatusCodes.Status200OK)]
-        public async Task<ActionResult<GetGameResponse>> GetGame([FromQuery] GetGameQuery request, CancellationToken cancellationToken)
+        public async Task<ActionResult<GetGameResponse>> GetGame(int id, CancellationToken cancellationToken)
         {
-            var response = await sender.Send(request, cancellationToken);
+            var response = await sender.Send(new GetGameQuery(id), cancellationToken);
             return Ok(response);
         }
 
