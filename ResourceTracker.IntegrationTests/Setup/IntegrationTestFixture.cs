@@ -19,7 +19,7 @@ namespace ResourceTracker.IntegrationTests.Setup
         public PostgreSqlContainer DbContainer { get; private set; }
         public IServiceScopeFactory ScopeFactory { get; private set; }
 
-        public virtual async Task InitializeAsync()
+        public virtual async ValueTask InitializeAsync()
         {
             DbContainer = new PostgreSqlBuilder()
                  .WithImage("postgres:latest")
@@ -47,7 +47,7 @@ namespace ResourceTracker.IntegrationTests.Setup
             await SeedUsersAsync(scope);
         }
 
-        public async Task DisposeAsync()
+        public async ValueTask DisposeAsync()
         {
             await DbContainer.DisposeAsync();
         }
