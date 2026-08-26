@@ -64,7 +64,8 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
             var allInventory = buildPlan.BuildPlanQuests.SelectMany(x => x.Quest.QuestComponents).ToList();
 
             // Immutable snapshot to check facility availability (facilities are not consumed)
-            var inventorySnapshot = allInventory.ToDictionary(i => i.ComponentId, i => i.AmountAquired);
+            var inventorySnapshot = allInventory.GroupBy(i => i.ComponentId)
+                .ToDictionary(g => g.Key, g => g.Sum(i => i.AmountAquired));
 
             // Working copy we can mutate while deducting consumed components
             var workingInventory = allInventory
@@ -166,8 +167,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
             int availableFromInventory = 0;
             if (includeInventory)
             {
-                var inventoryItem = workingInventory.FirstOrDefault(x => x.ComponentId == component.Id);
-                availableFromInventory = inventoryItem?.AmountAquired ?? 0;
+                availableFromInventory = workingInventory.Where(x => x.ComponentId == component.Id).Sum(x => x.AmountAquired);
             }
 
             int stillNeeded = Math.Max(0, quantityNeeded - availableFromInventory);

@@ -178,6 +178,52 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         }
 
         [Fact]
+        public async Task GetBuildPlanRequirement_WithResourcesInInventoryMultipleStacks_ShouldReturnCorrectRequirements()
+        {
+            // Arrange
+            var query = new GetBuildPlanRequirementQuery
+            {
+                BuildPlanId = _buildPlanId,
+                IncludeFacilityRequirements = false,
+                IncludeInventory = true
+            };
+            //so should return 1 diamond nedded, 0 gel sacks needed, and 7 titanium needed, rest the same
+            await ClearInventorySeed();
+            await SeedInventoryAsync(
+            (30, 1),// Diamond 2-1
+            (24, 2),  // Gell Sack 2-2
+            (14, 7), // Add multiple stacks of the same component to test aggregation
+            (14, 6) // Titanium 20-13
+            );
+
+
+            // Act
+            var result = await Sender.Send(query);
+
+            // Assert
+            var expectedRequirements = PrawnSuitBuildPlanOutput.ExpectedResponseDataNoFacilityWithInvestoryOnlyResources();
+
+            result.Should().NotBeNull();
+            result.BuildPlanId.Should().Be(_buildPlanId);
+            result.BuildPlanName.Should().Be("Prawn Suit Only");
+            result.Requirements.Should().HaveCount(8);
+            result.TotalAvailable.Should().Be(expectedRequirements.Sum(r => r.AvailableAmount));
+            result.TotalMissing.Should().Be(expectedRequirements.Sum(r => r.MissingAmount));
+            result.TotalRequired.Should().Be(expectedRequirements.Sum(r => r.RequiredAmount));
+            foreach (var expected in expectedRequirements)
+            {
+                var requirement = result.Requirements.FirstOrDefault(r => r.ComponentName == expected.ComponentName);
+
+                requirement.Should().NotBeNull();
+
+                requirement.ComponentId.Should().Be(expected.ComponentId);
+                requirement.RequiredAmount.Should().Be(expected.RequiredAmount);
+                requirement.AvailableAmount.Should().Be(expected.AvailableAmount);
+                requirement.MissingAmount.Should().Be(expected.MissingAmount);
+            }
+        }
+
+        [Fact]
         public async Task GetBuildPlanRequirement_WithResourcesAndCompositeInInventoryEnameldGlass_ShouldReturnCorrectRequirements()
         {
             // Arrange
