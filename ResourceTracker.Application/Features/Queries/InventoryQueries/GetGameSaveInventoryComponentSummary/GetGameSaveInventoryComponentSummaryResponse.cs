@@ -9,6 +9,7 @@ namespace ResourceTracker.Application.Features.Queries.InventoryQueries.GetGameS
         public int ComponentId { get; set; }
         public string ComponentName { get; set; }
         public string ComponentType { get; set; }
+        public string ComponentImageUrl { get; set; }
         public int TotalQuantity { get; set; }
         public List<GetGameSaveInventoryComponentQuestDto> Quests { get; set; } = new List<GetGameSaveInventoryComponentQuestDto>();
     }
