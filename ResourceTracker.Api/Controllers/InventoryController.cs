@@ -44,7 +44,7 @@ namespace ResourceTracker.Api.Controllers
         }
 
         [HttpPatch]
-        [ProducesResponseType(typeof(List<ConsumeBuildPlanComponentsResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ConsumeBuildPlanComponentsResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ConsumeBuildPlanComponentsResponse>> ConsumeBuildPlanComponents([FromBody] ConsumeBuildPlanComponentsCommand command, CancellationToken cancellationToken)
         {
