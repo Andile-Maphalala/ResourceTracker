@@ -7,5 +7,7 @@ namespace ResourceTracker.Application.Features.Commands.BuildPlanCommands.Update
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool IncludeInventory { get; set; }
+        public bool IncludeFacilityRequirements { get; set; }
     }
 }

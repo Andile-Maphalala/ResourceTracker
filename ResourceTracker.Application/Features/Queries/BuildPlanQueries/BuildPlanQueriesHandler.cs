@@ -30,6 +30,8 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanQueries
                     Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
+                    IncludeFacilityRequirements = x.IncludeFacilityRequirements,
+                    IncludeInventory = x.IncludeInventory,
                     GameSaveId = x.GameSaveId,
                     GameSaveName = x.GameSave.Name
                 }).FirstOrDefaultAsync(cancellationToken);
@@ -53,6 +55,8 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanQueries
                     Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
+                    IncludeInventory = x.IncludeInventory,
+                    IncludeFacilityRequirements = x.IncludeFacilityRequirements,
                     GameId = x.GameSave.GameId,
                     GameName = x.GameSave.Game.Name,
                     GameSaveId = x.GameSave.Id,

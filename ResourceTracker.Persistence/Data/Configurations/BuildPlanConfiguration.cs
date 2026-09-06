@@ -24,6 +24,14 @@ namespace ResourceTracker.Persistence.Data.Configurations
                 .HasMaxLength(250)
                 .IsUnicode(false);
 
+            builder.Property(e => e.IncludeInventory)
+                .IsRequired()
+                .HasDefaultValue(true);
+
+            builder.Property(e => e.IncludeFacilityRequirements)
+                .IsRequired()
+                .HasDefaultValue(false);
+
             // Relationships
             builder.HasMany(x => x.BuildPlanComponents)
                 .WithOne(e => e.BuildPlan)

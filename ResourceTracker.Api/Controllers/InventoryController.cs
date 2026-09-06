@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ResourceTracker.Application.Features.Commands.InventoryCommands.ConsumeBuildPlanComponents;
 using ResourceTracker.Application.Features.Queries.InventoryQueries.GetGameSaveInventorySummary;
 using ResourceTracker.Application.Features.Queries.InventoryQueries.GetGameSaveInventoryTotals;
 using ResourceTracker.Application.Features.Queries.InventoryQueries.GetInventoryComponentQuest;
@@ -39,6 +40,15 @@ namespace ResourceTracker.Api.Controllers
         {
             GetGameSaveInventorySummaryQuery request = new GetGameSaveInventorySummaryQuery(gameSaveId);
             var response = await sender.Send(request, cancellationToken);
+            return Ok(response);
+        }
+
+        [HttpPatch]
+        [ProducesResponseType(typeof(List<ConsumeBuildPlanComponentsResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ConsumeBuildPlanComponentsResponse>> ConsumeBuildPlanComponents([FromBody] ConsumeBuildPlanComponentsCommand command, CancellationToken cancellationToken)
+        {
+            var response = await sender.Send(command, cancellationToken);
             return Ok(response);
         }
 

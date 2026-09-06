@@ -15,6 +15,12 @@ namespace ResourceTracker.Application.Features.Commands.BuildPlanCommands.Update
 
             RuleFor(x => x.Description)
                 .MaximumLength(225).WithMessage("Description cannot exceed 225 characters");
+
+            RuleFor(x => x.IncludeInventory)
+                .NotNull().WithMessage("IncludeInventory is required");
+
+            RuleFor(x => x.IncludeFacilityRequirements)
+                .NotNull().WithMessage("IncludeFacilityRequirements is required");
         }
     }
 }

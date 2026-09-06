@@ -89,11 +89,11 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                         facilityRequirementsMap,
                         workingInventory,
                         inventorySnapshot,
-                        request.IncludeInventory,
-                        request.IncludeFacilityRequirements,
+                        buildPlan.IncludeInventory,
+                        buildPlan.IncludeFacilityRequirements,
                         cancellationToken);
                 }
-                if (request.IncludeFacilityRequirements && facilityRequirementsMap.Any())
+                if (buildPlan.IncludeFacilityRequirements && facilityRequirementsMap.Any())
                 {
                     // Iteratively process facilities until no new facility requirements are discovered.
                     // This handles facilities that themselves require other facilities.
@@ -129,8 +129,8 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                                 facilityRequirementsMap,
                                 workingInventory,
                                 inventorySnapshot,
-                                request.IncludeInventory,
-                                request.IncludeFacilityRequirements,
+                                buildPlan.IncludeInventory,
+                                buildPlan.IncludeFacilityRequirements,
                                 cancellationToken);
                         }
                     }
@@ -138,6 +138,23 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
 
                 
             }
+
+            var questNameById = buildPlan.BuildPlanQuests.ToDictionary(bpq => bpq.QuestId, bpq => bpq.Quest.Name);
+
+            foreach (var req in requirements)
+            {
+                req.Locations = allInventory
+                    .Where(i => i.ComponentId == req.ComponentId)
+                    .Select(i => new ComponentLocationDto
+                    {
+                        QuestComponentId = i.Id,
+                        QuestId = i.QuestId,
+                        QuestName = questNameById.TryGetValue(i.QuestId, out var name) ? name : "Unknown",
+                        Quantity = i.AmountAquired
+                    })
+                    .ToList();
+            }
+
             var response = new GetBuildPlanRequirementsResponse
             {
                 BuildPlanId = buildPlan.Id,

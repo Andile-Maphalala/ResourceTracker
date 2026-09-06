@@ -6,6 +6,8 @@ namespace ResourceTracker.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool IncludeInventory { get; set; }
+        public bool IncludeFacilityRequirements { get; set; }
         public int GameSaveId { get; set; }
         public virtual GameSave GameSave { get; set; }
         public virtual ICollection<BuildPlanComponent> BuildPlanComponents { get; set; }

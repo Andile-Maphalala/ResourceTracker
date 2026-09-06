@@ -16,6 +16,7 @@ namespace ResourceTracker.Application.Features.Queries.InventoryQueries
     public class InventoryQueries : IRequestHandler<GetInventoryComponentQuestQuery, List<GetInventoryComponentQuestResponse>>,
                                                                     IRequestHandler<GetGameSaveInventoryComponentSummaryQuery, List<GetGameSaveInventoryComponentSummaryResponse>>,
                                                                     IRequestHandler<GetGameSaveInventorySummaryQuery, GetGameSaveInventorySummaryResponse>
+
     {
 
 

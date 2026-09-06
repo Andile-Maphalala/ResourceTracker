@@ -100,12 +100,8 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         public async Task GetBuildPlanRequirement_EmptyInventoryOnlyComponets_ShouldReturnCorrectRequirements()
         {
             // Arrange
-            var query = new GetBuildPlanRequirementQuery
-            {
-                BuildPlanId = _buildPlanId,
-                IncludeFacilityRequirements = false,
-                IncludeInventory = false
-            };
+            var query = new GetBuildPlanRequirementQuery(_buildPlanId);
+            await SetBuildPlanParameters(_buildPlanId, includeFacilityRequirements: false, includeInventory: false);
             // Act
             var result = await Sender.Send(query);
 
@@ -136,12 +132,8 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         public async Task GetBuildPlanRequirement_WithResourcesInInventory_ShouldReturnCorrectRequirements()
         {
             // Arrange
-            var query = new GetBuildPlanRequirementQuery
-            {
-                BuildPlanId = _buildPlanId,
-                IncludeFacilityRequirements = false,
-                IncludeInventory = true
-            };
+            var query = new GetBuildPlanRequirementQuery(_buildPlanId);
+            await SetBuildPlanParameters(_buildPlanId, includeFacilityRequirements: false, includeInventory: true);
             //so should return 1 diamond nedded, 0 gel sacks needed, and 7 titanium needed, rest the same
             await ClearInventorySeed();
             await SeedInventoryAsync(
@@ -181,12 +173,8 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         public async Task GetBuildPlanRequirement_WithResourcesInInventoryMultipleStacks_ShouldReturnCorrectRequirements()
         {
             // Arrange
-            var query = new GetBuildPlanRequirementQuery
-            {
-                BuildPlanId = _buildPlanId,
-                IncludeFacilityRequirements = false,
-                IncludeInventory = true
-            };
+            var query = new GetBuildPlanRequirementQuery(_buildPlanId);
+            await SetBuildPlanParameters(_buildPlanId, includeFacilityRequirements: false, includeInventory: true);
             //so should return 1 diamond nedded, 0 gel sacks needed, and 7 titanium needed, rest the same
             await ClearInventorySeed();
             await SeedInventoryAsync(
@@ -227,12 +215,8 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         public async Task GetBuildPlanRequirement_WithResourcesAndCompositeInInventoryEnameldGlass_ShouldReturnCorrectRequirements()
         {
             // Arrange
-            var query = new GetBuildPlanRequirementQuery
-            {
-                BuildPlanId = _buildPlanId,
-                IncludeFacilityRequirements = false,
-                IncludeInventory = true
-            };
+            var query = new GetBuildPlanRequirementQuery(_buildPlanId);
+            await SetBuildPlanParameters(_buildPlanId, includeFacilityRequirements: false, includeInventory: true);
             //so should return 1 diamond nedded, 0 gel sacks needed, and 7 titanium needed, rest the same
             await ClearInventorySeed();
             await SeedInventoryAsync(
@@ -276,12 +260,8 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         public async Task GetBuildPlanRequirement_WithResourcesAndCompositeInInventoryGlass_ShouldReturnCorrectRequirements()
         {
             // Arrange
-            var query = new GetBuildPlanRequirementQuery
-            {
-                BuildPlanId = _buildPlanId,
-                IncludeFacilityRequirements = false,
-                IncludeInventory = true
-            };
+            var query = new GetBuildPlanRequirementQuery(_buildPlanId);
+            await SetBuildPlanParameters(_buildPlanId, includeFacilityRequirements: false, includeInventory: true);
             //so should return 1 diamond nedded, 0 gel sacks needed, and 7 titanium needed, rest the same
             await ClearInventorySeed();
             await SeedInventoryAsync(
@@ -326,12 +306,8 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         public async Task GetBuildPlanRequirement_Should_DepreciateInventoryAcrossMultipleRecipeLevels()
         {
             // Arrange
-            var query = new GetBuildPlanRequirementQuery
-            {
-                BuildPlanId = _buildPlanId,
-                IncludeFacilityRequirements = false,
-                IncludeInventory = true
-            };
+            var query = new GetBuildPlanRequirementQuery(_buildPlanId);
+            await SetBuildPlanParameters(_buildPlanId, includeFacilityRequirements: false, includeInventory: true);
 
             await ClearInventorySeed();
 
@@ -362,12 +338,8 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
         {
             //same as prevbious test but with faciluity requirments 
             // Arrange
-            var query = new GetBuildPlanRequirementQuery
-            {
-                BuildPlanId = _buildPlanId,
-                IncludeFacilityRequirements = true,//incluse facility requirements
-                IncludeInventory = true
-            };
+            var query = new GetBuildPlanRequirementQuery(_buildPlanId);
+            await SetBuildPlanParameters(_buildPlanId, includeFacilityRequirements: true, includeInventory: true);
             //so should return 1 diamond nedded, 0 gel sacks needed, and 7 titanium needed, rest the same
             await ClearInventorySeed();
             await SeedInventoryAsync(
@@ -441,6 +413,15 @@ namespace ResourceTracker.IntegrationTests.Tests.BuildPlanRequirementTests
             await DbContext.SaveChangesAsync();
         }
 
-
+        private async Task SetBuildPlanParameters(int buildPlanId, bool includeFacilityRequirements, bool includeInventory)
+        {
+            var buildPlan = await DbContext.BuildPlans.FindAsync(buildPlanId);
+            if (buildPlan != null)
+            {
+                buildPlan.IncludeFacilityRequirements = includeFacilityRequirements;
+                buildPlan.IncludeInventory = includeInventory;
+                await DbContext.SaveChangesAsync();
+            }
+        }
     }
 }

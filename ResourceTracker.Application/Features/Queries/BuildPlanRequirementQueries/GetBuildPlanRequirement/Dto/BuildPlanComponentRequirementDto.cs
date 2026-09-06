@@ -11,6 +11,6 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
         public int MissingAmount { get; set; }
         public int Type { get; set; }
         public string? ImageUrl { get; set; }
-
+        public List<ComponentLocationDto> Locations { get; set; } = new();
     }
 }
