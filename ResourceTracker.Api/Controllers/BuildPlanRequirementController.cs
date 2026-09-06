@@ -12,7 +12,7 @@ namespace ResourceTracker.Api.Controllers
     {
         [HttpGet]
         [ProducesResponseType(typeof(GetBuildPlanRequirementsResponse), StatusCodes.Status200OK)]
-        public async Task<ActionResult<GetBuildPlanRequirementsResponse>> GetBuildPlanRequirement(int buildPlanId, bool includeFacilityRequirements, bool IncludeInventory, CancellationToken cancellationToken)
+        public async Task<ActionResult<GetBuildPlanRequirementsResponse>> GetBuildPlanRequirement(int buildPlanId,CancellationToken cancellationToken)
         {
             GetBuildPlanRequirementQuery request = new GetBuildPlanRequirementQuery(buildPlanId);
             var response = await sender.Send(request, cancellationToken);
