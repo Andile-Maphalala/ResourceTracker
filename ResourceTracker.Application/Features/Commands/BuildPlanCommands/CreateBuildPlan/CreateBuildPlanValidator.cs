@@ -15,6 +15,12 @@ namespace ResourceTracker.Application.Features.Commands.BuildPlanCommands.Create
 
             RuleFor(x => x.GameSaveId)
                 .GreaterThan(0).WithMessage("Game Save is required");
+
+            RuleFor(x => x.IncludeInventory)
+                .NotNull().WithMessage("IncludeInventory is required");
+
+            RuleFor(x => x.IncludeFacilityRequirements)
+                .NotNull().WithMessage("IncludeFacilityRequirements is required");
         }
     }
 }

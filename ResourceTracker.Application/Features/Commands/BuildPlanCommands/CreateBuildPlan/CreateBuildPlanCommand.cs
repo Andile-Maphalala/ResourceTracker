@@ -7,5 +7,7 @@ namespace ResourceTracker.Application.Features.Commands.BuildPlanCommands.Create
         public string Name { get; set; }
         public string Description { get; set; }
         public int GameSaveId { get; set; }
+        public bool IncludeInventory { get; set; }
+        public bool IncludeFacilityRequirements { get; set; }
     }
 }

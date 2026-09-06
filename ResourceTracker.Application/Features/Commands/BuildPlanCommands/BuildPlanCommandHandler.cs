@@ -37,7 +37,9 @@ namespace ResourceTracker.Application.Features.Commands.BuildPlanCommands
             {
                 Name = command.Name,
                 Description = command.Description,
-                GameSaveId = command.GameSaveId
+                GameSaveId = command.GameSaveId,
+                IncludeInventory = command.IncludeInventory,
+                IncludeFacilityRequirements = command.IncludeFacilityRequirements,
             };
 
             await _repo.InsertAsync(entity, cancellationToken);
@@ -58,6 +60,8 @@ namespace ResourceTracker.Application.Features.Commands.BuildPlanCommands
 
             item.Name = command.Name;
             item.Description = command.Description;
+            item.IncludeFacilityRequirements = command.IncludeFacilityRequirements;
+            item.IncludeInventory = command.IncludeInventory;
 
             await _unitOfWork.Save(cancellationToken);
             return Unit.Value;
