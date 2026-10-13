@@ -87,8 +87,15 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
             var buildPlanComponetsRequired = buildPlan.BuildPlanComponents.OrderBy(x => x.Order).ToList();
             if (buildPlanComponetsRequired.Any())
             {
+                // A facility asked for as a plan item is walked here, so mark it: the facility pass
+                // below would otherwise walk it a second time and bill its build materials twice.
+                var processedFacilityIds = new HashSet<int>();
+
                 foreach (var buildPlanComponent in buildPlanComponetsRequired)
                 {
+                    if (buildPlanComponent.Component.Type == (int)ComponentTypeEnum.Facility)
+                        processedFacilityIds.Add(buildPlanComponent.Component.Id);
+
                     await CalculateRequirementsRecursive(
                         buildPlanComponent.Component,
                         buildPlanComponent.QuantityNeeded,
@@ -105,7 +112,6 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                 {
                     // Iteratively process facilities until no new facility requirements are discovered.
                     // This handles facilities that themselves require other facilities.
-                    var processedFacilityIds = new HashSet<int>();
                     while (true)
                     {
                         // determine which facility ids still need to be fetched/processed
