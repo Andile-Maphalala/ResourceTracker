@@ -7,6 +7,7 @@ namespace ResourceTracker.Domain.Entities
         public int GameSaveId { get; set; }
         public int ComponentId { get; set; }
         public int QuestId { get; set; }
+        public int Level { get; set; } = 1;
         public virtual GameSave GameSave { get; set; }
         public virtual Component Component { get; set; }
         public virtual Quest Quest { get; set; }

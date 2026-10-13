@@ -42,6 +42,7 @@ namespace ResourceTracker.Persistence.Repositories
         public IQueryable<Picture> Pictures => Set<Picture>();
         public IQueryable<GameSave> GameSaves => Set<GameSave>();
         public IQueryable<BuildPlanQuest> BuildPlanQuests => Set<BuildPlanQuest>();
+        public IQueryable<PlayerFacility> PlayerFacilities => Set<PlayerFacility>();
 
         public IQueryable<Game> Search(SearchGamesQuery request)
         {

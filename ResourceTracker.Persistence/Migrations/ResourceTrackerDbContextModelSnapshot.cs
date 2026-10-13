@@ -323,6 +323,11 @@ namespace ResourceTracker.Persistence.Migrations
                     b.Property<int>("GameSaveId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Level")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1);
+
                     b.Property<int>("QuestId")
                         .HasColumnType("integer");
 
@@ -420,6 +425,11 @@ namespace ResourceTracker.Persistence.Migrations
 
                     b.Property<int?>("RequiredFacilityId")
                         .HasColumnType("integer");
+
+                    b.Property<int>("RequiredFacilityLevel")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1);
 
                     b.HasKey("Id");
 

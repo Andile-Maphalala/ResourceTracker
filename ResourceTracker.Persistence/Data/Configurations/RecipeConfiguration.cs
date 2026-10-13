@@ -17,6 +17,13 @@ namespace ResourceTracker.Persistence.Data.Configurations
             builder.Property(e => e.AmountMade)
                 .IsRequired();
 
+            // Minimum level of RequiredFacility needed to craft this. Meaningless when
+            // RequiredFacilityId is null. Default 1 leaves recipes with no level (Subnautica) as
+            // they were, and any owned facility satisfies it.
+            builder.Property(e => e.RequiredFacilityLevel)
+                .IsRequired()
+                .HasDefaultValue(1);
+
             // Relationships
             builder.HasMany(x => x.RecipeComponents)
                 .WithOne(e => e.Recipe)

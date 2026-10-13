@@ -6,6 +6,7 @@
       "description": "Epic mech suit designed for navigating challenging environments on foot.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/42/Prawn_Suit.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Mobile Vehicle Bay",
@@ -38,6 +39,7 @@
       "description": "Fabricates vehicles from raw materials.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/30/Mobile_Vehicle_Bay.png",
       "rawMaterial": false,
+      "type": "Facility",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -62,6 +64,7 @@
       "description": "Basic survival fabricator. Atomically rearranges raw resources into useful objects.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/66/Fabricator.png",
       "rawMaterial": false,
+      "type": "Facility",
       "recipe": {
         "output_quantity": 1,
         "station": "Habitat Builder",
@@ -86,6 +89,7 @@
       "description": "Fabricates habitat compartments and appliances from raw materials.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/5/5c/Habitat_Builder.png",
       "rawMaterial": false,
+      "type": "Facility",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -110,6 +114,7 @@
       "description": "Insulated silver wire. Essential electronic component.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/7b/Wiring_Kit.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -126,6 +131,7 @@
       "description": "Ag. Conductive element and microbicide.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/97/Silver_Ore.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -133,6 +139,7 @@
       "description": "Multi-purpose CPU.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6f/Computer_Chip.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -157,6 +164,7 @@
       "description": "Contains trace precious metals used in computer fabrication.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0a/Table_Coral_Sample.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -164,6 +172,7 @@
       "description": "Au. Valuable conductive properties. Highly valuable social property.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/10/Gold.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -171,6 +180,7 @@
       "description": "Copper atoms fabricated into basic electrical wiring.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/4/43/Copper_Wire.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -187,6 +197,7 @@
       "description": "Cu. Essential wiring component.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/78/Copper_Ore.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -194,6 +205,7 @@
       "description": "Mobile power source.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/6d/Battery.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -214,6 +226,7 @@
       "description": "Purple fungus. Acidic flesh.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/ff/Acid_Mushroom.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -221,6 +234,7 @@
       "description": "Ti. Basic building material.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cc/Titanium.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 4,
         "station": "Fabricator",
@@ -237,6 +251,7 @@
       "description": "Composed primarily of titanium.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a4/Metal_Salvage.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -244,6 +259,7 @@
       "description": "Ti. Condensed titanium bar.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/61/Titanium_Ingot.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -260,6 +276,7 @@
       "description": "Naturally-derived, oil-based lubricant. Industrial applications.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/7/77/Lubricant.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -276,6 +293,7 @@
       "description": "Indigenous seeds with high silicone and oil content.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/0/0c/Creepvine_Seed_Cluster.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -283,6 +301,7 @@
       "description": "High-capacity mobile power source.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/9a/Power_Cell.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -303,6 +322,7 @@
       "description": "Synthetic, silicone-based rubber.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/d/d0/Silicone_Rubber.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 2,
         "station": "Fabricator",
@@ -319,6 +339,7 @@
       "description": "Ultra-strong synthetic construction material.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/f/fc/Plasteel_Ingot.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -339,6 +360,7 @@
       "description": "Li. Applications in high-strength alloys.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cf/Lithium.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -346,6 +368,7 @@
       "description": "Light, porous, dried gel. High heat insulation.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/6/66/Aerogel.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -366,6 +389,7 @@
       "description": "Gel sack.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/3/3f/Gel_Sack.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -373,6 +397,7 @@
       "description": null,
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/a/a9/Ruby.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -380,6 +405,7 @@
       "description": "Glass, hardened using a natural substrate.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/14/Enameled_Glass.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -400,6 +426,7 @@
       "description": "A sharp, hardened calcium formation.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/9/94/Stalker_Tooth.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -407,6 +434,7 @@
       "description": null,
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/1/15/Glass.png",
       "rawMaterial": false,
+      "type": "Composite",
       "recipe": {
         "output_quantity": 1,
         "station": "Fabricator",
@@ -423,6 +451,7 @@
       "description": null,
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/c/cf/Quartz.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -430,6 +459,7 @@
       "description": "C. Carbon allotrope with superlative physical properties.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/ea/Diamond.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     },
     {
@@ -437,6 +467,7 @@
       "description": "Pb. Insulates against radiation.",
       "image_url": "https://static.wikia.nocookie.net/subnautica/images/e/e8/Lead.png",
       "rawMaterial": true,
+      "type": "Resource",
       "recipe": null
     }
   ]

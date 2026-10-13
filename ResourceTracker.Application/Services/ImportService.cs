@@ -16,7 +16,7 @@ namespace ResourceTracker.Application.Services
                 {
                     Name = componentDto.Name,
                     Description = componentDto.Description ?? "",
-                    Type = (int)GetComponentType(componentDto, data.Components),
+                    Type = (int)GetComponentType(componentDto),
                     GameId = gameId
                 };
                 components.Add(component);
@@ -71,35 +71,22 @@ namespace ResourceTracker.Application.Services
         }
 
 
-        public static ComponentTypeEnum GetComponentType(GameComponentDto component, List<GameComponentDto> data)
+        public static ComponentTypeEnum GetComponentType(GameComponentDto component)
         {
-            if (component.RawMaterial)
+            if (string.IsNullOrWhiteSpace(component.Type))
             {
-                return ComponentTypeEnum.Resource;
+                throw new BadRequestException(
+                    $"Component {component.Name} has no type. Expected one of {string.Join(", ", Enum.GetNames<ComponentTypeEnum>())}.");
             }
-            else
+
+            if (!Enum.TryParse<ComponentTypeEnum>(component.Type, ignoreCase: true, out var type)
+                || !Enum.IsDefined(type))
             {
-                var stations = GetStations(data);
-                if (stations.Contains(component.Name))
-                {
-                    return ComponentTypeEnum.Facility;
-                }
-                else
-                {
-                    return ComponentTypeEnum.Composite;
-                }
+                throw new BadRequestException(
+                    $"Component {component.Name} has unknown type {component.Type}. Expected one of {string.Join(", ", Enum.GetNames<ComponentTypeEnum>())}.");
             }
-        }
 
-
-        private static List<string> GetStations(List<GameComponentDto> data)
-        {
-            var stations = data
-                .Where(c => c.Recipe != null)
-                .Select(c => c.Recipe!.Station)
-                .Distinct()
-                .ToList();
-            return stations;
+            return type;
         }
     }
 }
