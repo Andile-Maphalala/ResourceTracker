@@ -3,6 +3,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ResourceTracker.Application.Interfaces;
+using ResourceTracker.Domain.Enums;
 
 namespace ResourceTracker.Application.Features.Commands.InventoryCommands.ConsumeBuildPlanComponents
 {
@@ -16,6 +17,7 @@ namespace ResourceTracker.Application.Features.Commands.InventoryCommands.Consum
             var ids = request.Allocations.Select(a => a.QuestComponentId).ToList();
 
             var questComponents = await repo.QuestComponents
+                .Include(qc => qc.Component)
                 .Where(qc => ids.Contains(qc.Id))
                 .ToListAsync(cancellationToken);
 
@@ -26,6 +28,13 @@ namespace ResourceTracker.Application.Features.Commands.InventoryCommands.Consum
                 if (qc == null)
                 {
                     response.Errors.Add($"Inventory record {allocation.QuestComponentId} not found.");
+                    continue;
+                }
+
+                // A facility is capability, not stock, and belongs in PlayerFacility. Nothing stops
+                if (qc.Component != null && qc.Component.Type == (int)ComponentTypeEnum.Facility)
+                {
+                    response.Errors.Add($"'{qc.Component.Name}' is a facility and is never consumed.");
                     continue;
                 }
 

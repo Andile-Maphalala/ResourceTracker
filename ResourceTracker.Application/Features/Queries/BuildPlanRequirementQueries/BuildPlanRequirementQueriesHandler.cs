@@ -39,6 +39,9 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                 .ThenInclude(y => y.Quest)
                 .ThenInclude(x => x.QuestComponents)
                 .ThenInclude(y => y.Component)
+                .Include(z => z.BuildPlanQuests)
+                .ThenInclude(y => y.Quest)
+                .ThenInclude(y => y.PlayerFacilities)
                 .Include(z => z.BuildPlanComponents)
                 .ThenInclude(y => y.Component)
                 .FirstOrDefaultAsync(cancellationToken);
@@ -63,9 +66,14 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
 
             var allInventory = buildPlan.BuildPlanQuests.SelectMany(x => x.Quest.QuestComponents).ToList();
 
-            // Immutable snapshot to check facility availability (facilities are not consumed)
-            var inventorySnapshot = allInventory.GroupBy(i => i.ComponentId)
-                .ToDictionary(g => g.Key, g => g.Sum(i => i.AmountAquired));
+            // Facilities are capability, not stock: they live in PlayerFacility and never in the
+            // inventory, so they are not deducted from and cannot be consumed. Availability is the
+            // best level owned across the plan's locations - the same facility at a second base is
+            // a separate row, and a level-4 forge satisfies a level-3 recipe. Absent means 0.
+            var ownedFacilityLevels = buildPlan.BuildPlanQuests
+                .SelectMany(x => x.Quest.PlayerFacilities)
+                .GroupBy(f => f.ComponentId)
+                .ToDictionary(g => g.Key, g => g.Max(f => f.Level));
 
             // Working copy we can mutate while deducting consumed components
             var workingInventory = allInventory
@@ -88,7 +96,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                         requirements,
                         facilityRequirementsMap,
                         workingInventory,
-                        inventorySnapshot,
+                        ownedFacilityLevels,
                         buildPlan.IncludeInventory,
                         buildPlan.IncludeFacilityRequirements,
                         cancellationToken);
@@ -128,7 +136,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                                 requirements,
                                 facilityRequirementsMap,
                                 workingInventory,
-                                inventorySnapshot,
+                                ownedFacilityLevels,
                                 buildPlan.IncludeInventory,
                                 buildPlan.IncludeFacilityRequirements,
                                 cancellationToken);
@@ -176,11 +184,19 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
             List<BuildPlanComponentRequirementDto> requirements,
             Dictionary<int, BuildPlanFacilityRequirementDto> facilityRequirementsMap,
             List<QuestComponents> workingInventory,
-            IReadOnlyDictionary<int, int> inventorySnapshot,
+            IReadOnlyDictionary<int, int> ownedFacilityLevels,
             bool includeInventory,
             bool includeFacilityRequirements,
             CancellationToken cancellationToken)
         {
+            // A facility the player already owns among the plan's locations needs nothing gathered,
+            // and must not land in the requirements table: that table is stock, and its rows are
+            // what Consume acts on. Facility status is reported through FacilityRequirements.
+            if (component.Type == (int)ComponentTypeEnum.Facility && ownedFacilityLevels.ContainsKey(component.Id))
+            {
+                return;
+            }
+
             int availableFromInventory = 0;
             if (includeInventory)
             {
@@ -218,19 +234,23 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
 
             var recipe = recipes.First();
 
-            // Track facility requirement but determine availability from the ORIGINAL snapshot (not the mutated working inventory)
+            // Track the facility requirement against what the player owns, not the working
+            // inventory: a facility is never deducted here because it is never consumed.
             if (includeFacilityRequirements && recipe.RequiredFacility != null)
             {
                 var facilityId = recipe.RequiredFacility.Id;
+                var requiredLevel = recipe.RequiredFacilityLevel;
+                var ownedLevel = ownedFacilityLevels.TryGetValue(facilityId, out var level) ? level : 0;
+
                 if (!facilityRequirementsMap.TryGetValue(facilityId, out var facilityReq))
                 {
-                    bool isAvailable = inventorySnapshot.TryGetValue(facilityId, out var amt) && amt > 0;
-
                     facilityReq = new BuildPlanFacilityRequirementDto
                     {
                         FacilityId = facilityId,
                         Name = recipe.RequiredFacility.Name,
-                        IsAvailable = isAvailable,
+                        RequiredLevel = requiredLevel,
+                        OwnedLevel = ownedLevel,
+                        IsAvailable = ownedLevel >= requiredLevel,
                         RequiredFor = new List<int> { component.Id },
                         ImageUrl = GetPictureUrl(recipe.RequiredFacility.PictureId)
                     };
@@ -239,6 +259,15 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                 }
                 else
                 {
+                    // Several recipes can need the same station at different levels. A level-4 forge
+                    // satisfies a level-3 ask, so the facility requirement is the MAX of the levels
+                    // demanded - never the sum, and never whichever recipe happened to be walked first.
+                    if (requiredLevel > facilityReq.RequiredLevel)
+                        facilityReq.RequiredLevel = requiredLevel;
+
+                    facilityReq.OwnedLevel = ownedLevel;
+                    facilityReq.IsAvailable = ownedLevel >= facilityReq.RequiredLevel;
+
                     if (!facilityReq.RequiredFor.Contains(component.Id))
                         facilityReq.RequiredFor.Add(component.Id);
                 }
@@ -262,7 +291,7 @@ namespace ResourceTracker.Application.Features.Queries.BuildPlanRequirementQueri
                         requirements,
                         facilityRequirementsMap,
                         workingInventory,
-                        inventorySnapshot,
+                        ownedFacilityLevels,
                         includeInventory,
                         includeFacilityRequirements,
                         cancellationToken);

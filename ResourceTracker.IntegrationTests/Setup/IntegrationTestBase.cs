@@ -55,6 +55,7 @@ namespace ResourceTracker.IntegrationTests.Setup
                 "BuildPlanComponent",
                 "BuildPlan",
                 "QuestComponents",
+                "PlayerFacility",
                 "Recipe",
                 "Component",
                 "Quest",

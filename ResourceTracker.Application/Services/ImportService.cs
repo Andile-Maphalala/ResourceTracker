@@ -38,13 +38,28 @@ namespace ResourceTracker.Application.Services
                     {
                         throw new BadRequestException($"Component {componentDto.Name} not found");
                     }
-                    var facility = components.FirstOrDefault(c => c.Name == componentDto.Recipe.Station);
+                    // A station the data names but never declares is a broken file, not a recipe with
+                    // no station: importing it as null drops the facility requirement silently and
+                    // nothing downstream can tell it was meant to be there. A null station is
+                    // legitimate - it means hand-crafted, no station needed.
+                    Component? facility = null;
+                    if (!string.IsNullOrWhiteSpace(componentDto.Recipe.Station))
+                    {
+                        facility = components.FirstOrDefault(c => c.Name == componentDto.Recipe.Station);
+                        if (facility == null)
+                        {
+                            throw new BadRequestException($"Station {componentDto.Recipe.Station} required by {componentDto.Name} is not a declared component");
+                        }
+                    }
 
                     var recipe = new Recipe
                     {
                         ComponentId = component.Id,
                         AmountMade = componentDto.Recipe.OutputQuantity,
                         RequiredFacilityId = facility?.Id,
+                        // 0 in the data means "any level of this station", so it is normalised to the
+                        // lowest a facility can be (1) rather than stored as a requirement of zero.
+                        RequiredFacilityLevel = componentDto.Recipe.StationLevel > 0 ? componentDto.Recipe.StationLevel : 1
                     };
                     if(componentDto.Recipe.Requirements.Any())
                     {
