@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pagination.Models;
 using ResourceTracker.Application.Features.Commands.GameCommands.CreateGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.DeleteGame;
+using ResourceTracker.Application.Features.Commands.GameCommands.PurgeGame;
 using ResourceTracker.Application.Features.Commands.GameCommands.UpdateGame;
 using ResourceTracker.Application.Features.Queries.GameQueries.GetGame;
 using ResourceTracker.Application.Features.Queries.GameQueries.SearchGames;
@@ -46,6 +47,16 @@ namespace ResourceTracker.Api.Controllers
         {
             await sender.Send(new DeleteGameCommand(id), cancellationToken);
             return NoContent();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(PurgeGameResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PurgeGameResponse>> PurgeGame([FromBody] PurgeGameCommand request, CancellationToken cancellationToken)
+        {
+            var response = await sender.Send(request, cancellationToken);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]

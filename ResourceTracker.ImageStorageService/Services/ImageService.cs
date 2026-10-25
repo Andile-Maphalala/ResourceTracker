@@ -69,33 +69,52 @@ namespace ResourceTracker.ImageStorageService.Services
                 throw new NotFoundException(nameof(Picture), pictureId);
             }
 
-            var storedPath = (picture.Path ?? string.Empty).Trim();
-            storedPath = storedPath.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
-
-            string fullPath;
-            if (Path.IsPathRooted(storedPath))
-            {
-                fullPath = storedPath;
-            }
-            else
-            {
-                fullPath = Path.Combine(_baseStoragePath, storedPath);
-            }
-
-            if (File.Exists(fullPath))
-            {
-                try
-                {
-                    File.Delete(fullPath);
-                }
-                catch (IOException ex)
-                {
-                    throw new Exception($"Failed to delete image file at '{fullPath}'", ex);
-                }
-            }
+            DeleteFile(picture.Path);
 
             await _repo.DeleteAsync(picture, cancellationToken);
             await _unitOfWork.Save(cancellationToken);
+        }
+
+        public Task<int> DeleteImageFiles(IEnumerable<string?> paths, CancellationToken cancellationToken)
+        {
+            var deleted = 0;
+            foreach (var path in paths)
+            {
+                if (DeleteFile(path))
+                    deleted++;
+            }
+
+            return Task.FromResult(deleted);
+        }
+
+        private bool DeleteFile(string? path)
+        {
+            var fullPath = ResolveFullPath(path);
+            if (string.IsNullOrEmpty(fullPath) || !File.Exists(fullPath))
+                return false;
+
+            try
+            {
+                File.Delete(fullPath);
+                return true;
+            }
+            catch (IOException ex)
+            {
+                throw new Exception($"Failed to delete image file at '{fullPath}'", ex);
+            }
+        }
+
+        private string ResolveFullPath(string? path)
+        {
+            var storedPath = (path ?? string.Empty).Trim();
+            if (string.IsNullOrEmpty(storedPath))
+                return string.Empty;
+
+            storedPath = storedPath.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
+
+            return Path.IsPathRooted(storedPath)
+                ? storedPath
+                : Path.Combine(_baseStoragePath, storedPath);
         }
 
         public async Task<Picture> UploadImage(string url, int? linkedentityType, string folder, int? uploadedBy, string AltText, CancellationToken cancellationToken)
